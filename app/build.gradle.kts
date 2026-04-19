@@ -29,7 +29,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.activity.activity.compose)
+    implementation(projects.data.neo.impl)
     implementation(projects.ui.feature.home)
     implementation(projects.ui.shared.styles)
-    implementation(libs.androidx.activity.activity.compose)
 }

@@ -39,6 +39,10 @@ gradlePlugin {
             id = "neoexplorer.dependency.injection"
             implementationClass = "DependencyInjectionConventionPlugin"
         }
+        register("androidLibraryTest") {
+            id = "neoexplorer.android.library.test"
+            implementationClass = "AndroidLibraryTestConventionPlugin"
+        }
         register("kotlinLibrary") {
             id = "neoexplorer.kotlin.library"
             implementationClass = "KotlinLibraryConventionPlugin"

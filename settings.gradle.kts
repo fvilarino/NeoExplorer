@@ -28,5 +28,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "NeoExplorer"
 include(":app")
 include(":core:injection")
+include(":data:neo")
+include(":data:neo:impl")
 include(":ui:feature:home")
 include(":ui:shared:styles")

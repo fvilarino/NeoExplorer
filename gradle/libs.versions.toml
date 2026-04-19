@@ -1,5 +1,10 @@
 [versions]
 agp = "9.2.0-alpha08"
+androidx-paging-version = "3.3.6"
+com-squareup-okhttp3-version = "4.12.0"
+com-squareup-retrofit2-version = "2.11.0"
+org-jetbrains-kotlinx-datetime-version = "0.6.1"
+org-jetbrains-kotlinx-serialization-version = "1.8.0"
 androidx-activity-compose-version = "1.13.0"
 androidx-compose-bom-version = "2026.03.01"
 androidx-compose-foundation-version = "1.10.6"
@@ -40,9 +45,18 @@ com-android-tools-build-gradle = { module = "com.android.tools.build:gradle", ve
 com-jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref = "com-jakewharton-timber-version" }
 dev-zacsweers-metro-gradle-plugin = { module = "dev.zacsweers.metro:dev.zacsweers.metro.gradle.plugin", version.ref = "dev-zacsweers-metro-gradle-plugin-version" }
 junit-junit = { module = "junit:junit", version.ref = "junit-version" }
+androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging-version" }
+androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "androidx-paging-version" }
+com-squareup-okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "com-squareup-okhttp3-version" }
+com-squareup-okhttp3-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "com-squareup-okhttp3-version" }
+com-squareup-retrofit2-converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "com-squareup-retrofit2-version" }
+com-squareup-retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "com-squareup-retrofit2-version" }
+org-jetbrains-kotlinx-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "org-jetbrains-kotlinx-serialization-version" }
+org-jetbrains-kotlinx-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "org-jetbrains-kotlinx-datetime-version" }
 org-jetbrains-kotlin-kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "org-jetbrains-kotlin-gradle-plugin-version" }
 org-jetbrains-kotlinx-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "org-jetbrains-kotlinx-coroutines-version" }
 org-jetbrains-kotlinx-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "org-jetbrains-kotlinx-coroutines-version" }
+org-jetbrains-kotlinx-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx-coroutines-version" }
 
 [bundles]
 compose = [
@@ -68,3 +82,4 @@ com-google-devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "com-g
 dev-zacsweers-metro = { id = "dev.zacsweers.metro", version.ref = "dev-zacsweers-metro-gradle-plugin-version" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-gradle-plugin-version" }
 org-jetbrains-kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "org-jetbrains-kotlin-gradle-plugin-version" }
+org-jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "org-jetbrains-kotlin-gradle-plugin-version" }
