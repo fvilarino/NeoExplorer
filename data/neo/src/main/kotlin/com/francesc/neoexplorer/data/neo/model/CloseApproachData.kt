@@ -6,5 +6,6 @@ data class CloseApproachData(
     val closeApproachDate: LocalDate,
     val relativeVelocityKmPerSecond: KilometersPerSecond,
     val missDistanceKm: Kilometers,
+    val missDistanceLunar: LunarDistances,
     val orbitingBody: String,
 )

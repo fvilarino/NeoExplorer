@@ -1,3 +1,4 @@
+import com.francesc.neoexplorer.buildconvention.catalog
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
@@ -12,6 +13,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
             dependencies {
                 add("implementation", project(":ui:shared:styles"))
+                add("implementation", catalog.findBundle("circuit").get())
+                add("ksp", catalog.findLibrary("com.slack.circuit.circuit.codegen").get())
             }
         }
     }

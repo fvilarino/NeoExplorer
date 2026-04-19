@@ -11,6 +11,7 @@ data class RelativeVelocityDto(
 @Serializable
 data class MissDistanceDto(
     @SerialName("kilometers") val kilometers: String,
+    @SerialName("lunar") val lunar: String,
 )
 
 @Serializable

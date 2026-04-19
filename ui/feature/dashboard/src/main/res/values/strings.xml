@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="asteroid_watch">Asteroid Watch</string>
+    <string name="no_close_approaches_today">No close approaches today</string>
+    <string name="potentially_hazardous_abbreviation">PHO</string>
+    <string name="potentially_hazardous_objects_today">%1$d Potentially Hazardous Objects Today</string>
+    <string name="asteroid_velocity">%1$s km/s</string>
+    <string name="accessibility_potentially_hazardous">Potentially hazardous</string>
+    <string name="retry">Retry</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="asteroid_miss_distance">%1$s LD · %2$s</string>
+    <string name="accessibility_miss_distance">Miss distance</string>
+    <string name="accessibility_velocity">Relative velocity</string>
+    <string name="accessibility_diameter">Estimated diameter</string>
+    <string name="accessibility_sort_by_date">Sort by date</string>
+    <string name="accessibility_sort_by_distance">Sort by distance</string>
+</resources>

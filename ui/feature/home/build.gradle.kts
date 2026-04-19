@@ -10,4 +10,5 @@ android {
 
 dependencies {
     implementation(libs.androidx.activity.activity.compose)
+    implementation(projects.ui.feature.dashboard)
 }

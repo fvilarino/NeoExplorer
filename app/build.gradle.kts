@@ -30,7 +30,11 @@ android {
 
 dependencies {
     implementation(libs.androidx.activity.activity.compose)
+    implementation(libs.com.slack.circuit.circuit.foundation)
+    implementation(projects.core.clock.impl)
+    implementation(projects.core.formatter.impl)
     implementation(projects.data.neo.impl)
+    implementation(projects.ui.feature.dashboard)
     implementation(projects.ui.feature.home)
     implementation(projects.ui.shared.styles)
 }

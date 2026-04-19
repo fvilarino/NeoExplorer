@@ -1,17 +1,18 @@
 package com.francesc.neoexplorer.ui.feature.home
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
+import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.CircuitCompositionLocals
+import com.slack.circuit.foundation.CircuitContent
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    Scaffold(modifier = modifier) { innerPadding ->
-        Text(
-            text = "Hello Android!",
-            modifier = Modifier.padding(innerPadding),
+fun HomeScreen(circuit: Circuit, modifier: Modifier = Modifier) {
+    CircuitCompositionLocals(circuit) {
+        CircuitContent(
+            screen = DashboardScreen,
+            modifier = modifier,
         )
     }
 }

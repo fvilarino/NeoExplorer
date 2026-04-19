@@ -12,9 +12,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val circuit = (application as CircuitProvider).circuit
         setContent {
             NeoExplorerTheme {
                 HomeScreen(
+                    circuit = circuit,
                     modifier = Modifier.fillMaxSize(),
                 )
             }

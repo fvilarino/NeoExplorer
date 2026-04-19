@@ -1,5 +1,6 @@
 [versions]
 agp = "9.2.0-alpha08"
+com-slack-circuit-version = "0.33.1"
 androidx-paging-version = "3.3.6"
 com-squareup-okhttp3-version = "4.12.0"
 com-squareup-retrofit2-version = "2.11.0"
@@ -23,6 +24,16 @@ org-jetbrains-kotlin-gradle-plugin-version = "2.3.20"
 org-jetbrains-kotlinx-coroutines-version = "1.10.2"
 
 [libraries]
+com-slack-circuit-circuit-backstack = { module = "com.slack.circuit:circuit-backstack", version.ref = "com-slack-circuit-version" }
+com-slack-circuit-circuit-codegen = { module = "com.slack.circuit:circuit-codegen", version.ref = "com-slack-circuit-version" }
+com-slack-circuit-circuit-codegenAnnotations = { module = "com.slack.circuit:circuit-codegen-annotations", version.ref = "com-slack-circuit-version" }
+com-slack-circuit-circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "com-slack-circuit-version" }
+com-slack-circuit-circuit-overlay = { module = "com.slack.circuit:circuit-overlay", version.ref = "com-slack-circuit-version" }
+com-slack-circuit-circuit-retained = { module = "com.slack.circuit:circuit-retained", version.ref = "com-slack-circuit-version" }
+com-slack-circuit-circuit-runtime = { module = "com.slack.circuit:circuit-runtime", version.ref = "com-slack-circuit-version" }
+com-slack-circuit-circuit-runtime-presenter = { module = "com.slack.circuit:circuit-runtime-presenter", version.ref = "com-slack-circuit-version" }
+com-slack-circuit-circuit-runtime-ui = { module = "com.slack.circuit:circuit-runtime-ui", version.ref = "com-slack-circuit-version" }
+com-slack-circuit-circuit-test = { module = "com.slack.circuit:circuit-test", version.ref = "com-slack-circuit-version" }
 androidx-activity-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose-version" }
 androidx-compose-animation-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidx-compose-bom-version" }
@@ -59,6 +70,16 @@ org-jetbrains-kotlinx-kotlinx-coroutines-core = { module = "org.jetbrains.kotlin
 org-jetbrains-kotlinx-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "org-jetbrains-kotlinx-coroutines-version" }
 
 [bundles]
+circuit = [
+    "com-slack-circuit-circuit-backstack",
+    "com-slack-circuit-circuit-codegenAnnotations",
+    "com-slack-circuit-circuit-foundation",
+    "com-slack-circuit-circuit-overlay",
+    "com-slack-circuit-circuit-retained",
+    "com-slack-circuit-circuit-runtime",
+    "com-slack-circuit-circuit-runtime-presenter",
+    "com-slack-circuit-circuit-runtime-ui",
+]
 compose = [
     "androidx-compose-animation-animation",
     "androidx-compose-foundation",

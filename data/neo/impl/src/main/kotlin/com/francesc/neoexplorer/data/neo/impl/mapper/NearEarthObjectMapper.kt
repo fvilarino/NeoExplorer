@@ -8,6 +8,7 @@ import com.francesc.neoexplorer.data.neo.model.CloseApproachData
 import com.francesc.neoexplorer.data.neo.model.EstimatedDiameter
 import com.francesc.neoexplorer.data.neo.model.Kilometers
 import com.francesc.neoexplorer.data.neo.model.KilometersPerSecond
+import com.francesc.neoexplorer.data.neo.model.LunarDistances
 import com.francesc.neoexplorer.data.neo.model.NasaJplUrl
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
 import com.francesc.neoexplorer.data.neo.model.NeoFeed
@@ -31,6 +32,7 @@ internal fun CloseApproachDataDto.toDomain(): CloseApproachData = CloseApproachD
     closeApproachDate = LocalDate.parse(closeApproachDate),
     relativeVelocityKmPerSecond = KilometersPerSecond(relativeVelocity.kilometersPerSecond.toDouble()),
     missDistanceKm = Kilometers(missDistance.kilometers.toDouble()),
+    missDistanceLunar = LunarDistances(missDistance.lunar.toDouble()),
     orbitingBody = orbitingBody,
 )
 
