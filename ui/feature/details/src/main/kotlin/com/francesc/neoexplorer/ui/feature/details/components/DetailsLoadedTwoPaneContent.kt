@@ -60,6 +60,7 @@ internal fun DetailsLoadedTwoPaneContent(
         ) {
             item {
                 SizeComparisonCanvas(
+                    asteroidName = asteroid.name,
                     asteroidDiameterKm = asteroid.diameterMaxKm,
                     reference = asteroid.sizeReference,
                     modifier = Modifier.fillMaxWidth(),

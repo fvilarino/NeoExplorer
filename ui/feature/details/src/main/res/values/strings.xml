@@ -20,6 +20,12 @@
     <string name="size_comparison_title">Size Comparison</string>
     <string name="size_comparison_asteroid_label">Asteroid</string>
 
+    <!-- Asteroid scale visualizer -->
+    <string name="scale_visualizer_title">Illustrative Scale Comparison</string>
+    <string name="scale_visualizer_anchor_cd">Scale anchor: %s</string>
+    <string name="scale_visualizer_asteroid_label">%1$s (%2$dm)</string>
+    <string name="scale_visualizer_asteroid_cd">Asteroid silhouette</string>
+
     <!-- Hazardous banner -->
     <string name="potentially_hazardous_description">This object is classified as a Potentially Hazardous Asteroid (PHA)</string>
 

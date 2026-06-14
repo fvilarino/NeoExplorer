@@ -21,6 +21,7 @@ import androidx.core.net.toUri
 import com.francesc.neoexplorer.ui.feature.details.R
 import com.francesc.neoexplorer.ui.shared.compose.MarginOneAndHalf
 import com.francesc.neoexplorer.ui.shared.compose.MarginSingle
+import com.francesc.neoexplorer.ui.shared.compose.plus
 
 /** Max width of the size-comparison canvas on single-column layouts. */
 private val CanvasMaxWidth = 600.dp
@@ -30,6 +31,7 @@ internal fun DetailsLoadedSingleColumnContent(
     asteroid: DetailsUiModel,
     horizontalPadding: androidx.compose.ui.unit.Dp,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(),
 ) {
     val context = LocalContext.current
     LazyColumn(
@@ -37,7 +39,7 @@ internal fun DetailsLoadedSingleColumnContent(
         contentPadding = PaddingValues(
             horizontal = horizontalPadding,
             vertical = MarginOneAndHalf,
-        ),
+        ) + contentPadding,
         verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
     ) {
         // ── Hazardous badge ───────────────────────────────────────────────
@@ -64,6 +66,7 @@ internal fun DetailsLoadedSingleColumnContent(
         item {
             // Cap bar width so it doesn't become absurdly wide on Medium screens
             SizeComparisonCanvas(
+                asteroidName = asteroid.name,
                 asteroidDiameterKm = asteroid.diameterMaxKm,
                 reference = asteroid.sizeReference,
                 modifier = Modifier

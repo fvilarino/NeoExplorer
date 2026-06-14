@@ -81,7 +81,7 @@ class DetailsPresenter @AssistedInject constructor(
             orbitingBody = approach?.orbitingBody ?: "—",
             nasaJplUrl = nasaJplUrl.value,
             closeApproachDate = approach?.closeApproachDate?.let { dateFormatter.format(it) }.orEmpty(),
-            sizeReference = SizeReferenceObject.from(diameterMaxKm),
+            sizeReference = SizeReferenceObject.from(diameterMaxKm * 1_000.0),
         )
     }
 

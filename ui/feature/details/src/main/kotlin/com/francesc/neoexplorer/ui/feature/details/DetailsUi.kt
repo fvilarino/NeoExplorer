@@ -126,13 +126,13 @@ private fun DetailsUi(
                     }
                     ContentContainer(
                         modifier = Modifier
-                            .padding(innerPadding)
                             .fillMaxSize(),
                     ) {
                         DetailsLoadedSingleColumnContent(
                             asteroid = asteroid,
                             horizontalPadding = horizontalPadding,
                             modifier = Modifier.fillMaxWidth(),
+                            contentPadding = innerPadding,
                         )
                     }
                 }

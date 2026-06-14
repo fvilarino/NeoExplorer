@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -41,6 +42,7 @@ private val LabelHeight: Dp = 18.dp
  */
 @Composable
 fun SizeComparisonCanvas(
+    asteroidName: String,
     asteroidDiameterKm: Double,
     reference: SizeReferenceObject,
     modifier: Modifier = Modifier,
@@ -52,9 +54,8 @@ fun SizeComparisonCanvas(
     val asteroidInlineLabel = stringResource(R.string.size_comparison_asteroid_label)
     val sectionTitle = stringResource(R.string.size_comparison_title)
 
-    val asteroidSizeLabel = remember(asteroidDiameterKm) { formatKm(asteroidDiameterKm) }
-    val referenceLabel =
-        remember(reference) { "${reference.label}  (${formatKm(reference.sizeKm)})" }
+    val asteroidSizeLabel = remember(key1 = asteroidDiameterKm) { formatKm(asteroidDiameterKm) }
+    val referenceLabel = remember(key1 = reference) { "${reference.label}  (${formatKm(reference.sizeMeters / 1_000.0)})" }
 
     val labelStyle = TextStyle(fontSize = 11.sp, fontWeight = FontWeight.Medium)
 
@@ -70,13 +71,14 @@ fun SizeComparisonCanvas(
                 .fillMaxWidth()
                 .height(LabelHeight + BarHeight + BarGap + BarHeight + LabelHeight),
         ) {
-            val maxKm = maxOf(asteroidDiameterKm, reference.sizeKm)
+            val referenceSizeKm = reference.sizeMeters / 1_000.0
+            val maxKm = maxOf(asteroidDiameterKm, referenceSizeKm)
             val availableWidth = size.width
 
             val asteroidBarWidth =
                 ((asteroidDiameterKm / maxKm) * availableWidth).toFloat().coerceAtLeast(4f)
             val referenceBarWidth =
-                ((reference.sizeKm / maxKm) * availableWidth).toFloat().coerceAtLeast(4f)
+                ((referenceSizeKm / maxKm) * availableWidth).toFloat().coerceAtLeast(4f)
 
             val barHeightPx = BarHeight.toPx()
             val barGapPx = BarGap.toPx()
@@ -130,6 +132,16 @@ fun SizeComparisonCanvas(
                 topLeft = Offset(0f, referenceBarTop + barHeightPx + 2f),
             )
         }
+
+        // ── Illustrative icon comparison ──────────────────────────────────
+        Spacer(modifier = Modifier.height(MarginDouble))
+        HorizontalDivider()
+        Spacer(modifier = Modifier.height(MarginDouble))
+        AsteroidScaleVisualizer(
+            asteroidName = asteroidName,
+            diameterMeters = asteroidDiameterKm * 1_000.0,
+            reference = reference,
+        )
     }
 }
 
@@ -141,6 +153,7 @@ private fun SizeComparisonCanvasPreview() {
     NeoExplorerTheme {
         Surface(color = MaterialTheme.colorScheme.background) {
             SizeComparisonCanvas(
+                asteroidName = "2020 CD3",
                 asteroidDiameterKm = 0.42,
                 reference = SizeReferenceObject.BURJ_KHALIFA,
                 modifier = Modifier
