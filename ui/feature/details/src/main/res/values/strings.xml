@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen / generic -->
+    <string name="details_loading_title">Loading…</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="retry">Retry</string>
+
+    <!-- Section headers -->
+    <string name="section_object_characteristics">Object Characteristics</string>
+
+    <!-- Metric card labels -->
+    <string name="metric_diameter_min">Est. Diameter (min)</string>
+    <string name="metric_diameter_max">Est. Diameter (max)</string>
+    <string name="metric_velocity">Relative Velocity</string>
+    <string name="metric_orbiting_body">Orbiting Body</string>
+    <string name="metric_miss_distance_km">Miss Distance</string>
+    <string name="metric_miss_distance_lunar">Miss Distance (lunar)</string>
+
+    <!-- Size comparison canvas -->
+    <string name="size_comparison_title">Size Comparison</string>
+    <string name="size_comparison_asteroid_label">Asteroid</string>
+
+    <!-- Hazardous banner -->
+    <string name="potentially_hazardous_description">This object is classified as a Potentially Hazardous Asteroid (PHA)</string>
+
+    <!-- JPL button -->
+    <string name="open_jpl_button">View JPL Orbital Diagram</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_back">Back</string>
+</resources>

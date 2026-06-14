@@ -25,10 +25,11 @@ import com.francesc.neoexplorer.ui.shared.compose.MarginHalf
 import com.francesc.neoexplorer.ui.shared.compose.MarginSingle
 import com.francesc.neoexplorer.ui.shared.compose.WidgetPreviews
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
+import com.francesc.neoexplorer.ui.shared.styles.extendedColorScheme
 
 @Composable
 fun HazardousBadge(modifier: Modifier = Modifier) {
-    val amberColor = Color(0xFFFFA000)
+    val amberColor = MaterialTheme.extendedColorScheme.amber
     Row(
         modifier = modifier
             .background(

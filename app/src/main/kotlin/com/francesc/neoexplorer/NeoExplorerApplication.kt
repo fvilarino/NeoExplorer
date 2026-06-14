@@ -2,6 +2,7 @@ package com.francesc.neoexplorer
 
 import android.app.Application
 import com.francesc.neoexplorer.ui.feature.home.CircuitProvider
+import com.francesc.neoexplorer.ui.shared.navigation.NavigationRouter
 import com.slack.circuit.foundation.Circuit
 import dev.zacsweers.metro.createGraphFactory
 
@@ -12,6 +13,9 @@ class NeoExplorerApplication : Application(), CircuitProvider {
 
     override val circuit: Circuit
         get() = applicationGraph.circuit
+
+    override val navigationRouter: NavigationRouter
+        get() = applicationGraph.navigationRouter
 
     override fun onCreate() {
         super.onCreate()

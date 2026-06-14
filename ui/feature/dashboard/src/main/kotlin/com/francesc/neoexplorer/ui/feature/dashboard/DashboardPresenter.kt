@@ -18,6 +18,8 @@ import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardEvent
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
 import com.francesc.neoexplorer.ui.feature.dashboard.components.SortOrder
 import com.francesc.neoexplorer.ui.feature.dashboard.components.ThreatLevel
+import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
+import com.francesc.neoexplorer.ui.shared.navigation.NavigationBroadcaster
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
@@ -33,21 +35,22 @@ class DashboardPresenter(
     private val neoRepository: NeoRepository,
     private val dateProvider: DateProvider,
     private val dateFormatter: DateFormatter,
+    private val navigationBroadcaster: NavigationBroadcaster,
 ) : Presenter<DashboardUiState> {
 
     @Composable
     override fun present(): DashboardUiState {
         val today = remember { dateProvider.today() }
 
-        var loadingState by remember { mutableStateOf(LoadingState.LOADING) }
-        var hazardousCount by remember { mutableIntStateOf(0) }
+        var loadingState by rememberRetained { mutableStateOf(LoadingState.LOADING) }
+        var hazardousCount by rememberRetained { mutableIntStateOf(0) }
         var rawAsteroids by rememberRetained { mutableStateOf(emptyList<AsteroidUiModel>()) }
         var sortOrder by rememberRetained { mutableStateOf(SortOrder.BY_DATE) }
         var errorMessage by remember { mutableStateOf<String?>(null) }
         var retrySignal by remember { mutableIntStateOf(0) }
 
         LaunchedEffect(key1 = retrySignal) {
-            loadingState = LoadingState.LOADING
+            if (rawAsteroids.isEmpty()) loadingState = LoadingState.LOADING
             errorMessage = null
             neoRepository
                 .getFeed(startDate = today, endDate = today.plus(6, DateTimeUnit.DAY))
@@ -65,7 +68,7 @@ class DashboardPresenter(
                 )
         }
 
-        val sortedAsteroids = remember(key1 = rawAsteroids, key2 = sortOrder) {
+        val sortedAsteroids = rememberRetained(rawAsteroids, sortOrder) {
             when (sortOrder) {
                 SortOrder.BY_DATE -> rawAsteroids
                 SortOrder.BY_DISTANCE -> rawAsteroids.sortedBy { it.missDistanceLunar }
@@ -83,8 +86,9 @@ class DashboardPresenter(
                 when (event) {
                     DashboardEvent.Retry -> ++retrySignal
                     is DashboardEvent.SetSortOrder -> sortOrder = event.sortOrder
-                    is DashboardEvent.AsteroidClicked -> {
-                    }
+                    is DashboardEvent.AsteroidClicked -> navigationBroadcaster.broadcast(
+                        DetailsScreen(asteroidId = event.asteroidId),
+                    )
                 }
             },
         )

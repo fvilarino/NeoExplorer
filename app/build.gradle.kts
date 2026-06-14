@@ -35,6 +35,8 @@ dependencies {
     implementation(projects.core.formatter.impl)
     implementation(projects.data.neo.impl)
     implementation(projects.ui.feature.dashboard)
+    implementation(projects.ui.feature.details)
     implementation(projects.ui.feature.home)
+    implementation(projects.ui.shared.navigation)
     implementation(projects.ui.shared.styles)
 }

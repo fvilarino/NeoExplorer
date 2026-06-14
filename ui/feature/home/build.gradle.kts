@@ -11,4 +11,6 @@ android {
 dependencies {
     implementation(libs.androidx.activity.activity.compose)
     implementation(projects.ui.feature.dashboard)
+    implementation(projects.ui.feature.details)
+    implementation(projects.ui.shared.navigation)
 }
