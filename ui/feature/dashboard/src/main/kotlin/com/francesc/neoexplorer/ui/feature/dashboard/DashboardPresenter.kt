@@ -12,6 +12,7 @@ import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.data.neo.model.LunarDistances
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
+import com.francesc.neoexplorer.data.neo.model.NeoFeed
 import com.francesc.neoexplorer.ui.feature.dashboard.components.AsteroidUiModel
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardEvent
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
@@ -40,7 +41,7 @@ class DashboardPresenter(
 
         var loadingState by remember { mutableStateOf(LoadingState.LOADING) }
         var hazardousCount by remember { mutableIntStateOf(0) }
-        var rawAsteroids by rememberRetained() { mutableStateOf(emptyList<AsteroidUiModel>()) }
+        var rawAsteroids by rememberRetained { mutableStateOf(emptyList<AsteroidUiModel>()) }
         var sortOrder by rememberRetained { mutableStateOf(SortOrder.BY_DATE) }
         var errorMessage by remember { mutableStateOf<String?>(null) }
         var retrySignal by remember { mutableIntStateOf(0) }
@@ -48,20 +49,20 @@ class DashboardPresenter(
         LaunchedEffect(key1 = retrySignal) {
             loadingState = LoadingState.LOADING
             errorMessage = null
-            neoRepository.getFeed(startDate = today, endDate = today.plus(6, DateTimeUnit.DAY)).fold(
-                onSuccess = { feed ->
-                    val uiModels = feed.nearEarthObjects
-                        .entries.sortedBy { it.key }
-                        .flatMap { (date, neos) -> neos.map { neo -> neo.toUiModel(date) } }
-                    rawAsteroids = uiModels
-                    hazardousCount = uiModels.count { it.isPotentiallyHazardous }
-                    loadingState = LoadingState.LOADED
-                },
-                onFailure = { throwable ->
-                    errorMessage = throwable.message ?: "Unknown error"
-                    loadingState = LoadingState.ERROR
-                },
-            )
+            neoRepository
+                .getFeed(startDate = today, endDate = today.plus(6, DateTimeUnit.DAY))
+                .fold(
+                    onSuccess = { feed ->
+                        val data = parseFeed(feed)
+                        rawAsteroids = data.asteroids
+                        hazardousCount = data.hazardousCount
+                        loadingState = LoadingState.LOADED
+                    },
+                    onFailure = { throwable ->
+                        errorMessage = throwable.message ?: "Unknown error"
+                        loadingState = LoadingState.ERROR
+                    },
+                )
         }
 
         val sortedAsteroids = remember(key1 = rawAsteroids, key2 = sortOrder) {
@@ -87,6 +88,13 @@ class DashboardPresenter(
         )
     }
 
+    private fun parseFeed(feed: NeoFeed): AsteroidFeed {
+        val neos = feed.nearEarthObjects
+            .entries.sortedBy { it.key }
+            .flatMap { (date, neos) -> neos.map { neo -> neo.toUiModel(date) } }
+        return AsteroidFeed(neos, hazardousCount = neos.count { it.isPotentiallyHazardous })
+    }
+
     private fun NearEarthObject.toUiModel(feedDate: LocalDate): AsteroidUiModel {
         val missDistance = closeApproachData.find { it.closeApproachDate == feedDate }
             ?: closeApproachData.firstOrNull()
@@ -100,9 +108,15 @@ class DashboardPresenter(
             isPotentiallyHazardous = isPotentiallyHazardousAsteroid,
             velocityKmPerSecond = missDistance?.relativeVelocityKmPerSecond?.value ?: 0.0,
             estimatedDiameterMaxKm = estimatedDiameter.maxKm.value,
-            closeApproachDate = missDistance?.closeApproachDate?.let { dateFormatter.format(it) }
-                ?: "",
+            closeApproachDate = missDistance?.closeApproachDate?.let {
+                dateFormatter.format(it)
+            }.orEmpty(),
             threatLevel = ThreatLevel.from(lunarDist),
         )
     }
+
+    private data class AsteroidFeed(
+        val asteroids: List<AsteroidUiModel>,
+        val hazardousCount: Int,
+    )
 }
