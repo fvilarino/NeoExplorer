@@ -41,6 +41,7 @@ fun DashboardUi(state: DashboardUiState, modifier: Modifier = Modifier) {
                     asteroids = state.asteroids,
                     date = state.date,
                     hazardousCount = state.hazardousCount,
+                    onAsteroidClick = { state.eventSink(DashboardEvent.AsteroidClicked(it)) },
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = innerPadding,
                 )

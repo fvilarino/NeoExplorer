@@ -67,12 +67,14 @@ private fun formatDiameterM(maxKm: Double): String {
 @Composable
 fun AsteroidCard(
     asteroid: AsteroidUiModel,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(CardCornerSizeLarge),
         elevation = CardDefaults.cardElevation(defaultElevation = CardElevation),
+        onClick = onClick,
     ) {
         Row(
             modifier = Modifier
@@ -198,6 +200,7 @@ private fun AsteroidCardPreview() {
                         closeApproachDate = "19 Apr 2026",
                         threatLevel = ThreatLevel.DANGER,
                     ),
+                    onClick = {},
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Spacer(modifier = Modifier.height(MarginOneAndHalf))
@@ -214,6 +217,7 @@ private fun AsteroidCardPreview() {
                         closeApproachDate = "19 Apr 2026",
                         threatLevel = ThreatLevel.CAUTION,
                     ),
+                    onClick = {},
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Spacer(modifier = Modifier.height(MarginOneAndHalf))
@@ -230,6 +234,7 @@ private fun AsteroidCardPreview() {
                         closeApproachDate = "19 Apr 2026",
                         threatLevel = ThreatLevel.SAFE,
                     ),
+                    onClick = {},
                     modifier = Modifier.fillMaxWidth(),
                 )
             }

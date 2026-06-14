@@ -83,6 +83,8 @@ class DashboardPresenter(
                 when (event) {
                     DashboardEvent.Retry -> ++retrySignal
                     is DashboardEvent.SetSortOrder -> sortOrder = event.sortOrder
+                    is DashboardEvent.AsteroidClicked -> {
+                    }
                 }
             },
         )

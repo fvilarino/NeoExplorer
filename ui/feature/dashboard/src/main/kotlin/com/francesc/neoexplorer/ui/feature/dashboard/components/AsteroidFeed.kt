@@ -38,6 +38,7 @@ fun AsteroidFeed(
     asteroids: List<AsteroidUiModel>,
     date: LocalDate,
     hazardousCount: Int,
+    onAsteroidClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -89,6 +90,7 @@ fun AsteroidFeed(
                 items(asteroids, key = { it.id }) { asteroid ->
                     AsteroidCard(
                         asteroid = asteroid,
+                        onClick = { onAsteroidClick(asteroid.id) },
                         modifier = Modifier.fillMaxWidth(),
                     )
                 }
@@ -107,6 +109,7 @@ private fun AsteroidFeedEmptyPreview() {
                 emptyList(),
                 date = LocalDate(2026, Month.APRIL, 19),
                 hazardousCount = 2,
+                onAsteroidClick = {},
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -148,6 +151,7 @@ private fun AsteroidFeedPreview() {
                 ),
                 date = LocalDate(2026, Month.APRIL, 19),
                 hazardousCount = 2,
+                onAsteroidClick = {},
                 modifier = Modifier.fillMaxWidth(),
             )
         }
