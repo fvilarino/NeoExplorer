@@ -14,9 +14,7 @@ import com.francesc.neoexplorer.data.neo.model.LunarDistances
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
 import com.francesc.neoexplorer.data.neo.model.NeoFeed
 import com.francesc.neoexplorer.ui.feature.dashboard.components.AsteroidUiModel
-import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardEvent
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
-import com.francesc.neoexplorer.ui.feature.dashboard.components.SortOrder
 import com.francesc.neoexplorer.ui.feature.dashboard.components.ThreatLevel
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.shared.navigation.NavigationBroadcaster

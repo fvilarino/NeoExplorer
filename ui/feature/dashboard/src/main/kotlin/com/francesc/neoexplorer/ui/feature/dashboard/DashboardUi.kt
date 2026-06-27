@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.francesc.neoexplorer.ui.feature.dashboard.components.AsteroidFeed
-import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardEvent
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardTopBar
 import com.francesc.neoexplorer.ui.feature.dashboard.components.ErrorContent

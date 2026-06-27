@@ -11,7 +11,6 @@ import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.data.neo.model.AsteroidId
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
-import com.francesc.neoexplorer.ui.feature.details.components.DetailsEvent
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsUiModel
 import com.francesc.neoexplorer.ui.feature.details.components.SizeReferenceObject

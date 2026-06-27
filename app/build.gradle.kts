@@ -37,6 +37,8 @@ dependencies {
     implementation(projects.ui.feature.dashboard)
     implementation(projects.ui.feature.details)
     implementation(projects.ui.feature.home)
+    implementation(projects.ui.feature.settings)
+    implementation(projects.ui.feature.temporalexplorer)
     implementation(projects.ui.shared.navigation)
     implementation(projects.ui.shared.styles)
 }

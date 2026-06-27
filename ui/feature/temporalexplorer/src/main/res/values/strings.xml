@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="temporal_explorer">Temporal Explorer</string>
+    <string name="temporal_explorer_description">Pick a date range to explore asteroids\' closest approaches.</string>
+    <string name="temporal_explorer_start_date">Start date</string>
+    <string name="temporal_explorer_end_date">End date</string>
+    <string name="temporal_explorer_search">Search</string>
+</resources>
+

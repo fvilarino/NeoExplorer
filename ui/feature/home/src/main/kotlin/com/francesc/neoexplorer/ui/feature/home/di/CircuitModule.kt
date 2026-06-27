@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -15,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.slack.circuit.foundation.NavDecoration
 import com.slack.circuit.foundation.Circuit
+import com.slack.circuit.foundation.LocalCircuit
 import com.slack.circuit.runtime.ExperimentalCircuitApi
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.navigation.NavArgument
@@ -45,37 +47,5 @@ interface CircuitModule {
     ): Circuit = Circuit.Builder()
         .addPresenterFactories(presenterFactories)
         .addUiFactories(uiFactories)
-        .setDefaultNavDecoration(NavigationDecoration)
         .build()
 }
-
-private object NavigationDecoration : NavDecoration {
-
-    @OptIn(ExperimentalCircuitApi::class)
-    @Composable
-    override fun <T : NavArgument> DecoratedContent(
-        args: NavStackList<T>,
-        navigator: Navigator,
-        modifier: Modifier,
-        content: @Composable (T) -> Unit,
-    ) {
-        var prevBackstackDepth by rememberSaveable { mutableIntStateOf(0) }
-        val backStackDepth = args.backwardItems.iterator().asSequence().count()
-
-        AnimatedContent(
-            targetState = args,
-            modifier = modifier,
-            transitionSpec = {
-                val signum = if (prevBackstackDepth < backStackDepth) 1 else -1
-                (slideInHorizontally { signum * it } + fadeIn() togetherWith
-                    slideOutHorizontally { -signum * it } + fadeOut())
-                    .using(SizeTransform(clip = false))
-            },
-            label = "navigation",
-        ) {
-            content(it.first())
-        }
-        prevBackstackDepth = backStackDepth
-    }
-}
-

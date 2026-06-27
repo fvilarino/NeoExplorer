@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsErrorContent
-import com.francesc.neoexplorer.ui.feature.details.components.DetailsEvent
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsLoadedSingleColumnContent
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsLoadedTwoPaneContent
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsLoadingContent

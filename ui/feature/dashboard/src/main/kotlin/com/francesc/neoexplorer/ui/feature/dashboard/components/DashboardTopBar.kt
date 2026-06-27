@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.francesc.neoexplorer.ui.feature.dashboard.R
+import com.francesc.neoexplorer.ui.feature.dashboard.SortOrder
 import com.francesc.neoexplorer.ui.shared.compose.IconSizeSmall
 import com.francesc.neoexplorer.ui.shared.compose.WidgetPreviews
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
