@@ -1,33 +1,53 @@
 package com.francesc.neoexplorer.ui.shared.compose
 
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 
 /**
- * Canonical window-width breakpoints matching the Material 3 adaptive layout spec:
- * - [Compact] < 600 dp (phones in portrait)
- * - [Medium] 600–839 dp (large phones / tablets in portrait)
- * - [Expanded] ≥ 840 dp (tablets in landscape, desktop)
- */
-enum class WindowWidthClass {
-  Compact,
-  Medium,
-  Expanded,
-}
-
-/**
- * Returns the current [WindowWidthClass] derived from [LocalWindowInfo], which updates
+ * Returns the current [WindowWidthSizeClass] derived from [LocalWindowInfo], which updates
  * automatically on orientation changes without requiring an Activity reference.
  */
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun rememberWindowWidthClass(): WindowWidthClass {
-  val containerWidth = LocalWindowInfo.current.containerSize.width
-  val widthDp = with(LocalDensity.current) { containerWidth.toDp() }
-  return when {
-    widthDp < 600.dp -> WindowWidthClass.Compact
-    widthDp < 840.dp -> WindowWidthClass.Medium
-    else -> WindowWidthClass.Expanded
-  }
+fun rememberWindowWidthClass(): WindowWidthSizeClass {
+  val containerSize = LocalWindowInfo.current.containerSize
+  val dpSize =
+    with(LocalDensity.current) {
+      DpSize(containerSize.width.toDp(), containerSize.height.toDp())
+    }
+  return WindowSizeClass.calculateFromSize(dpSize).widthSizeClass
 }
+
+/**
+ * Returns the appropriate grid content padding for the current window width:
+ * - [WindowWidthSizeClass.Compact] → [MarginDouble] (16 dp)
+ * - [WindowWidthSizeClass.Medium] → [MarginTreble] (24 dp)
+ * - [WindowWidthSizeClass.Expanded] → [MarginQuad] (32 dp)
+ */
+@Composable
+fun rememberGridContentPadding(): Dp =
+  when (rememberWindowWidthClass()) {
+    WindowWidthSizeClass.Compact -> MarginDouble
+    WindowWidthSizeClass.Medium -> MarginTreble
+    else -> MarginQuad // Expanded
+  }
+
+/**
+ * Returns the appropriate grid item spacing for the current window width:
+ * - [WindowWidthSizeClass.Compact] → [MarginOneAndHalf] (12 dp)
+ * - [WindowWidthSizeClass.Medium] → [MarginDouble] (16 dp)
+ * - [WindowWidthSizeClass.Expanded] → [MarginTreble] (24 dp)
+ */
+@Composable
+fun rememberGridSpacing(): Dp =
+  when (rememberWindowWidthClass()) {
+    WindowWidthSizeClass.Compact -> MarginOneAndHalf
+    WindowWidthSizeClass.Medium -> MarginDouble
+    else -> MarginTreble // Expanded
+  }

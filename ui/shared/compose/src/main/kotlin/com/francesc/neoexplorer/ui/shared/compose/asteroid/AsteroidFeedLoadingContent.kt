@@ -10,11 +10,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
-import com.francesc.neoexplorer.ui.shared.compose.MarginOneAndHalf
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
 import com.francesc.neoexplorer.ui.shared.compose.plus
+import com.francesc.neoexplorer.ui.shared.compose.rememberGridContentPadding
+import com.francesc.neoexplorer.ui.shared.compose.rememberGridSpacing
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
@@ -25,9 +25,9 @@ fun AsteroidFeedLoadingContent(
   LazyVerticalGrid(
     columns = GridCells.Adaptive(minSize = MinCardSize),
     modifier = modifier,
-    contentPadding = contentPadding + PaddingValues(MarginDouble),
-    verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
-    horizontalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
+    contentPadding = contentPadding + PaddingValues(rememberGridContentPadding()),
+    verticalArrangement = Arrangement.spacedBy(rememberGridSpacing()),
+    horizontalArrangement = Arrangement.spacedBy(rememberGridSpacing()),
   ) {
     item(span = { GridItemSpan(maxLineSpan) }) {
       ShimmerFeedHeader(modifier = Modifier.fillMaxWidth())

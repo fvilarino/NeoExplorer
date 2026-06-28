@@ -8,5 +8,6 @@ android {
 }
 
 dependencies {
+  api(libs.androidx.compose.material3.windowsize)
   implementation(projects.ui.shared.styles)
 }

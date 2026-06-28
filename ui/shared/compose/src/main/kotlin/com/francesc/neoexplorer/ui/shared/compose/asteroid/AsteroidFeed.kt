@@ -22,11 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
-import com.francesc.neoexplorer.ui.shared.compose.MarginOneAndHalf
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.R
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
 import com.francesc.neoexplorer.ui.shared.compose.plus
+import com.francesc.neoexplorer.ui.shared.compose.rememberGridContentPadding
+import com.francesc.neoexplorer.ui.shared.compose.rememberGridSpacing
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 val MinCardSize = 300.dp
@@ -68,13 +69,16 @@ fun AsteroidFeed(
       }
     } else {
       val state = rememberLazyGridState()
+      val gridPadding = rememberGridContentPadding()
+      val gridSpacing = rememberGridSpacing()
+
       LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = MinCardSize),
         state = state,
         modifier = Modifier.fillMaxSize(),
-        contentPadding = contentPadding + PaddingValues(MarginDouble),
-        verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
-        horizontalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
+        contentPadding = contentPadding + PaddingValues(gridPadding),
+        verticalArrangement = Arrangement.spacedBy(gridSpacing),
+        horizontalArrangement = Arrangement.spacedBy(gridSpacing),
       ) {
         item(span = { GridItemSpan(maxLineSpan) }) {
           Box(modifier = Modifier.fillMaxWidth()) { header() }

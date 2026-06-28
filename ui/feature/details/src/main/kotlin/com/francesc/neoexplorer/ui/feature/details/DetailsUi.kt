@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,7 +32,6 @@ import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.MarginQuad
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
-import com.francesc.neoexplorer.ui.shared.compose.WindowWidthClass
 import com.francesc.neoexplorer.ui.shared.compose.rememberWindowWidthClass
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 import com.slack.circuit.codegen.annotations.CircuitInject
@@ -105,7 +105,7 @@ private fun DetailsUi(
         val asteroid = state.asteroid ?: return@Scaffold
         val windowWidthClass = rememberWindowWidthClass()
 
-        if (windowWidthClass == WindowWidthClass.Expanded) {
+        if (windowWidthClass == WindowWidthSizeClass.Expanded) {
           DetailsLoadedTwoPaneContent(
             asteroid = asteroid,
             modifier = Modifier.padding(innerPadding).fillMaxSize(),
@@ -113,7 +113,7 @@ private fun DetailsUi(
         } else {
           // Compact / Medium – single column, capped at MaxContentWidth and centered
           val horizontalPadding =
-            if (windowWidthClass == WindowWidthClass.Medium) {
+            if (windowWidthClass == WindowWidthSizeClass.Medium) {
               MarginQuad
             } else {
               MarginDouble
