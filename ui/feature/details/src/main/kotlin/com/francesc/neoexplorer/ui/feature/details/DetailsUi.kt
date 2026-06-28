@@ -17,6 +17,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsErrorContent
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsLoadedSingleColumnContent
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsLoadedTwoPaneContent
@@ -132,42 +134,58 @@ private fun DetailsUi(
 
 // ── Previews ──────────────────────────────────────────────────────────────────
 
-private fun previewState() =
-  DetailsUiState(
-    loadingState = DetailsLoadingState.LOADED,
-    asteroid =
-      DetailsUiModel(
-        id = "2025-AB",
-        name = "90416 (2025 AB)",
-        isPotentiallyHazardous = true,
-        diameterMinKm = 0.18,
-        diameterMaxKm = 0.42,
-        velocityKmPerSecond = 18.4,
-        missDistanceKm = 1_230_456.0,
-        missDistanceLunar = 3.2,
-        orbitingBody = "Earth",
-        nasaJplUrl = "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=2025-AB",
-        closeApproachDate = "19 Apr 2026",
-        sizeReference = SizeReferenceObject.BURJ_KHALIFA,
+private class DetailsUiStateProvider : PreviewParameterProvider<DetailsUiState> {
+  override val values =
+    sequenceOf(
+      // Loaded
+      DetailsUiState(
+        loadingState = DetailsLoadingState.LOADED,
+        asteroid =
+          DetailsUiModel(
+            id = "2025-AB",
+            name = "90416 (2025 AB)",
+            isPotentiallyHazardous = true,
+            diameterMinKm = 0.18,
+            diameterMaxKm = 0.42,
+            velocityKmPerSecond = 18.4,
+            missDistanceKm = 1_230_456.0,
+            missDistanceLunar = 3.2,
+            orbitingBody = "Earth",
+            nasaJplUrl = "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=2025-AB",
+            closeApproachDate = "19 Apr 2026",
+            sizeReference = SizeReferenceObject.BURJ_KHALIFA,
+          ),
       ),
-  )
+      // Loading
+      DetailsUiState(loadingState = DetailsLoadingState.LOADING),
+      // Error
+      DetailsUiState(
+        loadingState = DetailsLoadingState.ERROR,
+        errorMessage = "Failed to load asteroid data. Please try again.",
+      ),
+    )
+}
 
 @PhonePreviews
 @Composable
-private fun DetailsUiPhonePreview() {
+private fun DetailsUiPhonePreview(
+  @PreviewParameter(DetailsUiStateProvider::class) state: DetailsUiState
+) {
   NeoExplorerTheme {
     Surface(color = MaterialTheme.colorScheme.background) {
-      DetailsUi(state = previewState(), modifier = Modifier.fillMaxSize())
+      DetailsUi(state = state, modifier = Modifier.fillMaxSize())
     }
   }
 }
 
 @TabletPreviews
 @Composable
-private fun DetailsUiTabletPreview() {
+private fun DetailsUiTabletPreview(
+  @PreviewParameter(DetailsUiStateProvider::class) state: DetailsUiState
+) {
   NeoExplorerTheme {
     Surface(color = MaterialTheme.colorScheme.background) {
-      DetailsUi(state = previewState(), modifier = Modifier.fillMaxSize())
+      DetailsUi(state = state, modifier = Modifier.fillMaxSize())
     }
   }
 }

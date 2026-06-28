@@ -1,22 +1,46 @@
 package com.francesc.neoexplorer.ui.feature.details.components
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.francesc.neoexplorer.ui.shared.compose.ContentContainer
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
+import com.francesc.neoexplorer.ui.shared.compose.MarginQuad
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
+import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
+import com.francesc.neoexplorer.ui.shared.compose.WindowWidthClass
+import com.francesc.neoexplorer.ui.shared.compose.rememberWindowWidthClass
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
+/**
+ * Loading skeleton for the Details screen.
+ *
+ * Branches on [WindowWidthClass] to show a shimmer layout that mirrors the real loaded content:
+ * - [WindowWidthClass.Expanded] → two-pane shimmer ([DetailsShimmerTwoPaneContent])
+ * - [WindowWidthClass.Medium] / [WindowWidthClass.Compact] → single-column shimmer
+ *   ([DetailsShimmerSingleColumnContent]) centred inside [ContentContainer]
+ */
 @Composable
 internal fun DetailsLoadingContent(modifier: Modifier = Modifier) {
-  Box(modifier = modifier, contentAlignment = Alignment.Center) {
-    CircularProgressIndicator()
+  val windowWidthClass = rememberWindowWidthClass()
+
+  if (windowWidthClass == WindowWidthClass.Expanded) {
+    DetailsShimmerTwoPaneContent(modifier = modifier)
+  } else {
+    val horizontalPadding =
+      if (windowWidthClass == WindowWidthClass.Medium) {
+        MarginQuad
+      } else {
+        MarginDouble
+      }
+    ContentContainer(modifier = modifier) {
+      DetailsShimmerSingleColumnContent(
+        horizontalPadding = horizontalPadding,
+        modifier = Modifier.fillMaxWidth(),
+      )
+    }
   }
 }
 
@@ -24,10 +48,20 @@ internal fun DetailsLoadingContent(modifier: Modifier = Modifier) {
 
 @PhonePreviews
 @Composable
-private fun DetailsLoadingContentPreview() {
+private fun DetailsLoadingContentPhonePreview() {
   NeoExplorerTheme {
     Surface(color = MaterialTheme.colorScheme.background) {
-      DetailsLoadingContent(modifier = Modifier.fillMaxWidth().padding(all = MarginDouble))
+      DetailsLoadingContent()
+    }
+  }
+}
+
+@TabletPreviews
+@Composable
+private fun DetailsLoadingContentTabletPreview() {
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      DetailsLoadingContent()
     }
   }
 }

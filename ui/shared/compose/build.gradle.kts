@@ -6,3 +6,7 @@ plugins {
 android {
   namespace = "com.francesc.neoexplorer.ui.shared.compose"
 }
+
+dependencies {
+  implementation(projects.ui.shared.styles)
+}
