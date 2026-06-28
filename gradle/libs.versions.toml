@@ -1,5 +1,8 @@
 [versions]
 agp = "9.2.1"
+androidx-datastore-version = "1.2.1"
+com-google-protobuf-version = "4.35.1"
+com-google-protobuf-gradle-plugin-version = "0.10.0"
 com-slack-circuit-version = "0.34.0"
 androidx-paging-version = "3.5.0"
 com-squareup-okhttp3-version = "5.4.0"
@@ -59,6 +62,9 @@ dev-zacsweers-metro-gradle-plugin = { module = "dev.zacsweers.metro:dev.zacsweer
 junit-junit = { module = "junit:junit", version.ref = "junit-version" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging-version" }
 androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "androidx-paging-version" }
+androidx-datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "androidx-datastore-version" }
+com-google-protobuf-protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "com-google-protobuf-version" }
+com-google-protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "com-google-protobuf-version" }
 com-squareup-okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "com-squareup-okhttp3-version" }
 com-squareup-okhttp3-okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "com-squareup-okhttp3-version" }
 com-squareup-retrofit2-converter-kotlinx-serialization = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "com-squareup-retrofit2-version" }
@@ -105,3 +111,4 @@ dev-zacsweers-metro = { id = "dev.zacsweers.metro", version.ref = "dev-zacsweers
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-gradle-plugin-version" }
 org-jetbrains-kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "org-jetbrains-kotlin-gradle-plugin-version" }
 org-jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "org-jetbrains-kotlin-gradle-plugin-version" }
+com-google-protobuf = { id = "com.google.protobuf", version.ref = "com-google-protobuf-gradle-plugin-version" }

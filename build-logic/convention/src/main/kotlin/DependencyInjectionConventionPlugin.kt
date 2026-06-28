@@ -1,4 +1,3 @@
-import com.francesc.neoexplorer.buildconvention.configureDependencyInjection
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -9,7 +8,6 @@ class DependencyInjectionConventionPlugin : Plugin<Project> {
                 apply("com.google.devtools.ksp")
                 apply("dev.zacsweers.metro")
             }
-            configureDependencyInjection()
         }
     }
 }

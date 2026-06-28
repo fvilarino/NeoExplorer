@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option java_package = "com.francesc.neoexplorer.data.preferences.impl.proto";
+option java_multiple_files = true;
+
+/**
+ * Persisted representation of the app theme preference.
+ *
+ * The default value (0) maps to AUTO so that freshly installed apps follow the
+ * system light/dark setting without any explicit write.
+ */
+enum AppThemeProto {
+  APP_THEME_PROTO_AUTO = 0;
+  APP_THEME_PROTO_LIGHT = 1;
+  APP_THEME_PROTO_DARK = 2;
+}
+
+/**
+ * Root preferences message stored in the DataStore file.
+ */
+message AppPreferencesProto {
+  AppThemeProto theme = 1;
+  bool use_dynamic_theme = 2;
+}
