@@ -27,7 +27,7 @@ protobuf {
 }
 
 dependencies {
-    implementation(libs.androidx.datastore.datastore)
+    api(libs.androidx.datastore.datastore)
     implementation(libs.com.google.protobuf.protobuf.kotlin.lite)
     implementation(projects.core.dispatcher)
     implementation(projects.data.preferences)

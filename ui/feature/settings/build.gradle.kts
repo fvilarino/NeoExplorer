@@ -11,6 +11,6 @@ android {
 ksp { arg("circuit.codegen.mode", "metro") }
 
 dependencies {
+    implementation(projects.data.preferences)
     implementation(projects.ui.shared.compose)
 }
-

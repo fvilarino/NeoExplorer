@@ -45,7 +45,7 @@ internal fun AsteroidFeedHeader(
 
 internal fun formatDate(date: LocalDate): String {
     val monthName = date.month.name.lowercase().replaceFirstChar { it.uppercase() }
-    return "${date.dayOfMonth} $monthName ${date.year}"
+    return "${date.day} $monthName ${date.year}"
 }
 
 @WidgetPreviews
