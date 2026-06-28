@@ -5,5 +5,10 @@
     <string name="temporal_explorer_start_date">Start date</string>
     <string name="temporal_explorer_end_date">End date</string>
     <string name="temporal_explorer_search">Search</string>
+    <string name="temporal_explorer_cancel">Cancel</string>
+    <string name="temporal_explorer_select_date_range">Select date range</string>
+    <string name="temporal_explorer_change_date_range">Change date range</string>
+    <string name="temporal_explorer_range_too_long">Date range cannot exceed 7 days</string>
+    <string name="temporal_explorer_hazardous_objects">%1$d Potentially Hazardous Objects</string>
+    <string name="temporal_explorer_date_range_header">%1$s – %2$s</string>
 </resources>
-

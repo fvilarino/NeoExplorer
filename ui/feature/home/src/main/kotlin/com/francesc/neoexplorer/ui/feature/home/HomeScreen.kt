@@ -29,6 +29,7 @@ import com.slack.circuit.foundation.Circuit
 import com.slack.circuit.foundation.CircuitCompositionLocals
 import com.slack.circuit.foundation.NavigableCircuitContent
 import com.slack.circuit.foundation.rememberCircuitNavigator
+import com.slack.circuit.overlay.ContentWithOverlays
 import com.slack.circuit.runtime.screen.Screen
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNot
@@ -110,11 +111,13 @@ fun HomeScreen(
         }
       },
     ) {
-      NavigableCircuitContent(
-        navigator = navigator,
-        backStack = backStack,
-        modifier = Modifier.fillMaxSize(),
-      )
+      ContentWithOverlays {
+        NavigableCircuitContent(
+          navigator = navigator,
+          backStack = backStack,
+          modifier = Modifier.fillMaxSize(),
+        )
+      }
     }
   }
 }

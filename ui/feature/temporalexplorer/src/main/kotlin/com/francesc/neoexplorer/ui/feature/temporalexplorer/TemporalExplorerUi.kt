@@ -1,42 +1,89 @@
 package com.francesc.neoexplorer.ui.feature.temporalexplorer
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerFeedHeader
+import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerIdleContent
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerScreen
+import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerTopBar
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeed
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeedErrorContent
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeedLoadingContent
 import com.slack.circuit.codegen.annotations.CircuitInject
 import dev.zacsweers.metro.AppScope
 
 @CircuitInject(TemporalExplorerScreen::class, AppScope::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TemporalExplorerUi(
   state: TemporalExplorerUiState,
   modifier: Modifier = Modifier,
 ) {
-  Column(
+  Scaffold(
     modifier = modifier,
-    horizontalAlignment = Alignment.CenterHorizontally,
-    verticalArrangement = Arrangement.Center,
-  ) {
-    Text(
-      text = stringResource(R.string.temporal_explorer),
-      style = MaterialTheme.typography.headlineMedium,
-    )
-    Spacer(modifier = Modifier.height(8.dp))
-    Text(
-      text = stringResource(R.string.temporal_explorer_description),
-      style = MaterialTheme.typography.bodyMedium,
-      textAlign = TextAlign.Center,
-      color = MaterialTheme.colorScheme.onSurfaceVariant,
-    )
+    topBar = {
+      TemporalExplorerTopBar(
+        isLoaded = state.loadingState == TemporalExplorerLoadingState.LOADED,
+        onSelectDateClick = { state.eventSink(TemporalExplorerEvent.ShowDatePicker) },
+        modifier = Modifier.fillMaxWidth(),
+      )
+    },
+  ) { innerPadding ->
+    Crossfade(
+      targetState = state.loadingState,
+      label = "temporalExplorerState",
+    ) { loadingState ->
+      when (loadingState) {
+        TemporalExplorerLoadingState.IDLE ->
+          TemporalExplorerIdleContent(
+            onSelectDateClick = { state.eventSink(TemporalExplorerEvent.ShowDatePicker) },
+            modifier = Modifier.fillMaxSize().padding(innerPadding),
+          )
+
+        TemporalExplorerLoadingState.LOADING ->
+          AsteroidFeedLoadingContent(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = innerPadding,
+          )
+
+        TemporalExplorerLoadingState.LOADED ->
+          AsteroidFeed(
+            asteroids = state.asteroids,
+            onAsteroidClick = { state.eventSink(TemporalExplorerEvent.AsteroidClicked(it)) },
+            header = {
+              val start = state.startDate
+              val end = state.endDate
+              if (start != null && end != null) {
+                TemporalExplorerFeedHeader(
+                  startDate = start,
+                  endDate = end,
+                  hazardousCount = state.hazardousCount,
+                  modifier = Modifier.fillMaxWidth(),
+                )
+              }
+            },
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = innerPadding,
+          )
+
+        TemporalExplorerLoadingState.ERROR ->
+          AsteroidFeedErrorContent(
+            message =
+              state.errorMessage
+                ?: stringResource(
+                  com.francesc.neoexplorer.ui.shared.compose.R.string.something_went_wrong
+                ),
+            onRetry = { state.eventSink(TemporalExplorerEvent.Retry) },
+            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+          )
+      }
+    }
   }
 }

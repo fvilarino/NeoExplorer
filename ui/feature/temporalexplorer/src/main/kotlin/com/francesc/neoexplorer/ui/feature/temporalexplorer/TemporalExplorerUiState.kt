@@ -1,6 +1,7 @@
 package com.francesc.neoexplorer.ui.feature.temporalexplorer
 
 import androidx.compose.runtime.Stable
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
 import com.slack.circuit.runtime.CircuitUiState
 import kotlinx.datetime.LocalDate
 
@@ -12,11 +13,11 @@ enum class TemporalExplorerLoadingState {
 }
 
 sealed interface TemporalExplorerEvent {
-  data class SetStartDate(val date: LocalDate) : TemporalExplorerEvent
+  data object ShowDatePicker : TemporalExplorerEvent
 
-  data class SetEndDate(val date: LocalDate) : TemporalExplorerEvent
+  data object Retry : TemporalExplorerEvent
 
-  data object Search : TemporalExplorerEvent
+  data class AsteroidClicked(val asteroidId: String) : TemporalExplorerEvent
 }
 
 @Stable
@@ -24,6 +25,8 @@ data class TemporalExplorerUiState(
   val loadingState: TemporalExplorerLoadingState = TemporalExplorerLoadingState.IDLE,
   val startDate: LocalDate? = null,
   val endDate: LocalDate? = null,
+  val asteroids: List<AsteroidUiModel> = emptyList(),
+  val hazardousCount: Int = 0,
   val errorMessage: String? = null,
   val eventSink: (TemporalExplorerEvent) -> Unit = {},
 ) : CircuitUiState

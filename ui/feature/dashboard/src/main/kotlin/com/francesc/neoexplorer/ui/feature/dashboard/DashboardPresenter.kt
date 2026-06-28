@@ -120,7 +120,7 @@ class DashboardPresenter(
             dateFormatter.format(it)
           }
           .orEmpty(),
-      threatLevel = ThreatLevel.from(lunarDist),
+      threatLevel = ThreatLevel.from(lunarDist.value),
     )
   }
 

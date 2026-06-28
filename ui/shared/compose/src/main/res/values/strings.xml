@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Asteroid card -->
+    <string name="potentially_hazardous_abbreviation">PHO</string>
+    <string name="asteroid_miss_distance">%1$s LD · %2$s</string>
+    <string name="asteroid_velocity">%1$s km/s</string>
+    <string name="accessibility_potentially_hazardous">Potentially hazardous</string>
+    <string name="accessibility_miss_distance">Miss distance</string>
+    <string name="accessibility_velocity">Relative velocity</string>
+    <string name="accessibility_diameter">Estimated diameter</string>
+
+    <!-- Error / retry -->
+    <string name="retry">Retry</string>
+    <string name="something_went_wrong">Something went wrong</string>
+
+    <!-- Feed empty state -->
+    <string name="no_asteroids_in_range">No close approaches in this date range</string>
+</resources>
+
