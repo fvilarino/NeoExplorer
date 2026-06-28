@@ -62,6 +62,7 @@ com-jakewharton-timber = { module = "com.jakewharton.timber:timber", version.ref
 dev-zacsweers-metro-gradle-plugin = { module = "dev.zacsweers.metro:dev.zacsweers.metro.gradle.plugin", version.ref = "dev-zacsweers-metro-gradle-plugin-version" }
 junit-junit = { module = "junit:junit", version.ref = "junit-version" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "androidx-paging-version" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "androidx-paging-version" }
 androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "androidx-paging-version" }
 androidx-datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "androidx-datastore-version" }
 com-google-protobuf-protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "com-google-protobuf-version" }

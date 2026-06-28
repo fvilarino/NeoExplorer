@@ -51,6 +51,8 @@ include(":data:preferences")
 
 include(":data:preferences:impl")
 
+include(":ui:feature:browse")
+
 include(":ui:feature:dashboard")
 
 include(":ui:feature:details")

@@ -36,6 +36,7 @@ dependencies {
   implementation(projects.core.formatter.impl)
   implementation(projects.data.neo.impl)
   implementation(projects.data.preferences.impl)
+  implementation(projects.ui.feature.browse)
   implementation(projects.ui.feature.dashboard)
   implementation(projects.ui.feature.details)
   implementation(projects.ui.feature.home)

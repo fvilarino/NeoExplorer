@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import com.francesc.neoexplorer.ui.feature.browse.components.BrowseScreen
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
 import com.francesc.neoexplorer.ui.feature.settings.components.SettingsScreen
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerScreen
@@ -45,6 +47,12 @@ internal enum class HomeDestinations(
     icon = Icons.Default.Home,
     contentDescription = R.string.nav_dashboard,
     screen = DashboardScreen,
+  ),
+  Browse(
+    label = R.string.nav_browse,
+    icon = Icons.Default.Public,
+    contentDescription = R.string.nav_browse,
+    screen = BrowseScreen,
   ),
   TemporalExplorer(
     label = R.string.nav_temporal_explorer,

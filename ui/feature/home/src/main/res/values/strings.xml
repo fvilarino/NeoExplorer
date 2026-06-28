@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_browse">Browse</string>
     <string name="nav_temporal_explorer">Explore</string>
     <string name="nav_settings">Settings</string>
 </resources>

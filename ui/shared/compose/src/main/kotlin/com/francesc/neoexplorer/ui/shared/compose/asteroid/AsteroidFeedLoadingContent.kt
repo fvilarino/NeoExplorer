@@ -20,6 +20,7 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 @Composable
 fun AsteroidFeedLoadingContent(
   modifier: Modifier = Modifier,
+  displayHeader: Boolean = true,
   contentPadding: PaddingValues = PaddingValues(),
 ) {
   LazyVerticalGrid(
@@ -29,8 +30,10 @@ fun AsteroidFeedLoadingContent(
     verticalArrangement = Arrangement.spacedBy(rememberGridSpacing()),
     horizontalArrangement = Arrangement.spacedBy(rememberGridSpacing()),
   ) {
-    item(span = { GridItemSpan(maxLineSpan) }) {
-      ShimmerFeedHeader(modifier = Modifier.fillMaxWidth())
+    if (displayHeader) {
+      item(span = { GridItemSpan(maxLineSpan) }) {
+        ShimmerFeedHeader(modifier = Modifier.fillMaxWidth())
+      }
     }
     items(6) {
       ShimmerAsteroidCard(modifier = Modifier.fillMaxWidth())
