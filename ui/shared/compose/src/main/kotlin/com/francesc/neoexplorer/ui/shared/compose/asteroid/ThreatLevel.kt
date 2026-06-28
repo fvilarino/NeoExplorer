@@ -6,10 +6,11 @@ enum class ThreatLevel {
   DANGER;
 
   companion object {
-    fun from(missDistanceLunar: Double): ThreatLevel =
+    fun from(missDistance: Distance): ThreatLevel =
       when {
-        missDistanceLunar < 5.0 -> DANGER
-        missDistanceLunar <= 15.0 -> CAUTION
+        !missDistance.isKnown -> SAFE
+        missDistance.inLunarDistances < 5.0 -> DANGER
+        missDistance.inLunarDistances <= 15.0 -> CAUTION
         else -> SAFE
       }
   }

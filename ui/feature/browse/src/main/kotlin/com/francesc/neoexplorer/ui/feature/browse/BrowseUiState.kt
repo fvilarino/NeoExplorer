@@ -2,11 +2,12 @@ package com.francesc.neoexplorer.ui.feature.browse
 
 import androidx.compose.runtime.Stable
 import androidx.paging.compose.LazyPagingItems
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
 import com.slack.circuit.runtime.CircuitUiState
 
 sealed interface BrowseEvent {
-  data class AsteroidClicked(val asteroidId: String) : BrowseEvent
+  data class AsteroidClicked(val asteroidId: AsteroidId) : BrowseEvent
 }
 
 /**

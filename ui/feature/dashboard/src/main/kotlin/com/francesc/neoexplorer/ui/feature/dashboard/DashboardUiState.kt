@@ -2,6 +2,7 @@ package com.francesc.neoexplorer.ui.feature.dashboard
 
 import androidx.compose.runtime.Stable
 import com.francesc.neoexplorer.ui.feature.dashboard.components.AsteroidUiModel
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
 import com.slack.circuit.runtime.CircuitUiState
 import kotlinx.datetime.LocalDate
 
@@ -21,7 +22,7 @@ sealed interface DashboardEvent {
 
   data class SetSortOrder(val sortOrder: SortOrder) : DashboardEvent
 
-  data class AsteroidClicked(val asteroidId: String) : DashboardEvent
+  data class AsteroidClicked(val asteroidId: AsteroidId) : DashboardEvent
 }
 
 @Stable

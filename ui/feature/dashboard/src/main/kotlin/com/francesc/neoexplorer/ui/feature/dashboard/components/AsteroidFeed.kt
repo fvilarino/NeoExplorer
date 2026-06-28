@@ -11,6 +11,9 @@ import com.francesc.neoexplorer.ui.feature.dashboard.R
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeed as SharedAsteroidFeed
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
@@ -22,7 +25,7 @@ fun AsteroidFeed(
   asteroids: List<AsteroidUiModel>,
   date: LocalDate,
   hazardousCount: Int,
-  onAsteroidClick: (String) -> Unit,
+  onAsteroidClick: (AsteroidId) -> Unit,
   modifier: Modifier = Modifier,
   contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -51,13 +54,12 @@ private fun AsteroidFeedPreview() {
       AsteroidFeed(
         listOf(
           AsteroidUiModel(
-            id = "2023-CA",
+            id = AsteroidId("2023-CA"),
             name = "(2023 CA)",
             absoluteMagnitudeH = 22.3,
-            missDistanceLunar = 0.045,
-            missDistanceKm = 2_345_678.0,
+            missDistance = Distance.km(2_345_678.0),
             isPotentiallyHazardous = true,
-            velocityKmPerSecond = 15.1,
+            velocity = Velocity(15.1),
             estimatedDiameterMaxKm = 0.31,
             closeApproachDate = "19 Apr 2026",
             threatLevel = ThreatLevel.CAUTION,

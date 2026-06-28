@@ -55,11 +55,22 @@ private val ThreatLevel.color: Color
       ThreatLevel.DANGER -> Color(0xFFF44336)
     }
 
-private fun formatDistanceKm(km: Double): String =
-  when {
+private fun formatDistanceKm(distance: Distance): String {
+  val km = distance.inKilometers
+  return when {
+    !distance.isKnown -> "–"
     km >= 1_000_000.0 -> "${"%.1f".format(km / 1_000_000.0)} M km"
     else -> "${"%.0f".format(km / 1_000.0)} K km"
   }
+}
+
+/** Returns the numeric part of a lunar-distance value, or "–" if unknown. Used as %1$s arg. */
+private fun formatLunarDistanceArg(distance: Distance): String =
+  if (distance.isKnown) "%.1f".format(distance.inLunarDistances) else "–"
+
+/** Returns the numeric part of a velocity value, or "–" if unknown. Used as %1$s arg. */
+private fun formatVelocityArg(v: Velocity): String =
+  if (v.isKnown) "%.1f".format(v.kmPerSecond) else "–"
 
 private fun formatDiameterM(maxKm: Double): String {
   val meters = maxKm * 1_000.0
@@ -106,8 +117,8 @@ fun AsteroidCard(
           label =
             stringResource(
               R.string.asteroid_miss_distance,
-              "%.1f".format(asteroid.missDistanceLunar),
-              formatDistanceKm(asteroid.missDistanceKm),
+              formatLunarDistanceArg(asteroid.missDistance),
+              formatDistanceKm(asteroid.missDistance),
             ),
         )
         Spacer(modifier = Modifier.height(MarginHalf))
@@ -121,7 +132,7 @@ fun AsteroidCard(
             label =
               stringResource(
                 R.string.asteroid_velocity,
-                "%.1f".format(asteroid.velocityKmPerSecond),
+                formatVelocityArg(asteroid.velocity),
               ),
           )
           StatItem(
@@ -177,13 +188,12 @@ private fun AsteroidCardPreview() {
         AsteroidCard(
           asteroid =
             AsteroidUiModel(
-              id = "2025-AB",
+              id = AsteroidId("2025-AB"),
               name = "90416 (2025 AB)",
               absoluteMagnitudeH = 22.5,
-              missDistanceLunar = 3.2,
-              missDistanceKm = 1_230_456.0,
+              missDistance = Distance.km(1_230_456.0),
               isPotentiallyHazardous = true,
-              velocityKmPerSecond = 18.4,
+              velocity = Velocity(18.4),
               estimatedDiameterMaxKm = 0.42,
               closeApproachDate = "19 Apr 2026",
               threatLevel = ThreatLevel.DANGER,

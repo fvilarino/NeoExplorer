@@ -8,15 +8,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
-import com.francesc.neoexplorer.data.neo.model.LunarDistances
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
 import com.francesc.neoexplorer.data.neo.model.NeoFeed
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.DateRangeOverlay
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.DateRangeResult
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerScreen
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.navigation.NavigationBroadcaster
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.overlay.LocalOverlayHost
@@ -116,19 +118,19 @@ class TemporalExplorerPresenter(
   private fun NearEarthObject.toUiModel(feedDate: LocalDate): AsteroidUiModel {
     val missDistance =
       closeApproachData.find { it.closeApproachDate == feedDate } ?: closeApproachData.firstOrNull()
-    val lunarDist = missDistance?.missDistanceLunar ?: LunarDistances(0.0)
+    val dist = missDistance?.missDistanceKm?.value?.let { Distance.km(it) } ?: Distance.UNKNOWN
     return AsteroidUiModel(
-      id = id.value,
+      id = AsteroidId(id.value),
       name = name,
       absoluteMagnitudeH = absoluteMagnitudeH,
-      missDistanceLunar = lunarDist.value,
-      missDistanceKm = missDistance?.missDistanceKm?.value ?: 0.0,
+      missDistance = dist,
       isPotentiallyHazardous = isPotentiallyHazardousAsteroid,
-      velocityKmPerSecond = missDistance?.relativeVelocityKmPerSecond?.value ?: 0.0,
+      velocity =
+        missDistance?.relativeVelocityKmPerSecond?.value?.let(::Velocity) ?: Velocity.UNKNOWN,
       estimatedDiameterMaxKm = estimatedDiameter.maxKm.value,
       closeApproachDate =
         missDistance?.closeApproachDate?.let { dateFormatter.format(it) }.orEmpty(),
-      threatLevel = ThreatLevel.from(lunarDist.value),
+      threatLevel = ThreatLevel.from(dist),
     )
   }
 

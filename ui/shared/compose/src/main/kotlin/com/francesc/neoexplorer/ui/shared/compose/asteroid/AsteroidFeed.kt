@@ -35,7 +35,7 @@ val MinCardSize = 300.dp
 @Composable
 fun AsteroidFeed(
   asteroids: List<AsteroidUiModel>,
-  onAsteroidClick: (String) -> Unit,
+  onAsteroidClick: (AsteroidId) -> Unit,
   header: @Composable () -> Unit,
   modifier: Modifier = Modifier,
   contentPadding: PaddingValues = PaddingValues(),
@@ -105,13 +105,12 @@ private fun AsteroidFeedPreview() {
         asteroids =
           listOf(
             AsteroidUiModel(
-              id = "2023-CA",
+              id = AsteroidId("2023-CA"),
               name = "(2023 CA)",
               absoluteMagnitudeH = 22.3,
-              missDistanceLunar = 0.045,
-              missDistanceKm = 2_345_678.0,
+              missDistance = Distance.km(2_345_678.0),
               isPotentiallyHazardous = true,
-              velocityKmPerSecond = 15.1,
+              velocity = Velocity(15.1),
               estimatedDiameterMaxKm = 0.31,
               closeApproachDate = "19 Apr 2026",
               threatLevel = ThreatLevel.CAUTION,

@@ -32,6 +32,9 @@ import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.MarginQuad
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.compose.rememberWindowWidthClass
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 import com.slack.circuit.codegen.annotations.CircuitInject
@@ -142,14 +145,13 @@ private class DetailsUiStateProvider : PreviewParameterProvider<DetailsUiState> 
         loadingState = DetailsLoadingState.LOADED,
         asteroid =
           DetailsUiModel(
-            id = "2025-AB",
+            id = AsteroidId("2025-AB"),
             name = "90416 (2025 AB)",
             isPotentiallyHazardous = true,
             diameterMinKm = 0.18,
             diameterMaxKm = 0.42,
-            velocityKmPerSecond = 18.4,
-            missDistanceKm = 1_230_456.0,
-            missDistanceLunar = 3.2,
+            velocity = Velocity(18.4),
+            missDistance = Distance.km(1_230_456.0),
             orbitingBody = "Earth",
             nasaJplUrl = "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=2025-AB",
             closeApproachDate = "19 Apr 2026",

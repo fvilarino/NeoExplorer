@@ -9,11 +9,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
-import com.francesc.neoexplorer.data.neo.model.AsteroidId
+import com.francesc.neoexplorer.data.neo.model.AsteroidId as DataAsteroidId
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsUiModel
 import com.francesc.neoexplorer.ui.feature.details.components.SizeReferenceObject
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
@@ -42,7 +45,7 @@ constructor(
       loadingState = DetailsLoadingState.LOADING
       errorMessage = null
       neoRepository
-        .lookupAsteroid(AsteroidId(screen.asteroidId))
+        .lookupAsteroid(DataAsteroidId(screen.asteroidId.value))
         .fold(
           onSuccess = { neo ->
             asteroid = neo.toUiModel()
@@ -72,14 +75,13 @@ constructor(
     val approach = closeApproachData.firstOrNull()
     val diameterMaxKm = estimatedDiameter.maxKm.value
     return DetailsUiModel(
-      id = id.value,
+      id = AsteroidId(id.value),
       name = name,
       isPotentiallyHazardous = isPotentiallyHazardousAsteroid,
       diameterMinKm = estimatedDiameter.minKm.value,
       diameterMaxKm = diameterMaxKm,
-      velocityKmPerSecond = approach?.relativeVelocityKmPerSecond?.value ?: 0.0,
-      missDistanceKm = approach?.missDistanceKm?.value ?: 0.0,
-      missDistanceLunar = approach?.missDistanceLunar?.value ?: 0.0,
+      velocity = approach?.relativeVelocityKmPerSecond?.value?.let(::Velocity) ?: Velocity.UNKNOWN,
+      missDistance = approach?.missDistanceKm?.value?.let { Distance.km(it) } ?: Distance.UNKNOWN,
       orbitingBody = approach?.orbitingBody ?: "—",
       nasaJplUrl = nasaJplUrl.value,
       closeApproachDate = approach?.closeApproachDate?.let { dateFormatter.format(it) }.orEmpty(),

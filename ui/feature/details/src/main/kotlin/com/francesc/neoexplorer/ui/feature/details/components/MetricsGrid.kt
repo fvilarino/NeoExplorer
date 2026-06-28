@@ -16,6 +16,9 @@ import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.MarginSingle
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
 import com.francesc.neoexplorer.ui.shared.compose.WidgetPreviews
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 private data class MetricItem(
@@ -42,8 +45,12 @@ internal fun MetricsGrid(
       ),
       MetricItem(
         label = stringResource(R.string.metric_velocity),
-        value = "${"%.2f".format(asteroid.velocityKmPerSecond)} km/s",
-        subValue = "${"%.0f".format(asteroid.velocityKmPerHour)} km/h",
+        value =
+          if (asteroid.velocity.isKnown) "${"%.2f".format(asteroid.velocity.kmPerSecond)} km/s"
+          else "–",
+        subValue =
+          if (asteroid.velocity.isKnown) "${"%.0f".format(asteroid.velocityKmPerHour)} km/h"
+          else null,
       ),
       MetricItem(
         label = stringResource(R.string.metric_orbiting_body),
@@ -51,11 +58,14 @@ internal fun MetricsGrid(
       ),
       MetricItem(
         label = stringResource(R.string.metric_miss_distance_km),
-        value = formatDistanceKm(asteroid.missDistanceKm),
+        value = formatDistanceKm(asteroid.missDistance),
       ),
       MetricItem(
         label = stringResource(R.string.metric_miss_distance_lunar),
-        value = "${"%.2f".format(asteroid.missDistanceLunar)} LD",
+        value =
+          if (asteroid.missDistance.isKnown)
+            "${"%.2f".format(asteroid.missDistance.inLunarDistances)} LD"
+          else "–",
       ),
     )
 
@@ -116,14 +126,13 @@ private fun MetricsGridTabletPreview() {
 
 private fun previewAsteroid() =
   DetailsUiModel(
-    id = "2025-AB",
+    id = AsteroidId("2025-AB"),
     name = "90416 (2025 AB)",
     isPotentiallyHazardous = true,
     diameterMinKm = 0.18,
     diameterMaxKm = 0.42,
-    velocityKmPerSecond = 18.4,
-    missDistanceKm = 1_230_456.0,
-    missDistanceLunar = 3.2,
+    velocity = Velocity(18.4),
+    missDistance = Distance.km(1_230_456.0),
     orbitingBody = "Earth",
     nasaJplUrl = "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=2025-AB",
     closeApproachDate = "19 Apr 2026",

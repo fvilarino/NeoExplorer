@@ -28,10 +28,13 @@ import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidCard
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeedErrorContent
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.MinCardSize
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.ShimmerAsteroidCard
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.francesc.neoexplorer.ui.shared.compose.rememberGridContentPadding
 import com.francesc.neoexplorer.ui.shared.compose.rememberGridSpacing
@@ -41,7 +44,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun BrowseGrid(
   asteroids: LazyPagingItems<AsteroidUiModel>,
-  onAsteroidClick: (String) -> Unit,
+  onAsteroidClick: (AsteroidId) -> Unit,
   modifier: Modifier = Modifier,
   contentPadding: PaddingValues = PaddingValues(),
 ) {
@@ -107,49 +110,45 @@ internal fun BrowseGrid(
 private val previewAsteroids =
   listOf(
     AsteroidUiModel(
-      id = "3542519",
+      id = AsteroidId("3542519"),
       name = "(2010 PK9)",
       absoluteMagnitudeH = 21.6,
-      missDistanceLunar = 2.3,
-      missDistanceKm = 883_456.0,
+      missDistance = Distance.km(883_456.0),
       isPotentiallyHazardous = true,
-      velocityKmPerSecond = 22.1,
+      velocity = Velocity(22.1),
       estimatedDiameterMaxKm = 0.51,
       closeApproachDate = "28 Jun 2026",
       threatLevel = ThreatLevel.DANGER,
     ),
     AsteroidUiModel(
-      id = "2465633",
+      id = AsteroidId("2465633"),
       name = "465633 (2009 JR5)",
       absoluteMagnitudeH = 19.3,
-      missDistanceLunar = 8.7,
-      missDistanceKm = 3_345_678.0,
+      missDistance = Distance.km(3_345_678.0),
       isPotentiallyHazardous = false,
-      velocityKmPerSecond = 14.3,
+      velocity = Velocity(14.3),
       estimatedDiameterMaxKm = 1.02,
       closeApproachDate = "29 Jun 2026",
       threatLevel = ThreatLevel.CAUTION,
     ),
     AsteroidUiModel(
-      id = "2137924",
+      id = AsteroidId("2137924"),
       name = "137924 (2000 BD19)",
       absoluteMagnitudeH = 17.8,
-      missDistanceLunar = 42.0,
-      missDistanceKm = 16_120_000.0,
+      missDistance = Distance.km(16_120_000.0),
       isPotentiallyHazardous = false,
-      velocityKmPerSecond = 9.8,
+      velocity = Velocity(9.8),
       estimatedDiameterMaxKm = 1.88,
       closeApproachDate = "30 Jun 2026",
       threatLevel = ThreatLevel.SAFE,
     ),
     AsteroidUiModel(
-      id = "3702915",
+      id = AsteroidId("3702915"),
       name = "(2015 DP155)",
       absoluteMagnitudeH = 24.1,
-      missDistanceLunar = 11.4,
-      missDistanceKm = 4_378_900.0,
+      missDistance = Distance.km(4_378_900.0),
       isPotentiallyHazardous = false,
-      velocityKmPerSecond = 6.2,
+      velocity = Velocity(6.2),
       estimatedDiameterMaxKm = 0.18,
       closeApproachDate = "1 Jul 2026",
       threatLevel = ThreatLevel.CAUTION,
