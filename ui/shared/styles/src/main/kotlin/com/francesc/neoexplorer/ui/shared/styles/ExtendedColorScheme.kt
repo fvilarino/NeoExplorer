@@ -7,18 +7,11 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-@Immutable
-data class ExtendedColorScheme(
-    val amber: Color,
-)
+@Immutable data class ExtendedColorScheme(val amber: Color)
 
 val LocalExtendedColorScheme = staticCompositionLocalOf {
-    ExtendedColorScheme(
-        amber = Color.Unspecified,
-    )
+  ExtendedColorScheme(amber = Color.Unspecified)
 }
 
 val MaterialTheme.extendedColorScheme: ExtendedColorScheme
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalExtendedColorScheme.current
+  @Composable @ReadOnlyComposable get() = LocalExtendedColorScheme.current

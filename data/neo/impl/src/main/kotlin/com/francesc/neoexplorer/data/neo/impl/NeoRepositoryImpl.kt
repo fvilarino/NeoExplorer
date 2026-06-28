@@ -20,31 +20,35 @@ import kotlinx.datetime.LocalDate
 private const val PAGE_SIZE = 20
 
 /**
- * Like [runCatching] but rethrows [CancellationException] to preserve structured concurrency.
- * Only non-cancellation exceptions are captured as [Result.failure].
+ * Like [runCatching] but rethrows [CancellationException] to preserve structured concurrency. Only
+ * non-cancellation exceptions are captured as [Result.failure].
  */
 private inline fun <T> runCatchingNotCancelled(block: () -> T): Result<T> =
-    runCatching(block).onFailure { if (it is CancellationException) throw it }
+  runCatching(block).onFailure { if (it is CancellationException) throw it }
 
 @Inject
 @ContributesBinding(AppScope::class)
-class NeoRepositoryImpl(
-    private val dataSource: NeoDataSource,
-) : NeoRepository {
-    override suspend fun getFeed(startDate: LocalDate, endDate: LocalDate?): Result<NeoFeed> =
-        runCatchingNotCancelled {
-            dataSource.getFeed(
-                startDate = startDate.toString(),
-                endDate = endDate?.toString(),
-            ).toDomain()
-        }
+class NeoRepositoryImpl(private val dataSource: NeoDataSource) : NeoRepository {
+  override suspend fun getFeed(startDate: LocalDate, endDate: LocalDate?): Result<NeoFeed> =
+    runCatchingNotCancelled {
+      dataSource
+        .getFeed(
+          startDate = startDate.toString(),
+          endDate = endDate?.toString(),
+        )
+        .toDomain()
+    }
 
-    override suspend fun lookupAsteroid(asteroidId: AsteroidId): Result<NearEarthObject> =
-        runCatchingNotCancelled { dataSource.lookupAsteroid(asteroidId.value).toDomain() }
+  override suspend fun lookupAsteroid(asteroidId: AsteroidId): Result<NearEarthObject> =
+    runCatchingNotCancelled {
+      dataSource.lookupAsteroid(asteroidId.value).toDomain()
+    }
 
-    override fun browse(): Flow<PagingData<NearEarthObject>> =
-        Pager(
-            config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false),
-            pagingSourceFactory = { NeosPagingSource(dataSource) },
-        ).flow.map { pagingData -> pagingData.map { it.toDomain() } }
+  override fun browse(): Flow<PagingData<NearEarthObject>> =
+    Pager(
+        config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false),
+        pagingSourceFactory = { NeosPagingSource(dataSource) },
+      )
+      .flow
+      .map { pagingData -> pagingData.map { it.toDomain() } }
 }

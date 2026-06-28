@@ -8,11 +8,10 @@ import dev.zacsweers.metro.SingleIn
 
 @ContributesTo(AppScope::class)
 interface DispatcherProviderGraph {
-    val dispatcherProvider: DispatcherProvider
+  val dispatcherProvider: DispatcherProvider
 
-    @Provides
-    @SingleIn(AppScope::class)
-    @Suppress("InjectDispatcher")
-    fun provideDispatcherProvider(): DispatcherProvider = DispatcherProviderImpl
+  @Provides
+  @SingleIn(AppScope::class)
+  @Suppress("InjectDispatcher")
+  fun provideDispatcherProvider(): DispatcherProvider = DispatcherProviderImpl
 }
-

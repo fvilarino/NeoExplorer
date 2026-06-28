@@ -11,10 +11,10 @@ import kotlin.reflect.KClass
 @DependencyGraph(AppScope::class)
 interface ApplicationGraph {
 
-    val activityProviders: Map<KClass<out Activity>, Provider<Activity>>
+  val activityProviders: Map<KClass<out Activity>, Provider<Activity>>
 
-    @DependencyGraph.Factory
-    fun interface Factory {
-        fun create(@Provides application: Application): ApplicationGraph
-    }
+  @DependencyGraph.Factory
+  fun interface Factory {
+    fun create(@Provides application: Application): ApplicationGraph
+  }
 }

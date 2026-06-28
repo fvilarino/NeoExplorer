@@ -48,196 +48,196 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 private val ThreatBarWidth = 4.dp
 
 private val ThreatLevel.color: Color
-    get() = when (this) {
-        ThreatLevel.SAFE -> Color(0xFF4CAF50)
-        ThreatLevel.CAUTION -> Color(0xFFFFA000)
-        ThreatLevel.DANGER -> Color(0xFFF44336)
+  get() =
+    when (this) {
+      ThreatLevel.SAFE -> Color(0xFF4CAF50)
+      ThreatLevel.CAUTION -> Color(0xFFFFA000)
+      ThreatLevel.DANGER -> Color(0xFFF44336)
     }
 
-private fun formatDistanceKm(km: Double): String = when {
+private fun formatDistanceKm(km: Double): String =
+  when {
     km >= 1_000_000.0 -> "${"%.1f".format(km / 1_000_000.0)} M km"
     else -> "${"%.0f".format(km / 1_000.0)} K km"
-}
+  }
 
 private fun formatDiameterM(maxKm: Double): String {
-    val meters = maxKm * 1_000.0
-    return "~${"%.0f".format(meters)} m"
+  val meters = maxKm * 1_000.0
+  return "~${"%.0f".format(meters)} m"
 }
 
 @Composable
 fun AsteroidCard(
-    asteroid: AsteroidUiModel,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
+  asteroid: AsteroidUiModel,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(CardCornerSizeLarge),
-        elevation = CardDefaults.cardElevation(defaultElevation = CardElevation),
-        onClick = onClick,
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min)
-        ) {
-            // Threat-level accent bar
-            Box(
-                modifier = Modifier
-                    .width(ThreatBarWidth)
-                    .fillMaxHeight()
-                    .background(asteroid.threatLevel.color),
-            )
+  Card(
+    modifier = modifier,
+    shape = RoundedCornerShape(CardCornerSizeLarge),
+    elevation = CardDefaults.cardElevation(defaultElevation = CardElevation),
+    onClick = onClick,
+  ) {
+    Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min)) {
+      // Threat-level accent bar
+      Box(
+        modifier =
+          Modifier.width(ThreatBarWidth).fillMaxHeight().background(asteroid.threatLevel.color)
+      )
 
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = MarginDouble, vertical = MarginOneAndHalf),
-            ) {
-                // Header: name + hazardous badge
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = asteroid.name,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.weight(1f),
-                    )
-                    if (asteroid.isPotentiallyHazardous) {
-                        Spacer(modifier = Modifier.width(MarginSingle))
-                        HazardousBadge()
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(MarginSingle))
-
-                // Distance stat
-                StatItem(
-                    icon = Icons.Filled.Explore,
-                    contentDescription = stringResource(R.string.accessibility_miss_distance),
-                    label = stringResource(
-                        R.string.asteroid_miss_distance,
-                        "%.1f".format(asteroid.missDistanceLunar),
-                        formatDistanceKm(asteroid.missDistanceKm),
-                    ),
-                )
-
-                Spacer(modifier = Modifier.height(MarginHalf))
-
-                // Velocity + diameter stats
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    StatItem(
-                        icon = Icons.Filled.Speed,
-                        contentDescription = stringResource(R.string.accessibility_velocity),
-                        label = stringResource(
-                            R.string.asteroid_velocity,
-                            "%.1f".format(asteroid.velocityKmPerSecond),
-                        ),
-                    )
-                    StatItem(
-                        icon = Icons.Filled.TripOrigin,
-                        contentDescription = stringResource(R.string.accessibility_diameter),
-                        label = formatDiameterM(asteroid.estimatedDiameterMaxKm),
-                    )
-                }
-
-                if (asteroid.closeApproachDate.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(MarginQuarter))
-                    Text(
-                        text = asteroid.closeApproachDate,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                    )
-                }
-            }
+      Column(
+        modifier =
+          Modifier.weight(1f).padding(horizontal = MarginDouble, vertical = MarginOneAndHalf)
+      ) {
+        // Header: name + hazardous badge
+        Row(verticalAlignment = Alignment.CenterVertically) {
+          Text(
+            text = asteroid.name,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.weight(1f),
+          )
+          if (asteroid.isPotentiallyHazardous) {
+            Spacer(modifier = Modifier.width(MarginSingle))
+            HazardousBadge()
+          }
         }
+
+        Spacer(modifier = Modifier.height(MarginSingle))
+
+        // Distance stat
+        StatItem(
+          icon = Icons.Filled.Explore,
+          contentDescription = stringResource(R.string.accessibility_miss_distance),
+          label =
+            stringResource(
+              R.string.asteroid_miss_distance,
+              "%.1f".format(asteroid.missDistanceLunar),
+              formatDistanceKm(asteroid.missDistanceKm),
+            ),
+        )
+
+        Spacer(modifier = Modifier.height(MarginHalf))
+
+        // Velocity + diameter stats
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+          StatItem(
+            icon = Icons.Filled.Speed,
+            contentDescription = stringResource(R.string.accessibility_velocity),
+            label =
+              stringResource(
+                R.string.asteroid_velocity,
+                "%.1f".format(asteroid.velocityKmPerSecond),
+              ),
+          )
+          StatItem(
+            icon = Icons.Filled.TripOrigin,
+            contentDescription = stringResource(R.string.accessibility_diameter),
+            label = formatDiameterM(asteroid.estimatedDiameterMaxKm),
+          )
+        }
+
+        if (asteroid.closeApproachDate.isNotEmpty()) {
+          Spacer(modifier = Modifier.height(MarginQuarter))
+          Text(
+            text = asteroid.closeApproachDate,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.End,
+          )
+        }
+      }
     }
+  }
 }
 
 @Composable
 private fun StatItem(
-    icon: ImageVector,
-    contentDescription: String?,
-    label: String,
-    modifier: Modifier = Modifier,
+  icon: ImageVector,
+  contentDescription: String?,
+  label: String,
+  modifier: Modifier = Modifier,
 ) {
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
-        Icon(
-            imageVector = icon,
-            contentDescription = contentDescription,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.size(IconSizeSmall),
-        )
-        Spacer(modifier = Modifier.width(MarginHalf))
-        Text(
-            text = label,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
+  Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+    Icon(
+      imageVector = icon,
+      contentDescription = contentDescription,
+      tint = MaterialTheme.colorScheme.onSurfaceVariant,
+      modifier = Modifier.size(IconSizeSmall),
+    )
+    Spacer(modifier = Modifier.width(MarginHalf))
+    Text(
+      text = label,
+      style = MaterialTheme.typography.bodySmall,
+      color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+  }
 }
 
 @WidgetPreviews
 @Composable
 private fun AsteroidCardPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            Column(modifier = Modifier.padding(all = MarginDouble)) {
-                AsteroidCard(
-                    asteroid = AsteroidUiModel(
-                        id = "2025-AB",
-                        name = "90416 (2025 AB)",
-                        absoluteMagnitudeH = 22.5,
-                        missDistanceLunar = 3.2,
-                        missDistanceKm = 1_230_456.0,
-                        isPotentiallyHazardous = true,
-                        velocityKmPerSecond = 18.4,
-                        estimatedDiameterMaxKm = 0.42,
-                        closeApproachDate = "19 Apr 2026",
-                        threatLevel = ThreatLevel.DANGER,
-                    ),
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Spacer(modifier = Modifier.height(MarginOneAndHalf))
-                AsteroidCard(
-                    asteroid = AsteroidUiModel(
-                        id = "2024-XY",
-                        name = "(2024 XY)",
-                        absoluteMagnitudeH = 19.3,
-                        missDistanceLunar = 9.1,
-                        missDistanceKm = 3_510_000.0,
-                        isPotentiallyHazardous = false,
-                        velocityKmPerSecond = 12.7,
-                        estimatedDiameterMaxKm = 0.18,
-                        closeApproachDate = "19 Apr 2026",
-                        threatLevel = ThreatLevel.CAUTION,
-                    ),
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Spacer(modifier = Modifier.height(MarginOneAndHalf))
-                AsteroidCard(
-                    asteroid = AsteroidUiModel(
-                        id = "2023-ZZ",
-                        name = "(2023 ZZ)",
-                        absoluteMagnitudeH = 16.7,
-                        missDistanceLunar = 22.5,
-                        missDistanceKm = 8_650_000.0,
-                        isPotentiallyHazardous = false,
-                        velocityKmPerSecond = 8.2,
-                        estimatedDiameterMaxKm = 0.09,
-                        closeApproachDate = "19 Apr 2026",
-                        threatLevel = ThreatLevel.SAFE,
-                    ),
-                    onClick = {},
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      Column(modifier = Modifier.padding(all = MarginDouble)) {
+        AsteroidCard(
+          asteroid =
+            AsteroidUiModel(
+              id = "2025-AB",
+              name = "90416 (2025 AB)",
+              absoluteMagnitudeH = 22.5,
+              missDistanceLunar = 3.2,
+              missDistanceKm = 1_230_456.0,
+              isPotentiallyHazardous = true,
+              velocityKmPerSecond = 18.4,
+              estimatedDiameterMaxKm = 0.42,
+              closeApproachDate = "19 Apr 2026",
+              threatLevel = ThreatLevel.DANGER,
+            ),
+          onClick = {},
+          modifier = Modifier.fillMaxWidth(),
+        )
+        Spacer(modifier = Modifier.height(MarginOneAndHalf))
+        AsteroidCard(
+          asteroid =
+            AsteroidUiModel(
+              id = "2024-XY",
+              name = "(2024 XY)",
+              absoluteMagnitudeH = 19.3,
+              missDistanceLunar = 9.1,
+              missDistanceKm = 3_510_000.0,
+              isPotentiallyHazardous = false,
+              velocityKmPerSecond = 12.7,
+              estimatedDiameterMaxKm = 0.18,
+              closeApproachDate = "19 Apr 2026",
+              threatLevel = ThreatLevel.CAUTION,
+            ),
+          onClick = {},
+          modifier = Modifier.fillMaxWidth(),
+        )
+        Spacer(modifier = Modifier.height(MarginOneAndHalf))
+        AsteroidCard(
+          asteroid =
+            AsteroidUiModel(
+              id = "2023-ZZ",
+              name = "(2023 ZZ)",
+              absoluteMagnitudeH = 16.7,
+              missDistanceLunar = 22.5,
+              missDistanceKm = 8_650_000.0,
+              isPotentiallyHazardous = false,
+              velocityKmPerSecond = 8.2,
+              estimatedDiameterMaxKm = 0.09,
+              closeApproachDate = "19 Apr 2026",
+              threatLevel = ThreatLevel.SAFE,
+            ),
+          onClick = {},
+          modifier = Modifier.fillMaxWidth(),
+        )
+      }
     }
+  }
 }

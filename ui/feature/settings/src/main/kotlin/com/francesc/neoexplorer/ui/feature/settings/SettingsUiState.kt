@@ -5,13 +5,14 @@ import com.slack.circuit.runtime.CircuitUiEvent
 import com.slack.circuit.runtime.CircuitUiState
 
 data class SettingsUiState(
-    val isLoading: Boolean,
-    val theme: AppTheme,
-    val useDynamicTheme: Boolean,
-    val eventSink: (SettingsUiEvent) -> Unit,
+  val isLoading: Boolean,
+  val theme: AppTheme,
+  val useDynamicTheme: Boolean,
+  val eventSink: (SettingsUiEvent) -> Unit,
 ) : CircuitUiState
 
 sealed interface SettingsUiEvent : CircuitUiEvent {
-    data class ThemeChanged(val theme: AppTheme) : SettingsUiEvent
-    data class DynamicThemeChanged(val useDynamicTheme: Boolean) : SettingsUiEvent
+  data class ThemeChanged(val theme: AppTheme) : SettingsUiEvent
+
+  data class DynamicThemeChanged(val useDynamicTheme: Boolean) : SettingsUiEvent
 }

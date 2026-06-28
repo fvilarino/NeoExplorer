@@ -19,39 +19,40 @@ import kotlinx.coroutines.launch
 
 @CircuitInject(SettingsScreen::class, AppScope::class)
 @Inject
-class SettingsPresenter(
-    private val appPreferencesRepository: AppPreferencesRepository,
-) : Presenter<SettingsUiState> {
+class SettingsPresenter(private val appPreferencesRepository: AppPreferencesRepository) :
+  Presenter<SettingsUiState> {
 
-    @Composable
-    override fun present(): SettingsUiState {
-        var isLoading by rememberRetained { mutableStateOf(true) }
-        var theme by rememberRetained { mutableStateOf(AppTheme.AUTO) }
-        var useDynamicTheme by rememberRetained { mutableStateOf(false) }
-        val scope = rememberCoroutineScope()
+  @Composable
+  override fun present(): SettingsUiState {
+    var isLoading by rememberRetained { mutableStateOf(true) }
+    var theme by rememberRetained { mutableStateOf(AppTheme.AUTO) }
+    var useDynamicTheme by rememberRetained { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
-        LaunchedEffect(key1 = Unit) {
-            appPreferencesRepository.preferences.collectLatest { prefs ->
-                theme = prefs.theme
-                useDynamicTheme = prefs.useDynamicTheme
-                isLoading = false
+    LaunchedEffect(key1 = Unit) {
+      appPreferencesRepository.preferences.collectLatest { prefs ->
+        theme = prefs.theme
+        useDynamicTheme = prefs.useDynamicTheme
+        isLoading = false
+      }
+    }
+
+    return SettingsUiState(
+      isLoading = isLoading,
+      theme = theme,
+      useDynamicTheme = useDynamicTheme,
+      eventSink = { event ->
+        when (event) {
+          is SettingsUiEvent.ThemeChanged ->
+            scope.launch {
+              appPreferencesRepository.setTheme(event.theme)
+            }
+          is SettingsUiEvent.DynamicThemeChanged ->
+            scope.launch {
+              appPreferencesRepository.setUseDynamicTheme(event.useDynamicTheme)
             }
         }
-
-        return SettingsUiState(
-            isLoading = isLoading,
-            theme = theme,
-            useDynamicTheme = useDynamicTheme,
-            eventSink = { event ->
-                when (event) {
-                    is SettingsUiEvent.ThemeChanged -> scope.launch {
-                        appPreferencesRepository.setTheme(event.theme)
-                    }
-                    is SettingsUiEvent.DynamicThemeChanged -> scope.launch {
-                        appPreferencesRepository.setUseDynamicTheme(event.useDynamicTheme)
-                    }
-                }
-            },
-        )
-    }
+      },
+    )
+  }
 }

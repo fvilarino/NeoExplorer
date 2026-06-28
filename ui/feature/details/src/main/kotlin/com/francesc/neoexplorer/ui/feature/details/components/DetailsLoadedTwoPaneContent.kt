@@ -23,66 +23,62 @@ import com.francesc.neoexplorer.ui.shared.compose.MarginOneAndHalf
 
 @Composable
 internal fun DetailsLoadedTwoPaneContent(
-    asteroid: DetailsUiModel,
-    modifier: Modifier = Modifier,
+  asteroid: DetailsUiModel,
+  modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-    Row(
-        modifier = modifier.padding(horizontal = MarginDouble),
-        horizontalArrangement = Arrangement.spacedBy(MarginDouble),
+  val context = LocalContext.current
+  Row(
+    modifier = modifier.padding(horizontal = MarginDouble),
+    horizontalArrangement = Arrangement.spacedBy(MarginDouble),
+  ) {
+    // ── Left pane: hazard banner + metrics ────────────────────────────
+    LazyColumn(
+      modifier = Modifier.weight(1f),
+      contentPadding = PaddingValues(vertical = MarginOneAndHalf),
+      verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
     ) {
-        // ── Left pane: hazard banner + metrics ────────────────────────────
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(vertical = MarginOneAndHalf),
-            verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
-        ) {
-            if (asteroid.isPotentiallyHazardous) {
-                item {
-                    HazardousWarningBanner(modifier = Modifier.fillMaxWidth())
-                }
-            }
-            item {
-                SectionTitle(text = stringResource(R.string.section_object_characteristics))
-            }
-            item {
-                MetricsGrid(asteroid = asteroid, columns = 3)
-            }
+      if (asteroid.isPotentiallyHazardous) {
+        item {
+          HazardousWarningBanner(modifier = Modifier.fillMaxWidth())
         }
-
-        VerticalDivider(modifier = Modifier.fillMaxHeight())
-
-        // ── Right pane: size comparison + JPL button ──────────────────────
-        LazyColumn(
-            modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(vertical = MarginOneAndHalf),
-            verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
-        ) {
-            item {
-                SizeComparisonCanvas(
-                    asteroidName = asteroid.name,
-                    asteroidDiameterKm = asteroid.diameterMaxKm,
-                    reference = asteroid.sizeReference,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
-            item {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    JplLinkButton(
-                        onOpen = {
-                            context.startActivity(
-                                Intent(Intent.ACTION_VIEW, asteroid.nasaJplUrl.toUri()),
-                            )
-                        },
-                        modifier = Modifier
-                            .widthIn(max = JplButtonMaxWidth)
-                            .fillMaxWidth(),
-                    )
-                }
-            }
-        }
+      }
+      item {
+        SectionTitle(text = stringResource(R.string.section_object_characteristics))
+      }
+      item {
+        MetricsGrid(asteroid = asteroid, columns = 3)
+      }
     }
+
+    VerticalDivider(modifier = Modifier.fillMaxHeight())
+
+    // ── Right pane: size comparison + JPL button ──────────────────────
+    LazyColumn(
+      modifier = Modifier.weight(1f),
+      contentPadding = PaddingValues(vertical = MarginOneAndHalf),
+      verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
+    ) {
+      item {
+        SizeComparisonCanvas(
+          asteroidName = asteroid.name,
+          asteroidDiameterKm = asteroid.diameterMaxKm,
+          reference = asteroid.sizeReference,
+          modifier = Modifier.fillMaxWidth(),
+        )
+      }
+      item {
+        Box(
+          modifier = Modifier.fillMaxWidth(),
+          contentAlignment = Alignment.Center,
+        ) {
+          JplLinkButton(
+            onOpen = {
+              context.startActivity(Intent(Intent.ACTION_VIEW, asteroid.nasaJplUrl.toUri()))
+            },
+            modifier = Modifier.widthIn(max = JplButtonMaxWidth).fillMaxWidth(),
+          )
+        }
+      }
+    }
+  }
 }

@@ -13,29 +13,25 @@ import com.francesc.neoexplorer.ui.shared.compose.WidgetPreviews
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
-fun SettingsTopBar(
-    modifier: Modifier = Modifier,
-) {
-    TopAppBar(
-        modifier = modifier,
-        title = {
-            Text(
-                text = stringResource(R.string.settings),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.fillMaxWidth(),
-            )
-        },
-    )
+fun SettingsTopBar(modifier: Modifier = Modifier) {
+  TopAppBar(
+    modifier = modifier,
+    title = {
+      Text(
+        text = stringResource(R.string.settings),
+        style = MaterialTheme.typography.titleMedium,
+        modifier = Modifier.fillMaxWidth(),
+      )
+    },
+  )
 }
 
 @WidgetPreviews
 @Composable
 private fun SettingsTopBarByDatePreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            SettingsTopBar(
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      SettingsTopBar(modifier = Modifier.fillMaxWidth())
     }
+  }
 }

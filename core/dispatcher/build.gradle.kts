@@ -1,7 +1,7 @@
 plugins {
-    id("neoexplorer.kotlin.library")
+  id("neoexplorer.kotlin.library")
 }
 
 dependencies {
-    api(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
+  api(libs.org.jetbrains.kotlinx.kotlinx.coroutines.core)
 }

@@ -7,6 +7,6 @@ package com.francesc.neoexplorer.data.preferences
  * @property useDynamicTheme Whether to use Material You dynamic colour theming.
  */
 data class AppPreferences(
-    val theme: AppTheme,
-    val useDynamicTheme: Boolean,
+  val theme: AppTheme,
+  val useDynamicTheme: Boolean,
 )

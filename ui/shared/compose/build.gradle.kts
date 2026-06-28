@@ -1,9 +1,8 @@
 plugins {
-    id("neoexplorer.android.library")
-    id("neoexplorer.android.library.compose")
+  id("neoexplorer.android.library")
+  id("neoexplorer.android.library.compose")
 }
 
 android {
-    namespace = "com.francesc.neoexplorer.ui.shared.compose"
+  namespace = "com.francesc.neoexplorer.ui.shared.compose"
 }
-

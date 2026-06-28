@@ -1,9 +1,8 @@
 plugins {
-    id("neoexplorer.kotlin.library")
-    id("neoexplorer.dependency.injection")
+  id("neoexplorer.kotlin.library")
+  id("neoexplorer.dependency.injection")
 }
 
 dependencies {
-    implementation(projects.core.formatter)
+  implementation(projects.core.formatter)
 }
-

@@ -28,25 +28,26 @@ internal val JplButtonMaxWidth = 320.dp
 
 @Composable
 internal fun JplLinkButton(
-    onOpen: () -> Unit,
-    modifier: Modifier = Modifier,
+  onOpen: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    Button(
-        onClick = onOpen,
-        modifier = modifier,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer,
-            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
-        ),
-    ) {
-        Icon(
-            imageVector = Icons.Filled.OpenInBrowser,
-            contentDescription = null,
-            modifier = Modifier.size(IconSizeSmall),
-        )
-        Spacer(modifier = Modifier.width(MarginHalf))
-        Text(text = stringResource(R.string.open_jpl_button))
-    }
+  Button(
+    onClick = onOpen,
+    modifier = modifier,
+    colors =
+      ButtonDefaults.buttonColors(
+        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+      ),
+  ) {
+    Icon(
+      imageVector = Icons.Filled.OpenInBrowser,
+      contentDescription = null,
+      modifier = Modifier.size(IconSizeSmall),
+    )
+    Spacer(modifier = Modifier.width(MarginHalf))
+    Text(text = stringResource(R.string.open_jpl_button))
+  }
 }
 
 // ── Previews ──────────────────────────────────────────────────────────────────
@@ -55,12 +56,12 @@ internal fun JplLinkButton(
 @TabletPreviews
 @Composable
 private fun JplLinkButtonPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            JplLinkButton(
-                onOpen = {},
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      JplLinkButton(
+        onOpen = {},
+        modifier = Modifier.fillMaxWidth(),
+      )
     }
+  }
 }

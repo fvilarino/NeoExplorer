@@ -13,17 +13,18 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 @Inject
 class NavigationRouterImpl : NavigationBroadcaster, NavigationRouter {
 
-    private val _events = MutableSharedFlow<NavigationPayload>(extraBufferCapacity = 1)
+  private val _events = MutableSharedFlow<NavigationPayload>(extraBufferCapacity = 1)
 
-    override val events: Flow<NavigationPayload> = _events
+  override val events: Flow<NavigationPayload> = _events
 
-    override fun broadcast(screen: Screen) {
-        _events.tryEmit(NavigationPayload(screens = listOf(screen)))
-    }
+  override fun broadcast(screen: Screen) {
+    _events.tryEmit(NavigationPayload(screens = listOf(screen)))
+  }
 }
 
 @ContributesTo(AppScope::class)
 interface NavigationBindingsModule {
-    @Binds fun bindsNavigationBroadcaster(impl: NavigationRouterImpl): NavigationBroadcaster
-    @Binds fun bindsNavigationRouter(impl: NavigationRouterImpl): NavigationRouter
+  @Binds fun bindsNavigationBroadcaster(impl: NavigationRouterImpl): NavigationBroadcaster
+
+  @Binds fun bindsNavigationRouter(impl: NavigationRouterImpl): NavigationRouter
 }

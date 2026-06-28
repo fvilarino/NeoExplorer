@@ -13,19 +13,15 @@ import dev.zacsweers.metro.SingleIn
 @SingleIn(AppScope::class)
 interface CircuitModule {
 
-    @Multibinds
-    fun presenterFactories(): Set<Presenter.Factory>
+  @Multibinds fun presenterFactories(): Set<Presenter.Factory>
 
-    @Multibinds
-    fun uiFactories(): Set<Ui.Factory>
+  @Multibinds fun uiFactories(): Set<Ui.Factory>
 
-    @Provides
-    @SingleIn(AppScope::class)
-    fun provideCircuit(
-        presenterFactories: @JvmSuppressWildcards Set<Presenter.Factory>,
-        uiFactories: @JvmSuppressWildcards Set<Ui.Factory>,
-    ): Circuit = Circuit.Builder()
-        .addPresenterFactories(presenterFactories)
-        .addUiFactories(uiFactories)
-        .build()
+  @Provides
+  @SingleIn(AppScope::class)
+  fun provideCircuit(
+    presenterFactories: @JvmSuppressWildcards Set<Presenter.Factory>,
+    uiFactories: @JvmSuppressWildcards Set<Ui.Factory>,
+  ): Circuit =
+    Circuit.Builder().addPresenterFactories(presenterFactories).addUiFactories(uiFactories).build()
 }

@@ -7,11 +7,15 @@ import androidx.compose.ui.unit.dp
 
 /**
  * Canonical window-width breakpoints matching the Material 3 adaptive layout spec:
- *  - [Compact]  < 600 dp  (phones in portrait)
- *  - [Medium]   600–839 dp (large phones / tablets in portrait)
- *  - [Expanded] ≥ 840 dp  (tablets in landscape, desktop)
+ * - [Compact] < 600 dp (phones in portrait)
+ * - [Medium] 600–839 dp (large phones / tablets in portrait)
+ * - [Expanded] ≥ 840 dp (tablets in landscape, desktop)
  */
-enum class WindowWidthClass { Compact, Medium, Expanded }
+enum class WindowWidthClass {
+  Compact,
+  Medium,
+  Expanded,
+}
 
 /**
  * Returns the current [WindowWidthClass] derived from [LocalWindowInfo], which updates
@@ -19,11 +23,11 @@ enum class WindowWidthClass { Compact, Medium, Expanded }
  */
 @Composable
 fun rememberWindowWidthClass(): WindowWidthClass {
-    val containerWidth = LocalWindowInfo.current.containerSize.width
-    val widthDp = with(LocalDensity.current) { containerWidth.toDp() }
-    return when {
-        widthDp < 600.dp -> WindowWidthClass.Compact
-        widthDp < 840.dp -> WindowWidthClass.Medium
-        else -> WindowWidthClass.Expanded
-    }
+  val containerWidth = LocalWindowInfo.current.containerSize.width
+  val widthDp = with(LocalDensity.current) { containerWidth.toDp() }
+  return when {
+    widthDp < 600.dp -> WindowWidthClass.Compact
+    widthDp < 840.dp -> WindowWidthClass.Medium
+    else -> WindowWidthClass.Expanded
+  }
 }

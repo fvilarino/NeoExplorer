@@ -5,11 +5,7 @@ import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 val Project.javaVersion: JavaVersion
-    get() = JavaVersion.toVersion(
-        catalog.findVersion("jdk.version").get().requiredVersion,
-    )
+  get() = JavaVersion.toVersion(catalog.findVersion("jdk.version").get().requiredVersion)
 
 val Project.jvmTargetVersion: JvmTarget
-    get() = JvmTarget.fromTarget(
-        catalog.findVersion("jdk.version").get().requiredVersion,
-    )
+  get() = JvmTarget.fromTarget(catalog.findVersion("jdk.version").get().requiredVersion)

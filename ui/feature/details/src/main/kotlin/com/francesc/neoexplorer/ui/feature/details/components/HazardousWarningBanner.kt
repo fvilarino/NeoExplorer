@@ -31,29 +31,30 @@ import com.francesc.neoexplorer.ui.shared.styles.extendedColorScheme
 
 @Composable
 internal fun HazardousWarningBanner(modifier: Modifier = Modifier) {
-    val amberColor = MaterialTheme.extendedColorScheme.amber
-    Row(
-        modifier = modifier
-            .background(
-                color = amberColor.copy(alpha = 0.12f),
-                shape = RoundedCornerShape(CardCornerSize),
-            )
-            .padding(horizontal = MarginDouble, vertical = MarginOneAndHalf),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(
-            imageVector = Icons.Default.Warning,
-            contentDescription = null,
-            tint = amberColor,
-            modifier = Modifier.size(IconSizeSmall),
+  val amberColor = MaterialTheme.extendedColorScheme.amber
+  Row(
+    modifier =
+      modifier
+        .background(
+          color = amberColor.copy(alpha = 0.12f),
+          shape = RoundedCornerShape(CardCornerSize),
         )
-        Spacer(modifier = Modifier.width(MarginSingle))
-        Text(
-            text = stringResource(R.string.potentially_hazardous_description),
-            style = MaterialTheme.typography.bodySmall,
-            color = amberColor,
-        )
-    }
+        .padding(horizontal = MarginDouble, vertical = MarginOneAndHalf),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Icon(
+      imageVector = Icons.Default.Warning,
+      contentDescription = null,
+      tint = amberColor,
+      modifier = Modifier.size(IconSizeSmall),
+    )
+    Spacer(modifier = Modifier.width(MarginSingle))
+    Text(
+      text = stringResource(R.string.potentially_hazardous_description),
+      style = MaterialTheme.typography.bodySmall,
+      color = amberColor,
+    )
+  }
 }
 
 // ── Previews ──────────────────────────────────────────────────────────────────
@@ -62,13 +63,9 @@ internal fun HazardousWarningBanner(modifier: Modifier = Modifier) {
 @TabletPreviews
 @Composable
 private fun HazardousWarningBannerPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            HazardousWarningBanner(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      HazardousWarningBanner(modifier = Modifier.fillMaxWidth().padding(all = MarginDouble))
     }
+  }
 }

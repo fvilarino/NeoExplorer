@@ -27,88 +27,89 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
 internal fun ThemePreference(
-    selectedTheme: AppTheme,
-    onThemeSelected: (AppTheme) -> Unit,
-    modifier: Modifier = Modifier,
+  selectedTheme: AppTheme,
+  onThemeSelected: (AppTheme) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    Preference(
-        title = stringResource(R.string.settings_theme_section),
-        control = {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(MarginSingle),
-            ) {
-                ThemeIcon(
-                    icon = Icons.Default.AutoMode,
-                    onClick = { onThemeSelected(AppTheme.AUTO) },
-                    isSelected = selectedTheme == AppTheme.AUTO,
-                    contentDescription = AppTheme.AUTO.label,
-                )
-                ThemeIcon(
-                    icon = Icons.Default.LightMode,
-                    onClick = { onThemeSelected(AppTheme.LIGHT) },
-                    isSelected = selectedTheme == AppTheme.LIGHT,
-                    contentDescription = AppTheme.LIGHT.label,
-                )
-                ThemeIcon(
-                    icon = Icons.Default.DarkMode,
-                    onClick = { onThemeSelected(AppTheme.DARK) },
-                    isSelected = selectedTheme == AppTheme.DARK,
-                    contentDescription = AppTheme.DARK.label,
-                )
-            }
-        },
-        modifier = modifier,
-    )
+  Preference(
+    title = stringResource(R.string.settings_theme_section),
+    control = {
+      Row(horizontalArrangement = Arrangement.spacedBy(MarginSingle)) {
+        ThemeIcon(
+          icon = Icons.Default.AutoMode,
+          onClick = { onThemeSelected(AppTheme.AUTO) },
+          isSelected = selectedTheme == AppTheme.AUTO,
+          contentDescription = AppTheme.AUTO.label,
+        )
+        ThemeIcon(
+          icon = Icons.Default.LightMode,
+          onClick = { onThemeSelected(AppTheme.LIGHT) },
+          isSelected = selectedTheme == AppTheme.LIGHT,
+          contentDescription = AppTheme.LIGHT.label,
+        )
+        ThemeIcon(
+          icon = Icons.Default.DarkMode,
+          onClick = { onThemeSelected(AppTheme.DARK) },
+          isSelected = selectedTheme == AppTheme.DARK,
+          contentDescription = AppTheme.DARK.label,
+        )
+      }
+    },
+    modifier = modifier,
+  )
 }
 
 @Composable
 private fun ThemeIcon(
-    icon: ImageVector,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    contentDescription: String? = null,
+  icon: ImageVector,
+  isSelected: Boolean,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier,
+  contentDescription: String? = null,
 ) {
-    FilledIconToggleButton(
-        checked = isSelected,
-        onCheckedChange = { onClick() },
-        modifier = modifier,
-    ) {
-        Icon(
-            imageVector = icon,
-            tint = if (isSelected) {
-                MaterialTheme.colorScheme.onPrimary
-            } else {
-                MaterialTheme.colorScheme.onBackground
-            },
-            contentDescription = contentDescription,
-        )
-    }
+  FilledIconToggleButton(
+    checked = isSelected,
+    onCheckedChange = { onClick() },
+    modifier = modifier,
+  ) {
+    Icon(
+      imageVector = icon,
+      tint =
+        if (isSelected) {
+          MaterialTheme.colorScheme.onPrimary
+        } else {
+          MaterialTheme.colorScheme.onBackground
+        },
+      contentDescription = contentDescription,
+    )
+  }
 }
 
 private val AppTheme.label: String
-    @Composable get() = when (this) {
-        AppTheme.AUTO -> stringResource(R.string.settings_theme_auto)
-        AppTheme.LIGHT -> stringResource(R.string.settings_theme_light)
-        AppTheme.DARK -> stringResource(R.string.settings_theme_dark)
+  @Composable
+  get() =
+    when (this) {
+      AppTheme.AUTO -> stringResource(R.string.settings_theme_auto)
+      AppTheme.LIGHT -> stringResource(R.string.settings_theme_light)
+      AppTheme.DARK -> stringResource(R.string.settings_theme_dark)
     }
 
 private class AppThemePreviewProvider : PreviewParameterProvider<AppTheme> {
-    override val values = AppTheme.entries.asSequence()
+  override val values = AppTheme.entries.asSequence()
 }
 
 @WidgetPreviews
 @Composable
 private fun ThemePreferencePreview(
-    @PreviewParameter(AppThemePreviewProvider::class) theme: AppTheme,
+  @PreviewParameter(AppThemePreviewProvider::class) theme: AppTheme
 ) {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            ThemePreference(
-                selectedTheme = theme,
-                onThemeSelected = {},
-                modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      ThemePreference(
+        selectedTheme = theme,
+        onThemeSelected = {},
+        modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
+      )
     }
+  }
 }

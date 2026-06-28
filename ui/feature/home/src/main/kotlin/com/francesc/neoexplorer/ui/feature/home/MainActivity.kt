@@ -28,44 +28,48 @@ import dev.zacsweers.metro.binding
 @ContributesIntoMap(AppScope::class, binding = binding<Activity>())
 @Inject
 class MainActivity(
-    private val circuit: Circuit,
-    private val navigationRouter: NavigationRouter,
-    private val appPreferencesRepository: AppPreferencesRepository,
+  private val circuit: Circuit,
+  private val navigationRouter: NavigationRouter,
+  private val appPreferencesRepository: AppPreferencesRepository,
 ) : ComponentActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            val prefs by appPreferencesRepository.preferences
-                .collectAsStateWithLifecycle(AppPreferences(AppTheme.AUTO, false))
-            val darkTheme = when (prefs.theme) {
-                AppTheme.LIGHT -> false
-                AppTheme.DARK -> true
-                AppTheme.AUTO -> isSystemInDarkTheme()
-            }
-            SideEffect {
-                enableEdgeToEdge(
-                    statusBarStyle = if (darkTheme) {
-                        SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
-                    } else {
-                        SystemBarStyle.light(
-                            android.graphics.Color.TRANSPARENT,
-                            android.graphics.Color.TRANSPARENT,
-                        )
-                    },
-                )
-            }
-            NeoExplorerTheme(
-                darkTheme = darkTheme,
-                useDynamicTheme = prefs.useDynamicTheme,
-            ) {
-                HomeScreen(
-                    circuit = circuit,
-                    navigationRouter = navigationRouter,
-                    modifier = Modifier.fillMaxSize(),
-                )
-            }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    enableEdgeToEdge()
+    setContent {
+      val prefs by
+        appPreferencesRepository.preferences.collectAsStateWithLifecycle(
+          AppPreferences(AppTheme.AUTO, false)
+        )
+      val darkTheme =
+        when (prefs.theme) {
+          AppTheme.LIGHT -> false
+          AppTheme.DARK -> true
+          AppTheme.AUTO -> isSystemInDarkTheme()
         }
+      SideEffect {
+        enableEdgeToEdge(
+          statusBarStyle =
+            if (darkTheme) {
+              SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
+            } else {
+              SystemBarStyle.light(
+                android.graphics.Color.TRANSPARENT,
+                android.graphics.Color.TRANSPARENT,
+              )
+            }
+        )
+      }
+      NeoExplorerTheme(
+        darkTheme = darkTheme,
+        useDynamicTheme = prefs.useDynamicTheme,
+      ) {
+        HomeScreen(
+          circuit = circuit,
+          navigationRouter = navigationRouter,
+          modifier = Modifier.fillMaxSize(),
+        )
+      }
     }
+  }
 }

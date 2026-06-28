@@ -24,44 +24,44 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
 fun ErrorContent(
-    message: String,
-    onRetry: () -> Unit,
-    modifier: Modifier = Modifier,
+  message: String,
+  onRetry: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center,
+  Box(
+    modifier = modifier,
+    contentAlignment = Alignment.Center,
+  ) {
+    Column(
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.spacedBy(MarginDouble),
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(MarginDouble),
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Warning,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.error,
-                modifier = Modifier.size(IconSizeLarge),
-            )
-            Text(
-                text = message,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Button(onClick = onRetry) { Text(text = stringResource(R.string.retry)) }
-        }
+      Icon(
+        imageVector = Icons.Filled.Warning,
+        contentDescription = null,
+        tint = MaterialTheme.colorScheme.error,
+        modifier = Modifier.size(IconSizeLarge),
+      )
+      Text(
+        text = message,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+      Button(onClick = onRetry) { Text(text = stringResource(R.string.retry)) }
     }
+  }
 }
 
 @WidgetPreviews
 @Composable
 private fun ErrorContentPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            ErrorContent(
-                message = "Something went wrong. Please try again.",
-                onRetry = {},
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      ErrorContent(
+        message = "Something went wrong. Please try again.",
+        onRetry = {},
+        modifier = Modifier.fillMaxWidth(),
+      )
     }
+  }
 }

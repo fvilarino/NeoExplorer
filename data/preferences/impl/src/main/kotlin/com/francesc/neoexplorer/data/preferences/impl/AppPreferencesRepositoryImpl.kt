@@ -16,45 +16,43 @@ import kotlinx.coroutines.flow.map
 @Inject
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
-class AppPreferencesRepositoryImpl(
-    private val dataStore: DataStore<AppPreferencesProto>,
-) : AppPreferencesRepository {
+class AppPreferencesRepositoryImpl(private val dataStore: DataStore<AppPreferencesProto>) :
+  AppPreferencesRepository {
 
-    override val preferences: Flow<AppPreferences> = dataStore.data.map { it.toDomain() }
+  override val preferences: Flow<AppPreferences> = dataStore.data.map { it.toDomain() }
 
-    override suspend fun setTheme(theme: AppTheme) {
-        dataStore.updateData { current ->
-            current.toBuilder()
-                .setTheme(theme.toProto())
-                .build()
-        }
+  override suspend fun setTheme(theme: AppTheme) {
+    dataStore.updateData { current ->
+      current.toBuilder().setTheme(theme.toProto()).build()
     }
+  }
 
-    override suspend fun setUseDynamicTheme(useDynamicTheme: Boolean) {
-        dataStore.updateData { current ->
-            current.toBuilder()
-                .setUseDynamicTheme(useDynamicTheme)
-                .build()
-        }
+  override suspend fun setUseDynamicTheme(useDynamicTheme: Boolean) {
+    dataStore.updateData { current ->
+      current.toBuilder().setUseDynamicTheme(useDynamicTheme).build()
     }
+  }
 }
 
 // ── Mappers ──────────────────────────────────────────────────────────────────
 
-private fun AppPreferencesProto.toDomain(): AppPreferences = AppPreferences(
+private fun AppPreferencesProto.toDomain(): AppPreferences =
+  AppPreferences(
     theme = theme.toDomain(),
     useDynamicTheme = useDynamicTheme,
-)
+  )
 
-private fun AppThemeProto.toDomain(): AppTheme = when (this) {
+private fun AppThemeProto.toDomain(): AppTheme =
+  when (this) {
     AppThemeProto.APP_THEME_PROTO_LIGHT -> AppTheme.LIGHT
     AppThemeProto.APP_THEME_PROTO_DARK -> AppTheme.DARK
     // APP_THEME_PROTO_AUTO, UNRECOGNIZED, or any future value → safe default
     else -> AppTheme.AUTO
-}
+  }
 
-private fun AppTheme.toProto(): AppThemeProto = when (this) {
+private fun AppTheme.toProto(): AppThemeProto =
+  when (this) {
     AppTheme.AUTO -> AppThemeProto.APP_THEME_PROTO_AUTO
     AppTheme.LIGHT -> AppThemeProto.APP_THEME_PROTO_LIGHT
     AppTheme.DARK -> AppThemeProto.APP_THEME_PROTO_DARK
-}
+  }

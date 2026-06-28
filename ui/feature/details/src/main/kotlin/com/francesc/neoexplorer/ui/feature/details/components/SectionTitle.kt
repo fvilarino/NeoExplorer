@@ -14,13 +14,13 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
 internal fun SectionTitle(text: String, modifier: Modifier = Modifier) {
-    Text(
-        text = text,
-        style = MaterialTheme.typography.titleSmall,
-        fontWeight = FontWeight.SemiBold,
-        color = MaterialTheme.colorScheme.onSurface,
-        modifier = modifier,
-    )
+  Text(
+    text = text,
+    style = MaterialTheme.typography.titleSmall,
+    fontWeight = FontWeight.SemiBold,
+    color = MaterialTheme.colorScheme.onSurface,
+    modifier = modifier,
+  )
 }
 
 // ── Previews ──────────────────────────────────────────────────────────────────
@@ -28,14 +28,12 @@ internal fun SectionTitle(text: String, modifier: Modifier = Modifier) {
 @PhonePreviews
 @Composable
 private fun SectionTitlePreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            SectionTitle(
-                text = "(2013 NF19)",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      SectionTitle(
+        text = "(2013 NF19)",
+        modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
+      )
     }
+  }
 }

@@ -20,61 +20,57 @@ import kotlinx.datetime.Month
 @NonRestartableComposable
 @Composable
 internal fun AsteroidFeedHeader(
-    date: LocalDate,
-    hazardousCount: Int,
-    modifier: Modifier = Modifier,
+  date: LocalDate,
+  hazardousCount: Int,
+  modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier,
-    ) {
-        Text(
-            text = formatDate(date),
-            style = MaterialTheme.typography.titleLarge,
-        )
-        Text(
-            text = stringResource(R.string.potentially_hazardous_objects_today, hazardousCount),
-            style = MaterialTheme.typography.bodySmall,
-            color = if (hazardousCount > 0) {
-                MaterialTheme.colorScheme.error
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            },
-        )
-    }
+  Column(modifier = modifier) {
+    Text(
+      text = formatDate(date),
+      style = MaterialTheme.typography.titleLarge,
+    )
+    Text(
+      text = stringResource(R.string.potentially_hazardous_objects_today, hazardousCount),
+      style = MaterialTheme.typography.bodySmall,
+      color =
+        if (hazardousCount > 0) {
+          MaterialTheme.colorScheme.error
+        } else {
+          MaterialTheme.colorScheme.onSurfaceVariant
+        },
+    )
+  }
 }
 
 internal fun formatDate(date: LocalDate): String {
-    val monthName = date.month.name.lowercase().replaceFirstChar { it.uppercase() }
-    return "${date.day} $monthName ${date.year}"
+  val monthName = date.month.name.lowercase().replaceFirstChar { it.uppercase() }
+  return "${date.day} $monthName ${date.year}"
 }
 
 @WidgetPreviews
 @Composable
 private fun AsteroidFeedHeaderHazardousPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            AsteroidFeedHeader(
-                date = LocalDate(2026, Month.APRIL, 19),
-                hazardousCount = 3,
-                modifier = Modifier.fillMaxWidth().padding(MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      AsteroidFeedHeader(
+        date = LocalDate(2026, Month.APRIL, 19),
+        hazardousCount = 3,
+        modifier = Modifier.fillMaxWidth().padding(MarginDouble),
+      )
     }
+  }
 }
 
 @WidgetPreviews
 @Composable
 private fun AsteroidFeedHeaderSafePreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            AsteroidFeedHeader(
-                date = LocalDate(2026, Month.APRIL, 19),
-                hazardousCount = 0,
-                modifier = Modifier.fillMaxWidth().padding(MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      AsteroidFeedHeader(
+        date = LocalDate(2026, Month.APRIL, 19),
+        hazardousCount = 0,
+        modifier = Modifier.fillMaxWidth().padding(MarginDouble),
+      )
     }
+  }
 }
-
-
-

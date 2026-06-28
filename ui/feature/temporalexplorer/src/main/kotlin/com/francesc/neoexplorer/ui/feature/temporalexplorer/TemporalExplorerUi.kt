@@ -19,25 +19,24 @@ import dev.zacsweers.metro.AppScope
 @CircuitInject(TemporalExplorerScreen::class, AppScope::class)
 @Composable
 fun TemporalExplorerUi(
-    state: TemporalExplorerUiState,
-    modifier: Modifier = Modifier,
+  state: TemporalExplorerUiState,
+  modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = stringResource(R.string.temporal_explorer),
-            style = MaterialTheme.typography.headlineMedium,
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = stringResource(R.string.temporal_explorer_description),
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-    }
+  Column(
+    modifier = modifier,
+    horizontalAlignment = Alignment.CenterHorizontally,
+    verticalArrangement = Arrangement.Center,
+  ) {
+    Text(
+      text = stringResource(R.string.temporal_explorer),
+      style = MaterialTheme.typography.headlineMedium,
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+    Text(
+      text = stringResource(R.string.temporal_explorer_description),
+      style = MaterialTheme.typography.bodyMedium,
+      textAlign = TextAlign.Center,
+      color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+  }
 }
-

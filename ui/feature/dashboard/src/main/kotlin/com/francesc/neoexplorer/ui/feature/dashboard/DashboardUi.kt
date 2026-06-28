@@ -20,38 +20,39 @@ import dev.zacsweers.metro.AppScope
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardUi(state: DashboardUiState, modifier: Modifier = Modifier) {
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            DashboardTopBar(
-                isLoaded = state.loadingState == LoadingState.LOADED,
-                sortOrder = state.sortOrder,
-                onSortOrderChange = { state.eventSink(DashboardEvent.SetSortOrder(it)) },
-            )
-        },
-    ) { innerPadding ->
-        Crossfade(targetState = state.loadingState, label = "dashboardState") { loadingState ->
-            when (loadingState) {
-                LoadingState.LOADING -> LoadingContent(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = innerPadding,
-                )
-                LoadingState.LOADED -> AsteroidFeed(
-                    asteroids = state.asteroids,
-                    date = state.date,
-                    hazardousCount = state.hazardousCount,
-                    onAsteroidClick = { state.eventSink(DashboardEvent.AsteroidClicked(it)) },
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = innerPadding,
-                )
-                LoadingState.ERROR -> ErrorContent(
-                    message = state.errorMessage ?: stringResource(R.string.something_went_wrong),
-                    onRetry = { state.eventSink(DashboardEvent.Retry) },
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize(),
-                )
-            }
-        }
+  Scaffold(
+    modifier = modifier,
+    topBar = {
+      DashboardTopBar(
+        isLoaded = state.loadingState == LoadingState.LOADED,
+        sortOrder = state.sortOrder,
+        onSortOrderChange = { state.eventSink(DashboardEvent.SetSortOrder(it)) },
+      )
+    },
+  ) { innerPadding ->
+    Crossfade(targetState = state.loadingState, label = "dashboardState") { loadingState ->
+      when (loadingState) {
+        LoadingState.LOADING ->
+          LoadingContent(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = innerPadding,
+          )
+        LoadingState.LOADED ->
+          AsteroidFeed(
+            asteroids = state.asteroids,
+            date = state.date,
+            hazardousCount = state.hazardousCount,
+            onAsteroidClick = { state.eventSink(DashboardEvent.AsteroidClicked(it)) },
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = innerPadding,
+          )
+        LoadingState.ERROR ->
+          ErrorContent(
+            message = state.errorMessage ?: stringResource(R.string.something_went_wrong),
+            onRetry = { state.eventSink(DashboardEvent.Retry) },
+            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+          )
+      }
     }
+  }
 }

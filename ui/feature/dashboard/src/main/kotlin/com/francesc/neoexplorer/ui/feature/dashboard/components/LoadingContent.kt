@@ -19,34 +19,32 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
 fun LoadingContent(
-    modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(),
+  modifier: Modifier = Modifier,
+  contentPadding: PaddingValues = PaddingValues(),
 ) {
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(minSize = MinCardSize),
-        modifier = modifier,
-        contentPadding = contentPadding + PaddingValues(MarginDouble),
-        verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
-        horizontalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
-    ) {
-        item(span = { GridItemSpan(maxLineSpan) }) {
-            ShimmerHeader(modifier = Modifier.fillMaxWidth())
-        }
-        items(6) {
-            ShimmerCard(
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+  LazyVerticalGrid(
+    columns = GridCells.Adaptive(minSize = MinCardSize),
+    modifier = modifier,
+    contentPadding = contentPadding + PaddingValues(MarginDouble),
+    verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
+    horizontalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
+  ) {
+    item(span = { GridItemSpan(maxLineSpan) }) {
+      ShimmerHeader(modifier = Modifier.fillMaxWidth())
     }
+    items(6) {
+      ShimmerCard(modifier = Modifier.fillMaxWidth())
+    }
+  }
 }
 
 @PhonePreviews
 @TabletPreviews
 @Composable
 private fun LoadingContentPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            LoadingContent()
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      LoadingContent()
     }
+  }
 }

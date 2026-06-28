@@ -17,80 +17,80 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
 internal fun Preference(
-    title: String,
-    modifier: Modifier = Modifier,
-    summary: (@Composable () -> Unit)? = null,
-    control: (@Composable () -> Unit)? = null,
+  title: String,
+  modifier: Modifier = Modifier,
+  summary: (@Composable () -> Unit)? = null,
+  control: (@Composable () -> Unit)? = null,
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyLarge,
-            )
-            summary?.invoke()
-        }
-        control?.let {
-            Column(modifier = Modifier.padding(start = MarginDouble)) {
-                it()
-            }
-        }
+  Row(
+    modifier = modifier.fillMaxWidth(),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Column(modifier = Modifier.weight(1f)) {
+      Text(
+        text = title,
+        style = MaterialTheme.typography.bodyLarge,
+      )
+      summary?.invoke()
     }
+    control?.let {
+      Column(modifier = Modifier.padding(start = MarginDouble)) {
+        it()
+      }
+    }
+  }
 }
 
 @WidgetPreviews
 @Composable
 private fun PreferenceTitleOnlyPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            Preference(
-                title = "Preference title",
-                modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      Preference(
+        title = "Preference title",
+        modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
+      )
     }
+  }
 }
 
 @WidgetPreviews
 @Composable
 private fun PreferenceWithSummaryPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            Preference(
-                title = "Preference title",
-                summary = {
-                    Text(
-                        text = "This is a summary description",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                },
-                modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      Preference(
+        title = "Preference title",
+        summary = {
+          Text(
+            text = "This is a summary description",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+          )
+        },
+        modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
+      )
     }
+  }
 }
 
 @WidgetPreviews
 @Composable
 private fun PreferenceWithControlPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            Preference(
-                title = "Preference title",
-                summary = {
-                    Text(
-                        text = "This is a summary description",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                },
-                control = { Switch(checked = true, onCheckedChange = {}) },
-                modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      Preference(
+        title = "Preference title",
+        summary = {
+          Text(
+            text = "This is a summary description",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+          )
+        },
+        control = { Switch(checked = true, onCheckedChange = {}) },
+        modifier = Modifier.fillMaxWidth().padding(all = MarginDouble),
+      )
     }
+  }
 }

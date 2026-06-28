@@ -24,31 +24,31 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
 internal fun DetailsErrorContent(
-    message: String,
-    onRetry: () -> Unit,
-    modifier: Modifier = Modifier,
+  message: String,
+  onRetry: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(MarginDouble),
-        ) {
-            Icon(
-                imageVector = Icons.Default.Warning,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.error,
-                modifier = Modifier.size(IconSizeLarge),
-            )
-            Text(
-                text = message,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Button(onClick = onRetry) {
-                Text(text = stringResource(R.string.retry))
-            }
-        }
+  Box(modifier = modifier, contentAlignment = Alignment.Center) {
+    Column(
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.spacedBy(MarginDouble),
+    ) {
+      Icon(
+        imageVector = Icons.Default.Warning,
+        contentDescription = null,
+        tint = MaterialTheme.colorScheme.error,
+        modifier = Modifier.size(IconSizeLarge),
+      )
+      Text(
+        text = message,
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+      Button(onClick = onRetry) {
+        Text(text = stringResource(R.string.retry))
+      }
     }
+  }
 }
 
 // ── Previews ──────────────────────────────────────────────────────────────────
@@ -56,13 +56,13 @@ internal fun DetailsErrorContent(
 @PhonePreviews
 @Composable
 private fun DetailsErrorContentPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            DetailsErrorContent(
-                message = "Failed to load asteriod details. Please check your connection and try again.",
-                onRetry = {},
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      DetailsErrorContent(
+        message = "Failed to load asteriod details. Please check your connection and try again.",
+        onRetry = {},
+        modifier = Modifier.fillMaxWidth(),
+      )
     }
+  }
 }

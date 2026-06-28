@@ -15,40 +15,40 @@ private const val NEO_WS_BASE_URL = "https://api.nasa.gov/neo/rest/v1/"
 
 @ContributesTo(AppScope::class)
 interface NeoNetworkModule {
-    companion object {
-        @Provides
-        @Named("nasa_api_key")
-        fun provideNasaApiKey(): String = BuildConfig.NASA_API_KEY
+  companion object {
+    @Provides @Named("nasa_api_key") fun provideNasaApiKey(): String = BuildConfig.NASA_API_KEY
 
-        @Provides
-        fun provideNeoWsJson(): Json = Json {
-            ignoreUnknownKeys = true
-            coerceInputValues = true
-        }
-
-        @Provides
-        fun provideNeoWsOkHttpClient(): OkHttpClient =
-            OkHttpClient.Builder()
-                .addInterceptor(
-                    HttpLoggingInterceptor().apply {
-                        level = if (BuildConfig.DEBUG) {
-                            HttpLoggingInterceptor.Level.BODY
-                        } else {
-                            HttpLoggingInterceptor.Level.NONE
-                        }
-                    }
-                )
-                .build()
-
-        @Provides
-        @NeoWsRetrofit
-        fun provideNeoWsRetrofit(
-            okHttpClient: OkHttpClient,
-            json: Json,
-        ): Retrofit = Retrofit.Builder()
-            .baseUrl(NEO_WS_BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-            .build()
+    @Provides
+    fun provideNeoWsJson(): Json = Json {
+      ignoreUnknownKeys = true
+      coerceInputValues = true
     }
+
+    @Provides
+    fun provideNeoWsOkHttpClient(): OkHttpClient =
+      OkHttpClient.Builder()
+        .addInterceptor(
+          HttpLoggingInterceptor().apply {
+            level =
+              if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+              } else {
+                HttpLoggingInterceptor.Level.NONE
+              }
+          }
+        )
+        .build()
+
+    @Provides
+    @NeoWsRetrofit
+    fun provideNeoWsRetrofit(
+      okHttpClient: OkHttpClient,
+      json: Json,
+    ): Retrofit =
+      Retrofit.Builder()
+        .baseUrl(NEO_WS_BASE_URL)
+        .client(okHttpClient)
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .build()
+  }
 }

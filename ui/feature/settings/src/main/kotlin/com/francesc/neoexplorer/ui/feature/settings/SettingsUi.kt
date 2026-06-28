@@ -27,55 +27,50 @@ import dev.zacsweers.metro.AppScope
 @CircuitInject(SettingsScreen::class, AppScope::class)
 @Composable
 fun SettingsUi(
-    state: SettingsUiState,
-    modifier: Modifier = Modifier,
+  state: SettingsUiState,
+  modifier: Modifier = Modifier,
 ) {
-    Scaffold(
-        topBar = {
-            SettingsTopBar(
-                modifier = Modifier.fillMaxWidth(),
-            )
-        },
-        modifier = modifier,
-    ) { innerPadding ->
-        val layoutDirection = LocalLayoutDirection.current
-        Column(
-            modifier = Modifier
-                .padding(
-                    top = innerPadding.calculateTopPadding(),
-                    start = innerPadding.calculateLeftPadding(layoutDirection),
-                    end = innerPadding.calculateRightPadding(layoutDirection),
-                )
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(MarginSingle),
-        ) {
-            ThemePreference(
-                selectedTheme = state.theme,
-                onThemeSelected = { state.eventSink(SettingsUiEvent.ThemeChanged(it)) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = MarginDouble),
-            )
+  Scaffold(
+    topBar = {
+      SettingsTopBar(modifier = Modifier.fillMaxWidth())
+    },
+    modifier = modifier,
+  ) { innerPadding ->
+    val layoutDirection = LocalLayoutDirection.current
+    Column(
+      modifier =
+        Modifier.padding(
+            top = innerPadding.calculateTopPadding(),
+            start = innerPadding.calculateLeftPadding(layoutDirection),
+            end = innerPadding.calculateRightPadding(layoutDirection),
+          )
+          .verticalScroll(rememberScrollState()),
+      verticalArrangement = Arrangement.spacedBy(MarginSingle),
+    ) {
+      ThemePreference(
+        selectedTheme = state.theme,
+        onThemeSelected = { state.eventSink(SettingsUiEvent.ThemeChanged(it)) },
+        modifier = Modifier.fillMaxWidth().padding(horizontal = MarginDouble),
+      )
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                HorizontalDivider(
-                    modifier = Modifier.padding(
-                        vertical = MarginSingle,
-                        horizontal = MarginDouble
-                    )
-                )
-
-                SwitchPreference(
-                    title = stringResource(R.string.settings_dynamic_color_title),
-                    summary = stringResource(R.string.settings_dynamic_color_subtitle),
-                    checked = state.useDynamicTheme,
-                    onCheckedChange = { state.eventSink(SettingsUiEvent.DynamicThemeChanged(it)) },
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = MarginDouble),
-                )
-            }
-            Spacer(
-                modifier = Modifier.height(innerPadding.calculateBottomPadding())
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        HorizontalDivider(
+          modifier =
+            Modifier.padding(
+              vertical = MarginSingle,
+              horizontal = MarginDouble,
             )
-        }
+        )
+
+        SwitchPreference(
+          title = stringResource(R.string.settings_dynamic_color_title),
+          summary = stringResource(R.string.settings_dynamic_color_subtitle),
+          checked = state.useDynamicTheme,
+          onCheckedChange = { state.eventSink(SettingsUiEvent.DynamicThemeChanged(it)) },
+          modifier = Modifier.fillMaxWidth().padding(horizontal = MarginDouble),
+        )
+      }
+      Spacer(modifier = Modifier.height(innerPadding.calculateBottomPadding()))
     }
+  }
 }

@@ -15,16 +15,16 @@ import java.io.OutputStream
  */
 internal object AppPreferencesSerializer : Serializer<AppPreferencesProto> {
 
-    override val defaultValue: AppPreferencesProto = AppPreferencesProto.getDefaultInstance()
+  override val defaultValue: AppPreferencesProto = AppPreferencesProto.getDefaultInstance()
 
-    override suspend fun readFrom(input: InputStream): AppPreferencesProto =
-        try {
-            AppPreferencesProto.parseFrom(input)
-        } catch (e: InvalidProtocolBufferException) {
-            throw CorruptionException("Cannot deserialize AppPreferencesProto", e)
-        }
-
-    override suspend fun writeTo(t: AppPreferencesProto, output: OutputStream) {
-        t.writeTo(output)
+  override suspend fun readFrom(input: InputStream): AppPreferencesProto =
+    try {
+      AppPreferencesProto.parseFrom(input)
+    } catch (e: InvalidProtocolBufferException) {
+      throw CorruptionException("Cannot deserialize AppPreferencesProto", e)
     }
+
+  override suspend fun writeTo(t: AppPreferencesProto, output: OutputStream) {
+    t.writeTo(output)
+  }
 }

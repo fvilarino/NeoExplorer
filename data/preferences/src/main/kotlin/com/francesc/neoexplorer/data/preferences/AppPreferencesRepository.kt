@@ -10,20 +10,16 @@ import kotlinx.coroutines.flow.Flow
  */
 interface AppPreferencesRepository {
 
-    /**
-     * A cold [Flow] that emits the current [AppPreferences] and then each subsequent update.
-     * Backed by DataStore – it never completes normally and emits exactly one item on collection
-     * before suspending until the next change.
-     */
-    val preferences: Flow<AppPreferences>
+  /**
+   * A cold [Flow] that emits the current [AppPreferences] and then each subsequent update. Backed
+   * by DataStore – it never completes normally and emits exactly one item on collection before
+   * suspending until the next change.
+   */
+  val preferences: Flow<AppPreferences>
 
-    /**
-     * Persists [theme] as the new app theme preference.
-     */
-    suspend fun setTheme(theme: AppTheme)
+  /** Persists [theme] as the new app theme preference. */
+  suspend fun setTheme(theme: AppTheme)
 
-    /**
-     * Persists [useDynamicTheme] as the dynamic-colour preference flag.
-     */
-    suspend fun setUseDynamicTheme(useDynamicTheme: Boolean)
+  /** Persists [useDynamicTheme] as the dynamic-colour preference flag. */
+  suspend fun setUseDynamicTheme(useDynamicTheme: Boolean)
 }

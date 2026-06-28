@@ -31,103 +31,108 @@ private val AnchorSizeDp: Dp = 128.dp
 private val MinIconSizeDp: Dp = 16.dp
 
 private data class IllustrativeSize(
-    val referenceObject: Dp,
-    val asteroid: Dp,
+  val referenceObject: Dp,
+  val asteroid: Dp,
 )
 
 /**
  * Two-segment linear scale:
  *
- * • Asteroid ≤ reference → reference icon stays at [AnchorSizeDp];
- *   asteroid icon = (asteroidDiameter / referenceSize) × AnchorSizeDp.
+ * • Asteroid ≤ reference → reference icon stays at [AnchorSizeDp]; asteroid icon =
+ * (asteroidDiameter / referenceSize) × AnchorSizeDp.
  *
- * • Asteroid > reference → asteroid icon stays at [AnchorSizeDp];
- *   reference icon = (referenceSize / asteroidDiameter) × AnchorSizeDp.
+ * • Asteroid > reference → asteroid icon stays at [AnchorSizeDp]; reference icon = (referenceSize /
+ * asteroidDiameter) × AnchorSizeDp.
  *
  * Both results are clamped to [MinIconSizeDp] so neither icon vanishes entirely.
  *
  * @return IllustrativeSize(referenceIconSizeDp, asteroidIconSizeDp)
  */
 private fun calculateLinearScale(
-    asteroidDiameterMeters: Double,
-    referenceSizeMeters: Double,
-): IllustrativeSize = if (asteroidDiameterMeters <= referenceSizeMeters) {
-    val asteroidDp = (AnchorSizeDp * (asteroidDiameterMeters / referenceSizeMeters).toFloat())
-        .coerceAtLeast(MinIconSizeDp)
+  asteroidDiameterMeters: Double,
+  referenceSizeMeters: Double,
+): IllustrativeSize =
+  if (asteroidDiameterMeters <= referenceSizeMeters) {
+    val asteroidDp =
+      (AnchorSizeDp * (asteroidDiameterMeters / referenceSizeMeters).toFloat()).coerceAtLeast(
+        MinIconSizeDp
+      )
     IllustrativeSize(AnchorSizeDp, asteroidDp)
-} else {
-    val referenceDp = (AnchorSizeDp * (referenceSizeMeters / asteroidDiameterMeters).toFloat())
-        .coerceAtLeast(MinIconSizeDp)
+  } else {
+    val referenceDp =
+      (AnchorSizeDp * (referenceSizeMeters / asteroidDiameterMeters).toFloat()).coerceAtLeast(
+        MinIconSizeDp
+      )
     IllustrativeSize(referenceDp, AnchorSizeDp)
-}
+  }
 
 @Composable
 internal fun AsteroidScaleVisualizer(
-    asteroidName: String,
-    diameterMeters: Double,
-    reference: SizeReferenceObject,
-    modifier: Modifier = Modifier,
+  asteroidName: String,
+  diameterMeters: Double,
+  reference: SizeReferenceObject,
+  modifier: Modifier = Modifier,
 ) {
-    val (referenceIconSizeDp, asteroidIconSizeDp) = calculateLinearScale(
-        asteroidDiameterMeters = diameterMeters,
-        referenceSizeMeters = reference.sizeMeters,
+  val (referenceIconSizeDp, asteroidIconSizeDp) =
+    calculateLinearScale(
+      asteroidDiameterMeters = diameterMeters,
+      referenceSizeMeters = reference.sizeMeters,
     )
 
-    Column(modifier = modifier) {
-        Text(
-            text = stringResource(R.string.scale_visualizer_title),
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurface,
+  Column(modifier = modifier) {
+    Text(
+      text = stringResource(R.string.scale_visualizer_title),
+      style = MaterialTheme.typography.titleSmall,
+      color = MaterialTheme.colorScheme.onSurface,
+    )
+
+    Spacer(modifier = Modifier.size(MarginSingle))
+
+    Row(
+      modifier = Modifier.fillMaxWidth().wrapContentHeight().heightIn(min = 80.dp),
+      horizontalArrangement = Arrangement.Center,
+      verticalAlignment = Alignment.Bottom, // shared ground baseline
+    ) {
+      // ── Reference object (anchor) ─────────────────────────────────
+      Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(
+          painter = painterResource(id = reference.iconRes),
+          contentDescription =
+            stringResource(
+              R.string.scale_visualizer_anchor_cd,
+              reference.label,
+            ),
+          modifier = Modifier.size(referenceIconSizeDp),
         )
+        Text(
+          text = reference.label,
+          style = MaterialTheme.typography.labelSmall,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+      }
 
-        Spacer(modifier = Modifier.size(MarginSingle))
+      Spacer(modifier = Modifier.width(MarginDouble))
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .heightIn(min = 80.dp),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Bottom, // shared ground baseline
-        ) {
-            // ── Reference object (anchor) ─────────────────────────────────
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Image(
-                    painter = painterResource(id = reference.iconRes),
-                    contentDescription = stringResource(
-                        R.string.scale_visualizer_anchor_cd,
-                        reference.label,
-                    ),
-                    modifier = Modifier.size(referenceIconSizeDp),
-                )
-                Text(
-                    text = reference.label,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            Spacer(modifier = Modifier.width(MarginDouble))
-
-            // ── Asteroid silhouette ───────────────────────────────────────
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Image(
-                    painter = painterResource(id = R.drawable.asteroid),
-                    contentDescription = stringResource(R.string.scale_visualizer_asteroid_cd),
-                    modifier = Modifier.size(asteroidIconSizeDp),
-                )
-                Text(
-                    text = stringResource(
-                        R.string.scale_visualizer_asteroid_label,
-                        asteroidName,
-                        diameterMeters.toInt(),
-                    ),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
+      // ── Asteroid silhouette ───────────────────────────────────────
+      Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Image(
+          painter = painterResource(id = R.drawable.asteroid),
+          contentDescription = stringResource(R.string.scale_visualizer_asteroid_cd),
+          modifier = Modifier.size(asteroidIconSizeDp),
+        )
+        Text(
+          text =
+            stringResource(
+              R.string.scale_visualizer_asteroid_label,
+              asteroidName,
+              diameterMeters.toInt(),
+            ),
+          style = MaterialTheme.typography.labelSmall,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+      }
     }
+  }
 }
 
 // ── Previews ──────────────────────────────────────────────────────────────────
@@ -136,52 +141,46 @@ internal fun AsteroidScaleVisualizer(
 @WidgetPreviews
 @Composable
 private fun AsteroidScaleVisualizerTinyPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            AsteroidScaleVisualizer(
-                asteroidName = "2013 NF19",
-                diameterMeters = 1.5,
-                reference = SizeReferenceObject.BICYCLE,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      AsteroidScaleVisualizer(
+        asteroidName = "2013 NF19",
+        diameterMeters = 1.5,
+        reference = SizeReferenceObject.BICYCLE,
+        modifier = Modifier.fillMaxWidth().padding(MarginDouble),
+      )
     }
+  }
 }
 
 /** Mid-range asteroid (~500 m) vs Golden Gate Bridge (~2 737 m) */
 @WidgetPreviews
 @Composable
 private fun AsteroidScaleVisualizerMidPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            AsteroidScaleVisualizer(
-                asteroidName = "2013 NF19",
-                diameterMeters = 500.0,
-                reference = SizeReferenceObject.GOLDEN_GATE_BRIDGE,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      AsteroidScaleVisualizer(
+        asteroidName = "2013 NF19",
+        diameterMeters = 500.0,
+        reference = SizeReferenceObject.GOLDEN_GATE_BRIDGE,
+        modifier = Modifier.fillMaxWidth().padding(MarginDouble),
+      )
     }
+  }
 }
 
 /** Very large asteroid (~11 000 m) vs Mount Everest (~8 849 m) */
 @WidgetPreviews
 @Composable
 private fun AsteroidScaleVisualizerLargePreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            AsteroidScaleVisualizer(
-                asteroidName = "2013 NF19",
-                diameterMeters = 11_000.0,
-                reference = SizeReferenceObject.MOUNT_EVEREST,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      AsteroidScaleVisualizer(
+        asteroidName = "2013 NF19",
+        diameterMeters = 11_000.0,
+        reference = SizeReferenceObject.MOUNT_EVEREST,
+        modifier = Modifier.fillMaxWidth().padding(MarginDouble),
+      )
     }
+  }
 }

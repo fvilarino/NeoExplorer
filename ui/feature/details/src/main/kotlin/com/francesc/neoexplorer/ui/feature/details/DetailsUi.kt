@@ -39,112 +39,104 @@ import dev.zacsweers.metro.AppScope
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsUi(
-    state: DetailsUiState,
-    modifier: Modifier = Modifier,
+  state: DetailsUiState,
+  modifier: Modifier = Modifier,
 ) {
-    val sink = state.eventSink
-    DetailsUi(
-        state = state,
-        onBackClick = { sink(DetailsEvent.BackClicked) },
-        modifier = modifier,
-    )
+  val sink = state.eventSink
+  DetailsUi(
+    state = state,
+    onBackClick = { sink(DetailsEvent.BackClicked) },
+    modifier = modifier,
+  )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DetailsUi(
-    state: DetailsUiState,
-    onBackClick: () -> Unit,
-    modifier: Modifier = Modifier,
+  state: DetailsUiState,
+  onBackClick: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.accessibility_back),
-                            tint = MaterialTheme.colorScheme.onSurface,
-                        )
-                    }
-                },
-                title = {
-                    Column {
-                        Text(
-                            text = state.asteroid?.name
-                                ?: stringResource(R.string.details_loading_title),
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        if (state.loadingState == DetailsLoadingState.LOADED) {
-                            Text(
-                                text = state.asteroid?.closeApproachDate.orEmpty(),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                },
+  Scaffold(
+    modifier = modifier,
+    topBar = {
+      TopAppBar(
+        navigationIcon = {
+          IconButton(onClick = onBackClick) {
+            Icon(
+              imageVector = Icons.AutoMirrored.Default.ArrowBack,
+              contentDescription = stringResource(R.string.accessibility_back),
+              tint = MaterialTheme.colorScheme.onSurface,
             )
+          }
         },
-    ) { innerPadding ->
-        when (state.loadingState) {
-            DetailsLoadingState.LOADING -> DetailsLoadingContent(
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
+        title = {
+          Column {
+            Text(
+              text = state.asteroid?.name ?: stringResource(R.string.details_loading_title),
+              style = MaterialTheme.typography.titleMedium,
             )
-
-            DetailsLoadingState.ERROR -> DetailsErrorContent(
-                message = state.errorMessage
-                    ?: stringResource(R.string.something_went_wrong),
-                onRetry = { state.eventSink(DetailsEvent.Retry) },
-                modifier = Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
-            )
-
-            DetailsLoadingState.LOADED -> {
-                val asteroid = state.asteroid ?: return@Scaffold
-                val windowWidthClass = rememberWindowWidthClass()
-
-                if (windowWidthClass == WindowWidthClass.Expanded) {
-                    DetailsLoadedTwoPaneContent(
-                        asteroid = asteroid,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize(),
-                    )
-                } else {
-                    // Compact / Medium – single column, capped at MaxContentWidth and centered
-                    val horizontalPadding = if (windowWidthClass == WindowWidthClass.Medium) {
-                        MarginQuad
-                    } else {
-                        MarginDouble
-                    }
-                    ContentContainer(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                    ) {
-                        DetailsLoadedSingleColumnContent(
-                            asteroid = asteroid,
-                            horizontalPadding = horizontalPadding,
-                            modifier = Modifier.fillMaxWidth(),
-                            contentPadding = innerPadding,
-                        )
-                    }
-                }
+            if (state.loadingState == DetailsLoadingState.LOADED) {
+              Text(
+                text = state.asteroid?.closeApproachDate.orEmpty(),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+              )
             }
+          }
+        },
+      )
+    },
+  ) { innerPadding ->
+    when (state.loadingState) {
+      DetailsLoadingState.LOADING ->
+        DetailsLoadingContent(modifier = Modifier.padding(innerPadding).fillMaxSize())
+
+      DetailsLoadingState.ERROR ->
+        DetailsErrorContent(
+          message = state.errorMessage ?: stringResource(R.string.something_went_wrong),
+          onRetry = { state.eventSink(DetailsEvent.Retry) },
+          modifier = Modifier.padding(innerPadding).fillMaxSize(),
+        )
+
+      DetailsLoadingState.LOADED -> {
+        val asteroid = state.asteroid ?: return@Scaffold
+        val windowWidthClass = rememberWindowWidthClass()
+
+        if (windowWidthClass == WindowWidthClass.Expanded) {
+          DetailsLoadedTwoPaneContent(
+            asteroid = asteroid,
+            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+          )
+        } else {
+          // Compact / Medium – single column, capped at MaxContentWidth and centered
+          val horizontalPadding =
+            if (windowWidthClass == WindowWidthClass.Medium) {
+              MarginQuad
+            } else {
+              MarginDouble
+            }
+          ContentContainer(modifier = Modifier.fillMaxSize()) {
+            DetailsLoadedSingleColumnContent(
+              asteroid = asteroid,
+              horizontalPadding = horizontalPadding,
+              modifier = Modifier.fillMaxWidth(),
+              contentPadding = innerPadding,
+            )
+          }
         }
+      }
     }
+  }
 }
 
 // ── Previews ──────────────────────────────────────────────────────────────────
 
-private fun previewState() = DetailsUiState(
+private fun previewState() =
+  DetailsUiState(
     loadingState = DetailsLoadingState.LOADED,
-    asteroid = DetailsUiModel(
+    asteroid =
+      DetailsUiModel(
         id = "2025-AB",
         name = "90416 (2025 AB)",
         isPotentiallyHazardous = true,
@@ -157,25 +149,25 @@ private fun previewState() = DetailsUiState(
         nasaJplUrl = "https://ssd.jpl.nasa.gov/tools/sbdb_lookup.html#/?sstr=2025-AB",
         closeApproachDate = "19 Apr 2026",
         sizeReference = SizeReferenceObject.BURJ_KHALIFA,
-    ),
-)
+      ),
+  )
 
 @PhonePreviews
 @Composable
 private fun DetailsUiPhonePreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            DetailsUi(state = previewState(), modifier = Modifier.fillMaxSize())
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      DetailsUi(state = previewState(), modifier = Modifier.fillMaxSize())
     }
+  }
 }
 
 @TabletPreviews
 @Composable
 private fun DetailsUiTabletPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            DetailsUi(state = previewState(), modifier = Modifier.fillMaxSize())
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      DetailsUi(state = previewState(), modifier = Modifier.fillMaxSize())
     }
+  }
 }

@@ -14,8 +14,8 @@ val MaxContentWidth = 840.dp
 
 /**
  * A centering container that caps its inner content at [MaxContentWidth] and centres it
- * horizontally within the available space.  Use this to prevent single-column screens from
- * becoming uncomfortably wide on tablets in medium window-width mode.
+ * horizontally within the available space. Use this to prevent single-column screens from becoming
+ * uncomfortably wide on tablets in medium window-width mode.
  *
  * Example usage — wrap the content area of a Scaffold:
  * ```
@@ -26,15 +26,13 @@ val MaxContentWidth = 840.dp
  */
 @Composable
 fun ContentContainer(
-    modifier: Modifier = Modifier,
-    content: @Composable BoxScope.() -> Unit,
+  modifier: Modifier = Modifier,
+  content: @Composable BoxScope.() -> Unit,
 ) {
-    Box(modifier = modifier, contentAlignment = Alignment.TopCenter) {
-        Box(
-            modifier = Modifier
-                .widthIn(max = MaxContentWidth)
-                .fillMaxSize(),
-            content = content,
-        )
-    }
+  Box(modifier = modifier, contentAlignment = Alignment.TopCenter) {
+    Box(
+      modifier = Modifier.widthIn(max = MaxContentWidth).fillMaxSize(),
+      content = content,
+    )
+  }
 }

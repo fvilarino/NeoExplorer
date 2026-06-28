@@ -35,125 +35,123 @@ internal val MinCardSize = 300.dp
 
 @Composable
 fun AsteroidFeed(
-    asteroids: List<AsteroidUiModel>,
-    date: LocalDate,
-    hazardousCount: Int,
-    onAsteroidClick: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(),
+  asteroids: List<AsteroidUiModel>,
+  date: LocalDate,
+  hazardousCount: Int,
+  onAsteroidClick: (String) -> Unit,
+  modifier: Modifier = Modifier,
+  contentPadding: PaddingValues = PaddingValues(),
 ) {
-    Crossfade(
-        targetState = asteroids.isEmpty(),
-        modifier = modifier,
-        label = "AsteroidFeedCrossfade"
-    ) { isEmpty ->
-        if (isEmpty) {
-            Column(modifier = Modifier.fillMaxSize()) {
-                AsteroidFeedHeader(
-                    date = date,
-                    hazardousCount = hazardousCount,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(contentPadding)
-                        .padding(horizontal = MarginDouble, vertical = MarginDouble),
-                )
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        text = stringResource(R.string.no_close_approaches_today),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-        } else {
-            val state = rememberLazyGridState()
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = MinCardSize),
-                state = state,
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = contentPadding + PaddingValues(MarginDouble),
-                verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
-                horizontalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
-            ) {
-                item(span = { GridItemSpan(maxLineSpan) }) {
-                    AsteroidFeedHeader(
-                        date = date,
-                        hazardousCount = hazardousCount,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                items(asteroids, key = { it.id }) { asteroid ->
-                    AsteroidCard(
-                        asteroid = asteroid,
-                        onClick = { onAsteroidClick(asteroid.id) },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-            }
+  Crossfade(
+    targetState = asteroids.isEmpty(),
+    modifier = modifier,
+    label = "AsteroidFeedCrossfade",
+  ) { isEmpty ->
+    if (isEmpty) {
+      Column(modifier = Modifier.fillMaxSize()) {
+        AsteroidFeedHeader(
+          date = date,
+          hazardousCount = hazardousCount,
+          modifier =
+            Modifier.fillMaxWidth()
+              .padding(contentPadding)
+              .padding(horizontal = MarginDouble, vertical = MarginDouble),
+        )
+        Box(
+          modifier = Modifier.weight(1f).fillMaxWidth(),
+          contentAlignment = Alignment.Center,
+        ) {
+          Text(
+            text = stringResource(R.string.no_close_approaches_today),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+          )
         }
+      }
+    } else {
+      val state = rememberLazyGridState()
+      LazyVerticalGrid(
+        columns = GridCells.Adaptive(minSize = MinCardSize),
+        state = state,
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = contentPadding + PaddingValues(MarginDouble),
+        verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
+        horizontalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
+      ) {
+        item(span = { GridItemSpan(maxLineSpan) }) {
+          AsteroidFeedHeader(
+            date = date,
+            hazardousCount = hazardousCount,
+            modifier = Modifier.fillMaxWidth(),
+          )
+        }
+        items(asteroids, key = { it.id }) { asteroid ->
+          AsteroidCard(
+            asteroid = asteroid,
+            onClick = { onAsteroidClick(asteroid.id) },
+            modifier = Modifier.fillMaxWidth(),
+          )
+        }
+      }
     }
+  }
 }
 
 @PhonePreviews
 @TabletPreviews
 @Composable
 private fun AsteroidFeedEmptyPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            AsteroidFeed(
-                emptyList(),
-                date = LocalDate(2026, Month.APRIL, 19),
-                hazardousCount = 2,
-                onAsteroidClick = {},
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      AsteroidFeed(
+        emptyList(),
+        date = LocalDate(2026, Month.APRIL, 19),
+        hazardousCount = 2,
+        onAsteroidClick = {},
+        modifier = Modifier.fillMaxWidth(),
+      )
     }
+  }
 }
 
 @PhonePreviews
 @TabletPreviews
 @Composable
 private fun AsteroidFeedPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            AsteroidFeed(
-                listOf(
-                    AsteroidUiModel(
-                        id = "2023-CA",
-                        name = "(2023 CA)",
-                        absoluteMagnitudeH = 22.3,
-                        missDistanceLunar = 0.045,
-                        missDistanceKm = 2_345_678.0,
-                        isPotentiallyHazardous = true,
-                        velocityKmPerSecond = 15.1,
-                        estimatedDiameterMaxKm = 0.31,
-                        closeApproachDate = "19 Apr 2026",
-                        threatLevel = ThreatLevel.CAUTION,
-                    ),
-                    AsteroidUiModel(
-                        id = "2023-ZZ",
-                        name = "(2023 ZZ)",
-                        absoluteMagnitudeH = 16.7,
-                        missDistanceLunar = 22.5,
-                        missDistanceKm = 8_650_000.0,
-                        isPotentiallyHazardous = false,
-                        velocityKmPerSecond = 8.2,
-                        estimatedDiameterMaxKm = 0.09,
-                        closeApproachDate = "19 Apr 2026",
-                        threatLevel = ThreatLevel.SAFE,
-                    ),
-                ),
-                date = LocalDate(2026, Month.APRIL, 19),
-                hazardousCount = 2,
-                onAsteroidClick = {},
-                modifier = Modifier.fillMaxWidth(),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      AsteroidFeed(
+        listOf(
+          AsteroidUiModel(
+            id = "2023-CA",
+            name = "(2023 CA)",
+            absoluteMagnitudeH = 22.3,
+            missDistanceLunar = 0.045,
+            missDistanceKm = 2_345_678.0,
+            isPotentiallyHazardous = true,
+            velocityKmPerSecond = 15.1,
+            estimatedDiameterMaxKm = 0.31,
+            closeApproachDate = "19 Apr 2026",
+            threatLevel = ThreatLevel.CAUTION,
+          ),
+          AsteroidUiModel(
+            id = "2023-ZZ",
+            name = "(2023 ZZ)",
+            absoluteMagnitudeH = 16.7,
+            missDistanceLunar = 22.5,
+            missDistanceKm = 8_650_000.0,
+            isPotentiallyHazardous = false,
+            velocityKmPerSecond = 8.2,
+            estimatedDiameterMaxKm = 0.09,
+            closeApproachDate = "19 Apr 2026",
+            threatLevel = ThreatLevel.SAFE,
+          ),
+        ),
+        date = LocalDate(2026, Month.APRIL, 19),
+        hazardousCount = 2,
+        onAsteroidClick = {},
+        modifier = Modifier.fillMaxWidth(),
+      )
     }
+  }
 }

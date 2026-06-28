@@ -1,10 +1,12 @@
 plugins {
-    id("neoexplorer.android.library")
+  id("neoexplorer.android.library")
 }
+
 android {
-    namespace = "com.francesc.neoexplorer.data.neo"
+  namespace = "com.francesc.neoexplorer.data.neo"
 }
+
 dependencies {
-    api(libs.androidx.paging.common)
-    api(libs.org.jetbrains.kotlinx.kotlinx.datetime)
+  api(libs.androidx.paging.common)
+  api(libs.org.jetbrains.kotlinx.kotlinx.datetime)
 }

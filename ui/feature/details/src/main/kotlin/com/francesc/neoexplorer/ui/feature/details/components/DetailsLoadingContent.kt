@@ -15,9 +15,9 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
 internal fun DetailsLoadingContent(modifier: Modifier = Modifier) {
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
-    }
+  Box(modifier = modifier, contentAlignment = Alignment.Center) {
+    CircularProgressIndicator()
+  }
 }
 
 // ── Previews ──────────────────────────────────────────────────────────────────
@@ -25,13 +25,9 @@ internal fun DetailsLoadingContent(modifier: Modifier = Modifier) {
 @PhonePreviews
 @Composable
 private fun DetailsLoadingContentPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            DetailsLoadingContent(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      DetailsLoadingContent(modifier = Modifier.fillMaxWidth().padding(all = MarginDouble))
     }
+  }
 }

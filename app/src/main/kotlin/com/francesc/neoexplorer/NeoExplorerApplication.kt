@@ -5,11 +5,11 @@ import dev.zacsweers.metro.createGraphFactory
 
 class NeoExplorerApplication : Application() {
 
-    lateinit var applicationGraph: ApplicationGraph
-        private set
+  lateinit var applicationGraph: ApplicationGraph
+    private set
 
-    override fun onCreate() {
-        super.onCreate()
-        applicationGraph = createGraphFactory<ApplicationGraph.Factory>().create(this)
-    }
+  override fun onCreate() {
+    super.onCreate()
+    applicationGraph = createGraphFactory<ApplicationGraph.Factory>().create(this)
+  }
 }

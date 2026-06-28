@@ -5,11 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class EstimatedDiameterRangeDto(
-    @SerialName("estimated_diameter_min") val estimatedDiameterMin: Double,
-    @SerialName("estimated_diameter_max") val estimatedDiameterMax: Double,
+  @SerialName("estimated_diameter_min") val estimatedDiameterMin: Double,
+  @SerialName("estimated_diameter_max") val estimatedDiameterMax: Double,
 )
 
 @Serializable
-data class EstimatedDiameterDto(
-    @SerialName("kilometers") val kilometers: EstimatedDiameterRangeDto,
-)
+data class EstimatedDiameterDto(@SerialName("kilometers") val kilometers: EstimatedDiameterRangeDto)

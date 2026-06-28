@@ -34,87 +34,87 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.filterNot
 
 internal enum class HomeDestinations(
-    @StringRes val label: Int,
-    val icon: ImageVector,
-    @StringRes val contentDescription: Int,
-    val screen: Screen,
+  @StringRes val label: Int,
+  val icon: ImageVector,
+  @StringRes val contentDescription: Int,
+  val screen: Screen,
 ) {
-    Dashboard(
-        label = R.string.nav_dashboard,
-        icon = Icons.Default.Home,
-        contentDescription = R.string.nav_dashboard,
-        screen = DashboardScreen,
-    ),
-    TemporalExplorer(
-        label = R.string.nav_temporal_explorer,
-        icon = Icons.Default.DateRange,
-        contentDescription = R.string.nav_temporal_explorer,
-        screen = TemporalExplorerScreen,
-    ),
-    Settings(
-        label = R.string.nav_settings,
-        icon = Icons.Default.Settings,
-        contentDescription = R.string.nav_settings,
-        screen = SettingsScreen,
-    ),
+  Dashboard(
+    label = R.string.nav_dashboard,
+    icon = Icons.Default.Home,
+    contentDescription = R.string.nav_dashboard,
+    screen = DashboardScreen,
+  ),
+  TemporalExplorer(
+    label = R.string.nav_temporal_explorer,
+    icon = Icons.Default.DateRange,
+    contentDescription = R.string.nav_temporal_explorer,
+    screen = TemporalExplorerScreen,
+  ),
+  Settings(
+    label = R.string.nav_settings,
+    icon = Icons.Default.Settings,
+    contentDescription = R.string.nav_settings,
+    screen = SettingsScreen,
+  ),
 }
 
 @Composable
 fun HomeScreen(
-    circuit: Circuit,
-    navigationRouter: NavigationRouter,
-    modifier: Modifier = Modifier,
+  circuit: Circuit,
+  navigationRouter: NavigationRouter,
+  modifier: Modifier = Modifier,
 ) {
-    CircuitCompositionLocals(circuit) {
-        var currentDestination by rememberSaveable { mutableStateOf(HomeDestinations.Dashboard) }
-        val backStack = rememberSaveableBackStack(listOf(DashboardScreen))
-        val navigator = rememberCircuitNavigator(backStack)
+  CircuitCompositionLocals(circuit) {
+    var currentDestination by rememberSaveable { mutableStateOf(HomeDestinations.Dashboard) }
+    val backStack = rememberSaveableBackStack(listOf(DashboardScreen))
+    val navigator = rememberCircuitNavigator(backStack)
 
-        LaunchedEffect(navigationRouter) {
-            navigationRouter.events
-                .filterNot { it.isConsumed }
-                .collectLatest { payload ->
-                    payload.consume()?.forEach { screen ->
-                        navigator.goTo(screen)
-                    }
-                }
-        }
-
-        NavigationSuiteScaffold(
-            modifier = modifier,
-            navigationSuiteItems = {
-                HomeDestinations.entries.forEach { destination ->
-                    item(
-                        icon = {
-                            Icon(
-                                imageVector = destination.icon,
-                                contentDescription = stringResource(destination.contentDescription),
-                            )
-                        },
-                        label = {
-                            Text(
-                                text = stringResource(destination.label),
-                                style = MaterialTheme.typography.labelMedium,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        },
-                        selected = destination == currentDestination,
-                        onClick = {
-                            if (currentDestination != destination) {
-                                currentDestination = destination
-                                navigator.resetRoot(destination.screen)
-                            }
-                        },
-                    )
-                }
-            },
-        ) {
-            NavigableCircuitContent(
-                navigator = navigator,
-                backStack = backStack,
-                modifier = Modifier.fillMaxSize(),
-            )
+    LaunchedEffect(navigationRouter) {
+      navigationRouter.events
+        .filterNot { it.isConsumed }
+        .collectLatest { payload ->
+          payload.consume()?.forEach { screen ->
+            navigator.goTo(screen)
+          }
         }
     }
+
+    NavigationSuiteScaffold(
+      modifier = modifier,
+      navigationSuiteItems = {
+        HomeDestinations.entries.forEach { destination ->
+          item(
+            icon = {
+              Icon(
+                imageVector = destination.icon,
+                contentDescription = stringResource(destination.contentDescription),
+              )
+            },
+            label = {
+              Text(
+                text = stringResource(destination.label),
+                style = MaterialTheme.typography.labelMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+              )
+            },
+            selected = destination == currentDestination,
+            onClick = {
+              if (currentDestination != destination) {
+                currentDestination = destination
+                navigator.resetRoot(destination.screen)
+              }
+            },
+          )
+        }
+      },
+    ) {
+      NavigableCircuitContent(
+        navigator = navigator,
+        backStack = backStack,
+        modifier = Modifier.fillMaxSize(),
+      )
+    }
+  }
 }

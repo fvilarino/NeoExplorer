@@ -1,9 +1,7 @@
 plugins {
-    id("neoexplorer.kotlin.library")
+  id("neoexplorer.kotlin.library")
 }
 
 dependencies {
-    api(libs.org.jetbrains.kotlinx.kotlinx.datetime)
+  api(libs.org.jetbrains.kotlinx.kotlinx.datetime)
 }
-
-

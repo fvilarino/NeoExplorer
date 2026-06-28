@@ -9,10 +9,10 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,95 +43,90 @@ private val ShimmerBarWidth = 4.dp
 
 @Composable
 fun ShimmerCard(modifier: Modifier = Modifier) {
-    val shimmerBrush = rememberShimmerBrush()
-    Card(
-        modifier = modifier,
-        shape = RoundedCornerShape(CardCornerSizeLarge),
-        elevation = CardDefaults.cardElevation(defaultElevation = CardElevation),
-    ) {
-        Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-            // Accent bar placeholder
-            Box(
-                modifier = Modifier
-                    .width(ShimmerBarWidth)
-                    .fillMaxHeight()
-                    .background(shimmerBrush),
-            )
-            Column(modifier = Modifier.padding(horizontal = MarginDouble, vertical = MarginDouble)) {
-                // Title row
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(0.6f)
-                        .height(ShimmerHeightTitle)
-                        .background(shimmerBrush, RoundedCornerShape(CardCornerSize)),
-                )
-                Spacer(modifier = Modifier.height(ShimmerSpacing))
-                // Distance stat
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(0.7f)
-                        .height(ShimmerHeightBody)
-                        .background(shimmerBrush, RoundedCornerShape(CardCornerSize)),
-                )
-                Spacer(modifier = Modifier.height(MarginSingle))
-                // Velocity + diameter row
-                Row {
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(ShimmerHeightBody)
-                            .background(shimmerBrush, RoundedCornerShape(CardCornerSize)),
-                    )
-                    Spacer(modifier = Modifier.width(MarginDouble))
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(ShimmerHeightBody)
-                            .background(shimmerBrush, RoundedCornerShape(CardCornerSize)),
-                    )
-                }
-                Spacer(modifier = Modifier.height(MarginSingle))
-                // Date footer
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth(0.25f)
-                        .height(ShimmerHeightBody)
-                        .background(shimmerBrush, RoundedCornerShape(CardCornerSize)),
-                )
-            }
+  val shimmerBrush = rememberShimmerBrush()
+  Card(
+    modifier = modifier,
+    shape = RoundedCornerShape(CardCornerSizeLarge),
+    elevation = CardDefaults.cardElevation(defaultElevation = CardElevation),
+  ) {
+    Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+      // Accent bar placeholder
+      Box(modifier = Modifier.width(ShimmerBarWidth).fillMaxHeight().background(shimmerBrush))
+      Column(modifier = Modifier.padding(horizontal = MarginDouble, vertical = MarginDouble)) {
+        // Title row
+        Box(
+          modifier =
+            Modifier.fillMaxWidth(0.6f)
+              .height(ShimmerHeightTitle)
+              .background(shimmerBrush, RoundedCornerShape(CardCornerSize))
+        )
+        Spacer(modifier = Modifier.height(ShimmerSpacing))
+        // Distance stat
+        Box(
+          modifier =
+            Modifier.fillMaxWidth(0.7f)
+              .height(ShimmerHeightBody)
+              .background(shimmerBrush, RoundedCornerShape(CardCornerSize))
+        )
+        Spacer(modifier = Modifier.height(MarginSingle))
+        // Velocity + diameter row
+        Row {
+          Box(
+            modifier =
+              Modifier.weight(1f)
+                .height(ShimmerHeightBody)
+                .background(shimmerBrush, RoundedCornerShape(CardCornerSize))
+          )
+          Spacer(modifier = Modifier.width(MarginDouble))
+          Box(
+            modifier =
+              Modifier.weight(1f)
+                .height(ShimmerHeightBody)
+                .background(shimmerBrush, RoundedCornerShape(CardCornerSize))
+          )
         }
+        Spacer(modifier = Modifier.height(MarginSingle))
+        // Date footer
+        Box(
+          modifier =
+            Modifier.fillMaxWidth(0.25f)
+              .height(ShimmerHeightBody)
+              .background(shimmerBrush, RoundedCornerShape(CardCornerSize))
+        )
+      }
     }
+  }
 }
 
 @Composable
 internal fun rememberShimmerBrush(): Brush {
-    val baseColor = MaterialTheme.colorScheme.surfaceVariant
-    val highlightColor = MaterialTheme.colorScheme.surface
-    val transition = rememberInfiniteTransition(label = "shimmer")
-    val translateAnim by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1_200f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1_200, easing = FastOutSlowInEasing),
-            repeatMode = RepeatMode.Restart,
+  val baseColor = MaterialTheme.colorScheme.surfaceVariant
+  val highlightColor = MaterialTheme.colorScheme.surface
+  val transition = rememberInfiniteTransition(label = "shimmer")
+  val translateAnim by
+    transition.animateFloat(
+      initialValue = 0f,
+      targetValue = 1_200f,
+      animationSpec =
+        infiniteRepeatable(
+          animation = tween(durationMillis = 1_200, easing = FastOutSlowInEasing),
+          repeatMode = RepeatMode.Restart,
         ),
-        label = "shimmerTranslate",
+      label = "shimmerTranslate",
     )
-    return Brush.linearGradient(
-        colors = listOf(baseColor, highlightColor, baseColor),
-        start = Offset(x = translateAnim - 600f, y = 0f),
-        end = Offset(x = translateAnim + 600f, y = 0f),
-    )
+  return Brush.linearGradient(
+    colors = listOf(baseColor, highlightColor, baseColor),
+    start = Offset(x = translateAnim - 600f, y = 0f),
+    end = Offset(x = translateAnim + 600f, y = 0f),
+  )
 }
 
 @WidgetPreviews
 @Composable
 private fun ShimmerCardPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            ShimmerCard(
-                modifier = Modifier.padding(all = MarginDouble),
-            )
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      ShimmerCard(modifier = Modifier.padding(all = MarginDouble))
     }
+  }
 }

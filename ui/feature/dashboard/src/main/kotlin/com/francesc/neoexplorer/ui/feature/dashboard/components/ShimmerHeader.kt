@@ -22,34 +22,32 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 @Composable
 internal fun ShimmerHeader(modifier: Modifier = Modifier) {
-    val shimmerBrush = rememberShimmerBrush()
-    Column(modifier = modifier) {
-        // Title line
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.45f)
-                .height(ShimmerHeightTitle)
-                .background(shimmerBrush, RoundedCornerShape(CardCornerSize)),
-        )
-        Spacer(modifier = Modifier.height(MarginSingle))
-        // Subtitle line
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.65f)
-                .height(ShimmerHeightBody)
-                .background(shimmerBrush, RoundedCornerShape(CardCornerSize)),
-        )
-    }
+  val shimmerBrush = rememberShimmerBrush()
+  Column(modifier = modifier) {
+    // Title line
+    Box(
+      modifier =
+        Modifier.fillMaxWidth(0.45f)
+          .height(ShimmerHeightTitle)
+          .background(shimmerBrush, RoundedCornerShape(CardCornerSize))
+    )
+    Spacer(modifier = Modifier.height(MarginSingle))
+    // Subtitle line
+    Box(
+      modifier =
+        Modifier.fillMaxWidth(0.65f)
+          .height(ShimmerHeightBody)
+          .background(shimmerBrush, RoundedCornerShape(CardCornerSize))
+    )
+  }
 }
 
 @WidgetPreviews
 @Composable
 private fun ShimmerHeaderPreview() {
-    NeoExplorerTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            ShimmerHeader(modifier = Modifier
-                .fillMaxWidth()
-                .padding(MarginDouble))
-        }
+  NeoExplorerTheme {
+    Surface(color = MaterialTheme.colorScheme.background) {
+      ShimmerHeader(modifier = Modifier.fillMaxWidth().padding(MarginDouble))
     }
+  }
 }
