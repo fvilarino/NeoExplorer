@@ -25,14 +25,19 @@ import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
 
-class DetailsPresenter
 @AssistedInject
-constructor(
+class DetailsPresenter(
   @Assisted private val screen: DetailsScreen,
   @Assisted private val navigator: Navigator,
   private val neoRepository: NeoRepository,
   private val dateFormatter: DateFormatter,
 ) : Presenter<DetailsUiState> {
+
+  @CircuitInject(DetailsScreen::class, AppScope::class)
+  @AssistedFactory
+  fun interface Factory {
+    fun create(@Assisted screen: DetailsScreen, @Assisted navigator: Navigator): DetailsPresenter
+  }
 
   @Composable
   override fun present(): DetailsUiState {
@@ -87,11 +92,5 @@ constructor(
       closeApproachDate = approach?.closeApproachDate?.let { dateFormatter.format(it) }.orEmpty(),
       sizeReference = SizeReferenceObject.from(diameterMaxKm * 1_000.0),
     )
-  }
-
-  @CircuitInject(DetailsScreen::class, AppScope::class)
-  @AssistedFactory
-  fun interface Factory {
-    fun create(screen: DetailsScreen, navigator: Navigator): DetailsPresenter
   }
 }
