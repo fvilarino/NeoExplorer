@@ -65,6 +65,8 @@ include(":ui:feature:temporalexplorer")
 
 include(":ui:shared:compose")
 
+include(":ui:shared:errormessage")
+
 include(":ui:shared:navigation")
 
 include(":ui:shared:styles")

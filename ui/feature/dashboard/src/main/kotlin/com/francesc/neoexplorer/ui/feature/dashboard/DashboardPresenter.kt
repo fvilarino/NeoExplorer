@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalResources
 import com.francesc.neoexplorer.core.clock.DateProvider
 import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
@@ -19,6 +20,7 @@ import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
+import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
 import com.francesc.neoexplorer.ui.shared.navigation.NavigationBroadcaster
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.rememberRetained
@@ -40,6 +42,7 @@ class DashboardPresenter(
 
   @Composable
   override fun present(): DashboardUiState {
+    val resources = LocalResources.current
     val today = remember { dateProvider.today() }
 
     var loadingState by rememberRetained { mutableStateOf(LoadingState.LOADING) }
@@ -68,7 +71,7 @@ class DashboardPresenter(
             loadingState = LoadingState.LOADED
           },
           onFailure = { throwable ->
-            errorMessage = throwable.message ?: "Unknown error"
+            errorMessage = throwable.toUserMessage(resources)
             loadingState = LoadingState.ERROR
           },
         )

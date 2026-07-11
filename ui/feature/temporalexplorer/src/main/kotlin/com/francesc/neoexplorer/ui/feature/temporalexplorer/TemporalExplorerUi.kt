@@ -1,6 +1,7 @@
 package com.francesc.neoexplorer.ui.feature.temporalexplorer
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,9 +14,11 @@ import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalE
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerIdleContent
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerScreen
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerTopBar
+import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeed
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeedErrorContent
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeedLoadingContent
+import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.slack.circuit.codegen.annotations.CircuitInject
 import dev.zacsweers.metro.AppScope
 
@@ -81,7 +84,8 @@ fun TemporalExplorerUi(
                   com.francesc.neoexplorer.ui.shared.compose.R.string.something_went_wrong
                 ),
             onRetry = { state.eventSink(TemporalExplorerEvent.Retry) },
-            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+            modifier =
+              Modifier.padding(innerPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
           )
       }
     }

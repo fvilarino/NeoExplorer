@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalResources
 import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.data.neo.model.AsteroidId as DataAsteroidId
@@ -17,6 +18,7 @@ import com.francesc.neoexplorer.ui.feature.details.components.SizeReferenceObjec
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
+import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
@@ -36,11 +38,15 @@ class DetailsPresenter(
   @CircuitInject(DetailsScreen::class, AppScope::class)
   @AssistedFactory
   fun interface Factory {
-    fun create(@Assisted screen: DetailsScreen, @Assisted navigator: Navigator): DetailsPresenter
+    fun create(
+      @Assisted screen: DetailsScreen,
+      @Assisted navigator: Navigator,
+    ): DetailsPresenter
   }
 
   @Composable
   override fun present(): DetailsUiState {
+    val resources = LocalResources.current
     var loadingState by remember { mutableStateOf(DetailsLoadingState.LOADING) }
     var asteroid by remember { mutableStateOf<DetailsUiModel?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
@@ -57,7 +63,7 @@ class DetailsPresenter(
             loadingState = DetailsLoadingState.LOADED
           },
           onFailure = { throwable ->
-            errorMessage = throwable.message ?: "Unknown error"
+            errorMessage = throwable.toUserMessage(resources)
             loadingState = DetailsLoadingState.ERROR
           },
         )

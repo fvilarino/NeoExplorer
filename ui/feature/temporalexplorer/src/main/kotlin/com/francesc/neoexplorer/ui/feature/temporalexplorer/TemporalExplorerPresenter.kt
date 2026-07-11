@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalResources
 import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
@@ -19,6 +20,7 @@ import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
+import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
 import com.francesc.neoexplorer.ui.shared.navigation.NavigationBroadcaster
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.overlay.LocalOverlayHost
@@ -39,6 +41,7 @@ class TemporalExplorerPresenter(
 
   @Composable
   override fun present(): TemporalExplorerUiState {
+    val resources = LocalResources.current
     val overlayHost = LocalOverlayHost.current
     val scope = rememberCoroutineScope()
 
@@ -62,7 +65,7 @@ class TemporalExplorerPresenter(
             loadingState = TemporalExplorerLoadingState.LOADED
           },
           onFailure = { throwable ->
-            errorMessage = throwable.message ?: "Unknown error"
+            errorMessage = throwable.toUserMessage(resources)
             loadingState = TemporalExplorerLoadingState.ERROR
           },
         )

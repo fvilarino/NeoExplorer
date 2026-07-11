@@ -1,6 +1,7 @@
 package com.francesc.neoexplorer.ui.feature.details
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -35,6 +36,7 @@ import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
+import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.francesc.neoexplorer.ui.shared.compose.rememberWindowWidthClass
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 import com.slack.circuit.codegen.annotations.CircuitInject
@@ -101,7 +103,8 @@ private fun DetailsUi(
         DetailsErrorContent(
           message = state.errorMessage ?: stringResource(R.string.something_went_wrong),
           onRetry = { state.eventSink(DetailsEvent.Retry) },
-          modifier = Modifier.padding(innerPadding).fillMaxSize(),
+          modifier =
+            Modifier.padding(innerPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
         )
 
       DetailsLoadingState.LOADED -> {
