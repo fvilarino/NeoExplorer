@@ -46,11 +46,17 @@ class DashboardPresenter(
     var hazardousCount by rememberRetained { mutableIntStateOf(0) }
     var rawAsteroids by rememberRetained { mutableStateOf(emptyList<AsteroidUiModel>()) }
     var sortOrder by rememberRetained { mutableStateOf(SortOrder.BY_DATE) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-    var retrySignal by remember { mutableIntStateOf(0) }
+    var errorMessage by rememberRetained { mutableStateOf<String?>(null) }
+    var retrySignal by rememberRetained { mutableIntStateOf(0) }
 
     LaunchedEffect(key1 = retrySignal) {
-      if (rawAsteroids.isEmpty()) loadingState = LoadingState.LOADING
+      // Skip if this is not a user-triggered retry and we already have a terminal state:
+      // • data loaded  → no need to re-fetch on tab returns / config changes
+      // • error shown  → user must press Retry explicitly; auto-refetch would flash loading→error
+      if (retrySignal == 0 && (rawAsteroids.isNotEmpty() || loadingState == LoadingState.ERROR)) {
+        return@LaunchedEffect
+      }
+      loadingState = LoadingState.LOADING
       errorMessage = null
       neoRepository
         .getFeed(startDate = today, endDate = today.plus(6, DateTimeUnit.DAY))

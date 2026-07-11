@@ -1,6 +1,7 @@
 package com.francesc.neoexplorer.ui.feature.dashboard
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,6 +14,8 @@ import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardTopBar
 import com.francesc.neoexplorer.ui.feature.dashboard.components.ErrorContent
 import com.francesc.neoexplorer.ui.feature.dashboard.components.LoadingContent
+import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
+import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.slack.circuit.codegen.annotations.CircuitInject
 import dev.zacsweers.metro.AppScope
 
@@ -50,7 +53,8 @@ fun DashboardUi(state: DashboardUiState, modifier: Modifier = Modifier) {
           ErrorContent(
             message = state.errorMessage ?: stringResource(R.string.something_went_wrong),
             onRetry = { state.eventSink(DashboardEvent.Retry) },
-            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+            modifier =
+              Modifier.padding(innerPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
           )
       }
     }

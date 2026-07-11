@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import com.francesc.neoexplorer.ui.shared.compose.IconSizeLarge
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.R
@@ -46,6 +47,7 @@ fun AsteroidFeedErrorContent(
         text = message,
         style = MaterialTheme.typography.bodyMedium,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
+        textAlign = TextAlign.Center,
       )
       Button(onClick = onRetry) { Text(text = stringResource(R.string.retry)) }
     }
