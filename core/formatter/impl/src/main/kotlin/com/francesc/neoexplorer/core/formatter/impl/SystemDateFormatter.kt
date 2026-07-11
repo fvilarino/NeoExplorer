@@ -11,6 +11,6 @@ import kotlinx.datetime.LocalDate
 class SystemDateFormatter : DateFormatter {
   override fun format(date: LocalDate): String {
     val month = date.month.name.lowercase().replaceFirstChar { it.uppercase() }.take(3)
-    return "${date.dayOfMonth} $month ${date.year}"
+    return "${date.day} $month ${date.year}"
   }
 }
