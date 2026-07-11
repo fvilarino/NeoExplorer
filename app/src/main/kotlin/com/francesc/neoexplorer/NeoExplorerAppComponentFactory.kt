@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Intent
 import androidx.annotation.Keep
 import androidx.core.app.AppComponentFactory
-import dev.zacsweers.metro.Provider
 import kotlin.reflect.KClass
 
 @Keep
@@ -14,7 +13,7 @@ class NeoExplorerAppComponentFactory : AppComponentFactory() {
   private inline fun <reified T : Any> getInstance(
     cl: ClassLoader,
     className: String,
-    providers: Map<KClass<out T>, Provider<T>>,
+    providers: Map<KClass<out T>, () -> T>,
   ): T? {
     val clazz = Class.forName(className, false, cl).asSubclass(T::class.java)
     return providers[clazz.kotlin]?.invoke()
