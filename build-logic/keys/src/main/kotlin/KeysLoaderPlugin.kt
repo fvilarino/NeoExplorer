@@ -1,39 +1,40 @@
 import java.util.Properties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.provider.Property
 import org.gradle.kotlin.dsl.create
 
 private const val NasaApiKey = "nasa_api_key"
 private const val NasaKeysFile = "./certs/keys.properties"
 
-open class NasaConfigKeys {
-  val nasaApiKey: String
-    get() =
-      key
-        ?: error(
-          "Can't locate NASA API key. Add '$NasaApiKey' to $NasaKeysFile or set it as an environment variable."
-        )
-
-  private var key: String? = null
-
-  internal fun setKey(key: String) {
-    this.key = key
-  }
+interface NasaConfigKeys {
+  val nasaApiKey: Property<String>
 }
 
 class KeysLoaderPlugin : Plugin<Project> {
   override fun apply(target: Project) {
     val extension = target.extensions.create<NasaConfigKeys>("NasaConfigKeys")
-    val properties = Properties()
-    val keysFile = target.rootProject.file(NasaKeysFile)
-    if (keysFile.exists()) {
-      keysFile.inputStream().use { stream ->
-        properties.load(stream)
+
+    val keyProvider =
+      target.providers.provider {
+        val keysFile = target.rootProject.file(NasaKeysFile)
+        val fileKey =
+          if (keysFile.exists()) {
+            keysFile.inputStream().use { stream ->
+              val properties = Properties()
+              properties.load(stream)
+              properties.getProperty(NasaApiKey)
+            }
+          } else {
+            null
+          }
+        fileKey
+          ?: System.getenv(NasaApiKey)
+          ?: error(
+            "Can't locate NASA API key. Add '$NasaApiKey' to $NasaKeysFile or set it as an environment variable."
+          )
       }
-    }
-    val key = properties.getProperty(NasaApiKey) ?: System.getenv(NasaApiKey)
-    if (key != null) {
-      extension.setKey(key)
-    }
+
+    extension.nasaApiKey.convention(keyProvider)
   }
 }
