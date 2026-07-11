@@ -21,7 +21,6 @@ import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.presenter.Presenter
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Inject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.map
 
@@ -37,12 +36,16 @@ class BrowsePresenter(
   @Composable
   override fun present(): BrowseUiState {
     // A CoroutineScope retained for the lifetime of this back-stack entry.
+    // CancellableRetainedScope implements RememberObserver so rememberRetained will
+    // call onForgotten() — and therefore cancel the scope — when the back-stack entry
+    // is popped and the retained registry is cleared, preventing a coroutine/memory leak.
     // cachedIn() keeps loaded pages alive in memory so returning from Details
     // never triggers a network reload.
     val retainedScope =
       rememberRetained("browse_pager_scope") {
-        CoroutineScope(SupervisorJob() + dispatcherProvider.main)
-      }
+          CancellableRetainedScope(SupervisorJob() + dispatcherProvider.main)
+        }
+        .scope
 
     // Build the mapped+cached paging flow once; retained across composition disposal.
     val pagingFlow =
