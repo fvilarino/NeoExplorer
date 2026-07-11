@@ -27,6 +27,9 @@ internal class FakeNeoDataSource : NeoDataSource {
   var lastBrowsePageSize: Int? = null
     private set
 
+  /** Every `pageSize` requested via [browse], in call order. */
+  val browsePageSizes: MutableList<Int> = mutableListOf()
+
   override suspend fun getFeed(startDate: String, endDate: String?): NeoFeedResponse {
     error?.let { throw it }
     lastFeedStartDate = startDate
@@ -44,6 +47,7 @@ internal class FakeNeoDataSource : NeoDataSource {
     error?.let { throw it }
     lastBrowsePage = page
     lastBrowsePageSize = pageSize
+    browsePageSizes += pageSize
     return browseResponse
   }
 }

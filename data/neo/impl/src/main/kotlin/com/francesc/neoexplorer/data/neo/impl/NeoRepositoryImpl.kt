@@ -46,7 +46,15 @@ class NeoRepositoryImpl(private val dataSource: NeoDataSource) : NeoRepository {
 
   override fun browse(): Flow<PagingData<NearEarthObject>> =
     Pager(
-        config = PagingConfig(pageSize = PAGE_SIZE, enablePlaceholders = false),
+        // initialLoadSize is pinned to PAGE_SIZE so every request uses the same `size`.
+        // NeosPagingSource keys pages by index, so a larger first load (the Paging default of
+        // pageSize * 3) would desync the page math and re-fetch/duplicate items.
+        config =
+          PagingConfig(
+            pageSize = PAGE_SIZE,
+            initialLoadSize = PAGE_SIZE,
+            enablePlaceholders = false,
+          ),
         pagingSourceFactory = { NeosPagingSource(dataSource) },
       )
       .flow

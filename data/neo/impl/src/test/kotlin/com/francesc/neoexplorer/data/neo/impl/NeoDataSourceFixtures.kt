@@ -14,12 +14,13 @@ internal fun closeApproachDataDto(
   closeApproachDate: String = "2025-01-15",
   velocityKmPerSecond: String = "12.345",
   missDistanceKm: String = "500000.0",
+  missDistanceLunar: String = "1.3",
   orbitingBody: String = "Earth",
 ) =
   CloseApproachDataDto(
     closeApproachDate = closeApproachDate,
     relativeVelocity = RelativeVelocityDto(kilometersPerSecond = velocityKmPerSecond),
-    missDistance = MissDistanceDto(kilometers = missDistanceKm),
+    missDistance = MissDistanceDto(kilometers = missDistanceKm, lunar = missDistanceLunar),
     orbitingBody = orbitingBody,
   )
 

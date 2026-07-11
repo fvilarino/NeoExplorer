@@ -242,5 +242,31 @@ class NeoRepositoryImplTest {
     assertEquals(5, result.size)
     assertEquals(1, pageRequested)
   }
+
+  @Test
+  fun `browse requests a consistent page size across all loads`() = runTest {
+    // Regression guard for the initialLoadSize vs. page-index mismatch (B2):
+    // Paging's default initialLoadSize is pageSize * 3, which would make the first
+    // request ask for a larger `size` than subsequent page-indexed requests and
+    // duplicate/overlap items. Every load must request the same page size.
+    val pageNeos = { page: Int -> (1..20).map { nearEarthObjectDto(id = "${page * 20 + it}") } }
+    val multiPageDataSource =
+      object : NeoDataSource by dataSource {
+        override suspend fun browse(page: Int, pageSize: Int) =
+          neoBrowseResponse(neos = pageNeos(page), page = page, totalPages = 10).also {
+            dataSource.browse(page, pageSize)
+          } // record the requested pageSize
+      }
+    val multiPageRepository = NeoRepositoryImpl(multiPageDataSource)
+
+    multiPageRepository.browse().asSnapshot { scrollTo(index = 25) }
+
+    val requestedSizes = dataSource.browsePageSizes
+    assertTrue("Expected at least two loads", requestedSizes.size >= 2)
+    assertTrue(
+      "All loads must use the same page size, but got $requestedSizes",
+      requestedSizes.all { it == requestedSizes.first() },
+    )
+  }
   // endregion
 }
