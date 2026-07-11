@@ -3,7 +3,6 @@ package com.francesc.neoexplorer.data.neo.impl
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.map
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.data.neo.impl.mapper.toDomain
 import com.francesc.neoexplorer.data.neo.model.AsteroidId
@@ -14,7 +13,6 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.datetime.LocalDate
 
 private const val PAGE_SIZE = 20
@@ -58,5 +56,4 @@ class NeoRepositoryImpl(private val dataSource: NeoDataSource) : NeoRepository {
         pagingSourceFactory = { NeosPagingSource(dataSource) },
       )
       .flow
-      .map { pagingData -> pagingData.map { it.toDomain() } }
 }
