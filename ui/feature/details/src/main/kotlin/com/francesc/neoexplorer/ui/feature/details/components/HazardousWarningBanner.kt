@@ -31,12 +31,11 @@ import com.francesc.neoexplorer.ui.shared.styles.extendedColorScheme
 
 @Composable
 internal fun HazardousWarningBanner(modifier: Modifier = Modifier) {
-  val amberColor = MaterialTheme.extendedColorScheme.amber
   Row(
     modifier =
       modifier
         .background(
-          color = amberColor.copy(alpha = 0.12f),
+          color = MaterialTheme.extendedColorScheme.caution,
           shape = RoundedCornerShape(CardCornerSize),
         )
         .padding(horizontal = MarginDouble, vertical = MarginOneAndHalf),
@@ -45,14 +44,14 @@ internal fun HazardousWarningBanner(modifier: Modifier = Modifier) {
     Icon(
       imageVector = Icons.Default.Warning,
       contentDescription = null,
-      tint = amberColor,
+      tint = MaterialTheme.extendedColorScheme.onCaution,
       modifier = Modifier.size(IconSizeSmall),
     )
     Spacer(modifier = Modifier.width(MarginSingle))
     Text(
       text = stringResource(R.string.potentially_hazardous_description),
       style = MaterialTheme.typography.bodySmall,
-      color = amberColor,
+      color = MaterialTheme.extendedColorScheme.onCaution,
     )
   }
 }

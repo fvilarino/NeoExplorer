@@ -26,6 +26,11 @@ private val LightColorScheme =
     tertiary = Pink40,
   )
 
+private val LightColorSchemeCaution = Color(0x20FFA000)
+private val LightColorSchemeOnCaution = Color(0xFF362200)
+private val DarkColorSchemeCaution = Color(0x20FFA000)
+private val DarkColorSchemeOnCaution = Color(0xFF442B00)
+
 @Composable
 fun NeoExplorerTheme(
   darkTheme: Boolean = isSystemInDarkTheme(),
@@ -43,7 +48,11 @@ fun NeoExplorerTheme(
       else -> LightColorScheme
     }
 
-  val extendedColorScheme = ExtendedColorScheme(amber = Color(0xFFFFA000))
+  val extendedColorScheme =
+    ExtendedColorScheme(
+      caution = if (darkTheme) DarkColorSchemeCaution else LightColorSchemeCaution,
+      onCaution = if (darkTheme) DarkColorSchemeOnCaution else LightColorSchemeOnCaution,
+    )
 
   CompositionLocalProvider(LocalExtendedColorScheme provides extendedColorScheme) {
     MaterialTheme(

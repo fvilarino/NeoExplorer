@@ -28,12 +28,11 @@ import com.francesc.neoexplorer.ui.shared.styles.extendedColorScheme
 
 @Composable
 fun HazardousBadge(modifier: Modifier = Modifier) {
-  val amberColor = MaterialTheme.extendedColorScheme.amber
   Row(
     modifier =
       modifier
         .background(
-          color = amberColor.copy(alpha = 0.15f),
+          color = MaterialTheme.extendedColorScheme.caution,
           shape = RoundedCornerShape(CardCornerSize),
         )
         .padding(horizontal = MarginSingle, vertical = MarginHalf),
@@ -43,13 +42,13 @@ fun HazardousBadge(modifier: Modifier = Modifier) {
     Icon(
       imageVector = Icons.Filled.Warning,
       contentDescription = stringResource(R.string.accessibility_potentially_hazardous),
-      tint = amberColor,
+      tint = MaterialTheme.extendedColorScheme.onCaution,
       modifier = Modifier.size(IconSizeSmall),
     )
     Text(
       text = stringResource(R.string.potentially_hazardous_abbreviation),
       style = MaterialTheme.typography.labelSmall,
-      color = amberColor,
+      color = MaterialTheme.extendedColorScheme.onCaution,
       fontWeight = FontWeight.Bold,
     )
   }
