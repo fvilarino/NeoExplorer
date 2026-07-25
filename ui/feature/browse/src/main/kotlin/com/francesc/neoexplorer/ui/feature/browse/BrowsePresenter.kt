@@ -6,6 +6,7 @@ import androidx.paging.map
 import com.francesc.neoexplorer.core.dispather.DispatcherProvider
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.ui.feature.browse.components.BrowseScreen
+import com.francesc.neoexplorer.ui.feature.browse.components.CancellableRetainedScope
 import com.francesc.neoexplorer.ui.feature.browse.components.collectAsRetainedLazyPagingItems
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.shared.asteroid.NearEarthObjectMapper

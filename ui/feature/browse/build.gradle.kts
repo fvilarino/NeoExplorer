@@ -1,11 +1,18 @@
 plugins {
   id("neoexplorer.android.feature")
   id("neoexplorer.android.library.compose")
+  id("neoexplorer.android.library.test")
   id("neoexplorer.dependency.injection")
 }
 
 android {
   namespace = "com.francesc.neoexplorer.ui.feature.browse"
+
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
+    }
+  }
 }
 
 ksp { arg("circuit.codegen.mode", "metro") }
@@ -18,4 +25,8 @@ dependencies {
   implementation(projects.ui.shared.asteroid)
   implementation(projects.ui.shared.compose)
   implementation(projects.ui.shared.errormessage)
+
+  testImplementation(libs.robolectric)
+  testImplementation(libs.androidx.compose.ui.ui.test.junit4)
+  testImplementation(libs.androidx.paging.testing)
 }

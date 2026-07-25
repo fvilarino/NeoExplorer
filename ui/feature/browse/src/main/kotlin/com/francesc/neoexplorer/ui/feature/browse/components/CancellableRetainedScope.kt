@@ -1,4 +1,4 @@
-package com.francesc.neoexplorer.ui.feature.browse
+package com.francesc.neoexplorer.ui.feature.browse.components
 
 import androidx.compose.runtime.RememberObserver
 import kotlin.coroutines.CoroutineContext
@@ -6,16 +6,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 
 /**
- * A [CoroutineScope] wrapper that implements [RememberObserver], allowing it to be stored in
+ * A [kotlinx.coroutines.CoroutineScope] wrapper that implements
+ * [androidx.compose.runtime.RememberObserver], allowing it to be stored in
  * [com.slack.circuit.retained.rememberRetained].
  *
- * A raw [CoroutineScope] does **not** implement [RememberObserver], so without this wrapper the
- * scope would never be cancelled when the retained slot is evicted — leaking active coroutines for
- * every back-stack entry that was ever pushed.
+ * A raw [kotlinx.coroutines.CoroutineScope] does **not** implement
+ * [androidx.compose.runtime.RememberObserver], so without this wrapper the scope would never be
+ * cancelled when the retained slot is evicted — leaking active coroutines for every back-stack
+ * entry that was ever pushed.
  *
  * [rememberRetained] calls [onForgotten] on the stored value when it finally removes the entry
- * (e.g. when the back-stack entry is popped and the registry is cleared). This triggers
- * [CoroutineScope.cancel], cleaning up all child coroutines (e.g. the paging [cachedIn] flow).
+ * (e.g. when the back-stack entry is popped and the registry is cleared). This triggers [cancel],
+ * cleaning up all child coroutines (e.g. the paging [cachedIn] flow).
  *
  * Usage:
  * ```

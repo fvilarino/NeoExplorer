@@ -16,6 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -40,6 +41,8 @@ import com.francesc.neoexplorer.ui.shared.compose.rememberGridContentPadding
 import com.francesc.neoexplorer.ui.shared.compose.rememberGridSpacing
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 import kotlinx.coroutines.flow.flowOf
+
+internal val LoadingFooterTestTag = "loading_footer"
 
 @Composable
 internal fun BrowseGrid(
@@ -82,7 +85,10 @@ internal fun BrowseGrid(
       is LoadState.Loading ->
         item(span = { GridItemSpan(maxLineSpan) }) {
           Box(
-            modifier = Modifier.fillMaxWidth().padding(vertical = MarginDouble),
+            modifier =
+              Modifier.fillMaxWidth()
+                .padding(vertical = MarginDouble)
+                .testTag(LoadingFooterTestTag),
             contentAlignment = Alignment.Center,
           ) {
             CircularProgressIndicator()
