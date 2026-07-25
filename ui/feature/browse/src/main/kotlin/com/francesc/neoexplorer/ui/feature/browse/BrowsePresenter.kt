@@ -18,6 +18,7 @@ import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
 @AssistedInject
@@ -54,6 +55,7 @@ class BrowsePresenter(
         neoRepository
           .browse()
           .map { pagingData -> pagingData.map { neo -> mapper.toBrowseUiModel(neo) } }
+          .flowOn(dispatcherProvider.default)
           .cachedIn(retainedScope)
       }
 
