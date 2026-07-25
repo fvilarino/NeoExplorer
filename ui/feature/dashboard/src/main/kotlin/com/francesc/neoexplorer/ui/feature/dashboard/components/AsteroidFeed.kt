@@ -17,13 +17,11 @@ import com.francesc.neoexplorer.ui.shared.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.Month
 
 @Composable
 fun AsteroidFeed(
   asteroids: List<AsteroidUiModel>,
-  date: LocalDate,
+  date: String,
   hazardousCount: Int,
   onAsteroidClick: (AsteroidId) -> Unit,
   modifier: Modifier = Modifier,
@@ -65,7 +63,7 @@ private fun AsteroidFeedPreview() {
             threatLevel = ThreatLevel.CAUTION,
           )
         ),
-        date = LocalDate(2026, Month.APRIL, 19),
+        date = "25 Jun 2026",
         hazardousCount = 1,
         onAsteroidClick = {},
         modifier = Modifier.fillMaxWidth(),

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Stable
 import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidUiModel
 import com.slack.circuit.runtime.CircuitUiState
-import kotlinx.datetime.LocalDate
 
 enum class LoadingState {
   LOADING,
@@ -28,7 +27,7 @@ sealed interface DashboardEvent {
 @Stable
 data class DashboardUiState(
   val loadingState: LoadingState = LoadingState.LOADING,
-  val date: LocalDate,
+  val date: String,
   val hazardousCount: Int = 0,
   val asteroids: List<AsteroidUiModel> = emptyList(),
   val sortOrder: SortOrder = SortOrder.BY_DATE,

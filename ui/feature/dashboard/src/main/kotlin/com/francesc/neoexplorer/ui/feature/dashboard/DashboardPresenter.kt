@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalResources
 import com.francesc.neoexplorer.core.clock.DateProvider
+import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
@@ -31,6 +32,7 @@ class DashboardPresenter(
   @Assisted private val navigator: Navigator,
   private val neoRepository: NeoRepository,
   private val dateProvider: DateProvider,
+  private val dateFormatter: DateFormatter,
   private val mapper: NearEarthObjectMapper,
 ) : Presenter<DashboardUiState> {
 
@@ -44,6 +46,7 @@ class DashboardPresenter(
   override fun present(): DashboardUiState {
     val resources = LocalResources.current
     val today = remember { dateProvider.today() }
+    val formattedToday = remember(key1 = today) { dateFormatter.format(today) }
 
     var loadingState by rememberRetained { mutableStateOf(LoadingState.LOADING) }
     var hazardousCount by rememberRetained { mutableIntStateOf(0) }
@@ -90,7 +93,7 @@ class DashboardPresenter(
 
     return DashboardUiState(
       loadingState = loadingState,
-      date = today,
+      date = formattedToday,
       hazardousCount = hazardousCount,
       asteroids = sortedAsteroids,
       sortOrder = sortOrder,

@@ -14,19 +14,17 @@ import com.francesc.neoexplorer.ui.feature.dashboard.R
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.WidgetPreviews
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.Month
 
 @NonRestartableComposable
 @Composable
 internal fun AsteroidFeedHeader(
-  date: LocalDate,
+  date: String,
   hazardousCount: Int,
   modifier: Modifier = Modifier,
 ) {
   Column(modifier = modifier) {
     Text(
-      text = formatDate(date),
+      text = date,
       style = MaterialTheme.typography.titleLarge,
     )
     Text(
@@ -42,18 +40,13 @@ internal fun AsteroidFeedHeader(
   }
 }
 
-internal fun formatDate(date: LocalDate): String {
-  val monthName = date.month.name.lowercase().replaceFirstChar { it.uppercase() }
-  return "${date.day} $monthName ${date.year}"
-}
-
 @WidgetPreviews
 @Composable
 private fun AsteroidFeedHeaderHazardousPreview() {
   NeoExplorerTheme {
     Surface(color = MaterialTheme.colorScheme.background) {
       AsteroidFeedHeader(
-        date = LocalDate(2026, Month.APRIL, 19),
+        date = "25 Jun 2026",
         hazardousCount = 3,
         modifier = Modifier.fillMaxWidth().padding(MarginDouble),
       )
@@ -67,7 +60,7 @@ private fun AsteroidFeedHeaderSafePreview() {
   NeoExplorerTheme {
     Surface(color = MaterialTheme.colorScheme.background) {
       AsteroidFeedHeader(
-        date = LocalDate(2026, Month.APRIL, 19),
+        date = "25 Jun 2026",
         hazardousCount = 0,
         modifier = Modifier.fillMaxWidth().padding(MarginDouble),
       )
