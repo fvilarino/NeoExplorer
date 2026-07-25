@@ -11,10 +11,9 @@ android {
 ksp { arg("circuit.codegen.mode", "metro") }
 
 dependencies {
-  implementation(projects.core.clock)
-  implementation(projects.core.formatter)
   implementation(projects.data.neo)
   implementation(projects.ui.feature.details)
+  implementation(projects.ui.shared.asteroid)
   implementation(projects.ui.shared.compose)
   implementation(projects.ui.shared.errormessage)
 }

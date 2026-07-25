@@ -1,4 +1,4 @@
-package com.francesc.neoexplorer.ui.shared.compose.asteroid
+package com.francesc.neoexplorer.ui.shared.asteroid
 
 /**
  * Represents a miss-distance value, stored internally as kilometres.

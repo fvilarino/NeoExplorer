@@ -5,5 +5,5 @@ import androidx.compose.ui.Modifier
 
 @Composable
 internal fun ShimmerHeader(modifier: Modifier = Modifier) {
-  com.francesc.neoexplorer.ui.shared.compose.asteroid.ShimmerFeedHeader(modifier = modifier)
+  com.francesc.neoexplorer.ui.shared.asteroid.ShimmerFeedHeader(modifier = modifier)
 }

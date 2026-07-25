@@ -1,4 +1,4 @@
-package com.francesc.neoexplorer.ui.shared.compose.asteroid
+package com.francesc.neoexplorer.ui.shared.asteroid
 
 @JvmInline
 value class Velocity(val kmPerSecond: Double) {

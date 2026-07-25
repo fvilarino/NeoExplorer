@@ -2,8 +2,8 @@ package com.francesc.neoexplorer.ui.feature.browse
 
 import androidx.compose.runtime.Stable
 import androidx.paging.compose.LazyPagingItems
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidUiModel
 import com.slack.circuit.runtime.CircuitUiState
 
 sealed interface BrowseEvent {

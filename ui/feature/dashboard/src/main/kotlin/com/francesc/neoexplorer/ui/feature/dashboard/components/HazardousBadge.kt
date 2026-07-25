@@ -5,5 +5,5 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun HazardousBadge(modifier: Modifier = Modifier) {
-  com.francesc.neoexplorer.ui.shared.compose.asteroid.HazardousBadge(modifier = modifier)
+  com.francesc.neoexplorer.ui.shared.asteroid.HazardousBadge(modifier = modifier)
 }

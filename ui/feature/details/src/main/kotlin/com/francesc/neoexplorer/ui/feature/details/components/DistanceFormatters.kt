@@ -1,6 +1,6 @@
 package com.francesc.neoexplorer.ui.feature.details.components
 
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.asteroid.Distance
 
 internal fun formatKm(km: Double): String =
   when {

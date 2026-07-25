@@ -12,13 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.francesc.neoexplorer.ui.feature.details.R
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.MarginSingle
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
 import com.francesc.neoexplorer.ui.shared.compose.WidgetPreviews
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 private data class MetricItem(

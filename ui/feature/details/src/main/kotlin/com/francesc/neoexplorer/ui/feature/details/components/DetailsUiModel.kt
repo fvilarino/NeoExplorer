@@ -1,8 +1,8 @@
 package com.francesc.neoexplorer.ui.feature.details.components
 
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.asteroid.Velocity
 
 data class DetailsUiModel(
   val id: AsteroidId,

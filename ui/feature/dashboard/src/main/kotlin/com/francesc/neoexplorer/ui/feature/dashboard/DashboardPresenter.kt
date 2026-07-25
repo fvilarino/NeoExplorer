@@ -9,17 +9,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalResources
 import com.francesc.neoexplorer.core.clock.DateProvider
-import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
-import com.francesc.neoexplorer.data.neo.model.NearEarthObject
-import com.francesc.neoexplorer.data.neo.model.NeoFeed
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidUiModel
+import com.francesc.neoexplorer.ui.shared.asteroid.NearEarthObjectMapper
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.rememberRetained
@@ -30,7 +24,6 @@ import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
 
 @AssistedInject
@@ -38,7 +31,7 @@ class DashboardPresenter(
   @Assisted private val navigator: Navigator,
   private val neoRepository: NeoRepository,
   private val dateProvider: DateProvider,
-  private val dateFormatter: DateFormatter,
+  private val mapper: NearEarthObjectMapper,
 ) : Presenter<DashboardUiState> {
 
   @CircuitInject(DashboardScreen::class, AppScope::class)
@@ -72,9 +65,9 @@ class DashboardPresenter(
         .getFeed(startDate = today, endDate = today.plus(6, DateTimeUnit.DAY))
         .fold(
           onSuccess = { feed ->
-            val data = parseFeed(feed)
-            rawAsteroids = data.asteroids
-            hazardousCount = data.hazardousCount
+            val parsed = mapper.parseFeed(feed)
+            rawAsteroids = parsed.asteroids
+            hazardousCount = parsed.hazardousCount
             loadingState = LoadingState.LOADED
           },
           onFailure = { throwable ->
@@ -112,36 +105,4 @@ class DashboardPresenter(
       },
     )
   }
-
-  private fun parseFeed(feed: NeoFeed): AsteroidFeed {
-    val neos =
-      feed.nearEarthObjects.entries
-        .sortedBy { it.key }
-        .flatMap { (date, neos) -> neos.map { neo -> neo.toUiModel(date) } }
-    return AsteroidFeed(neos, hazardousCount = neos.count { it.isPotentiallyHazardous })
-  }
-
-  private fun NearEarthObject.toUiModel(feedDate: LocalDate): AsteroidUiModel {
-    val missDistance =
-      closeApproachData.find { it.closeApproachDate == feedDate } ?: closeApproachData.firstOrNull()
-    val dist = missDistance?.missDistanceKm?.value?.let { Distance.km(it) } ?: Distance.UNKNOWN
-    return AsteroidUiModel(
-      id = AsteroidId(id.value),
-      name = name,
-      absoluteMagnitudeH = absoluteMagnitudeH,
-      missDistance = dist,
-      isPotentiallyHazardous = isPotentiallyHazardousAsteroid,
-      velocity =
-        missDistance?.relativeVelocityKmPerSecond?.value?.let(::Velocity) ?: Velocity.UNKNOWN,
-      estimatedDiameterMaxKm = estimatedDiameter.maxKm.value,
-      closeApproachDate =
-        missDistance?.closeApproachDate?.let { dateFormatter.format(it) }.orEmpty(),
-      threatLevel = ThreatLevel.from(dist),
-    )
-  }
-
-  private data class AsteroidFeed(
-    val asteroids: List<AsteroidUiModel>,
-    val hazardousCount: Int,
-  )
 }

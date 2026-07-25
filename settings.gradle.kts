@@ -63,6 +63,8 @@ include(":ui:feature:settings")
 
 include(":ui:feature:temporalexplorer")
 
+include(":ui:shared:asteroid")
+
 include(":ui:shared:compose")
 
 include(":ui:shared:errormessage")

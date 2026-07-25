@@ -7,19 +7,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalResources
-import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
-import com.francesc.neoexplorer.data.neo.model.NearEarthObject
-import com.francesc.neoexplorer.data.neo.model.NeoFeed
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.DateRangeOverlay
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.DateRangeResult
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerScreen
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidUiModel
+import com.francesc.neoexplorer.ui.shared.asteroid.NearEarthObjectMapper
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.overlay.LocalOverlayHost
@@ -37,7 +31,7 @@ import kotlinx.datetime.LocalDate
 class TemporalExplorerPresenter(
   @Assisted private val navigator: Navigator,
   private val neoRepository: NeoRepository,
-  private val dateFormatter: DateFormatter,
+  private val mapper: NearEarthObjectMapper,
 ) : Presenter<TemporalExplorerUiState> {
 
   @CircuitInject(TemporalExplorerScreen::class, AppScope::class)
@@ -66,7 +60,7 @@ class TemporalExplorerPresenter(
         .getFeed(startDate = start, endDate = end)
         .fold(
           onSuccess = { feed ->
-            val result = parseFeed(feed)
+            val result = mapper.parseFeed(feed)
             asteroids = result.asteroids
             hazardousCount = result.hazardousCount
             loadingState = TemporalExplorerLoadingState.LOADED
@@ -116,36 +110,4 @@ class TemporalExplorerPresenter(
       },
     )
   }
-
-  private fun parseFeed(feed: NeoFeed): ParsedFeed {
-    val neos =
-      feed.nearEarthObjects.entries
-        .sortedBy { it.key }
-        .flatMap { (date, neos) -> neos.map { neo -> neo.toUiModel(date) } }
-    return ParsedFeed(neos, hazardousCount = neos.count { it.isPotentiallyHazardous })
-  }
-
-  private fun NearEarthObject.toUiModel(feedDate: LocalDate): AsteroidUiModel {
-    val missDistance =
-      closeApproachData.find { it.closeApproachDate == feedDate } ?: closeApproachData.firstOrNull()
-    val dist = missDistance?.missDistanceKm?.value?.let { Distance.km(it) } ?: Distance.UNKNOWN
-    return AsteroidUiModel(
-      id = AsteroidId(id.value),
-      name = name,
-      absoluteMagnitudeH = absoluteMagnitudeH,
-      missDistance = dist,
-      isPotentiallyHazardous = isPotentiallyHazardousAsteroid,
-      velocity =
-        missDistance?.relativeVelocityKmPerSecond?.value?.let(::Velocity) ?: Velocity.UNKNOWN,
-      estimatedDiameterMaxKm = estimatedDiameter.maxKm.value,
-      closeApproachDate =
-        missDistance?.closeApproachDate?.let { dateFormatter.format(it) }.orEmpty(),
-      threatLevel = ThreatLevel.from(dist),
-    )
-  }
-
-  private data class ParsedFeed(
-    val asteroids: List<AsteroidUiModel>,
-    val hazardousCount: Int,
-  )
 }

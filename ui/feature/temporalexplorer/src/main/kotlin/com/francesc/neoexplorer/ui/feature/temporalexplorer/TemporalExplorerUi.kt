@@ -14,10 +14,10 @@ import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalE
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerIdleContent
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerScreen
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalExplorerTopBar
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeed
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeedErrorContent
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeedLoadingContent
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeed
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeedErrorContent
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeedLoadingContent
 import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.slack.circuit.codegen.annotations.CircuitInject
 import dev.zacsweers.metro.AppScope

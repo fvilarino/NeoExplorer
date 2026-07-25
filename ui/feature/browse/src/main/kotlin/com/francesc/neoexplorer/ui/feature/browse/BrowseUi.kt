@@ -14,9 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
 import com.francesc.neoexplorer.ui.feature.browse.components.BrowseGrid
 import com.francesc.neoexplorer.ui.feature.browse.components.BrowseScreen
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeedErrorContent
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeedLoadingContent
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeedErrorContent
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeedLoadingContent
 import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
 import com.slack.circuit.codegen.annotations.CircuitInject

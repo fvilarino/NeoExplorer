@@ -15,9 +15,9 @@ import com.francesc.neoexplorer.data.neo.model.NearEarthObject
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsUiModel
 import com.francesc.neoexplorer.ui.feature.details.components.SizeReferenceObject
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.Navigator

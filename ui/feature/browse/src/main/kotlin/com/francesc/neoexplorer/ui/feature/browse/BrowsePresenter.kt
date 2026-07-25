@@ -4,17 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.francesc.neoexplorer.core.dispather.DispatcherProvider
-import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
-import com.francesc.neoexplorer.data.neo.model.NearEarthObject
 import com.francesc.neoexplorer.ui.feature.browse.components.BrowseScreen
 import com.francesc.neoexplorer.ui.feature.browse.components.collectAsRetainedLazyPagingItems
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
+import com.francesc.neoexplorer.ui.shared.asteroid.NearEarthObjectMapper
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator
@@ -30,7 +24,7 @@ import kotlinx.coroutines.flow.map
 class BrowsePresenter(
   @Assisted private val navigator: Navigator,
   private val neoRepository: NeoRepository,
-  private val dateFormatter: DateFormatter,
+  private val mapper: NearEarthObjectMapper,
   private val dispatcherProvider: DispatcherProvider,
 ) : Presenter<BrowseUiState> {
 
@@ -59,7 +53,7 @@ class BrowsePresenter(
       rememberRetained("browse_paging_flow") {
         neoRepository
           .browse()
-          .map { pagingData -> pagingData.map { neo -> neo.toUiModel() } }
+          .map { pagingData -> pagingData.map { neo -> mapper.toBrowseUiModel(neo) } }
           .cachedIn(retainedScope)
       }
 
@@ -73,24 +67,6 @@ class BrowsePresenter(
             navigator.goTo(DetailsScreen(asteroidId = event.asteroidId))
         }
       },
-    )
-  }
-
-  private fun NearEarthObject.toUiModel(): AsteroidUiModel {
-    val missDistance = closeApproachData.firstOrNull()
-    val dist = missDistance?.missDistanceKm?.value?.let { Distance.km(it) } ?: Distance.UNKNOWN
-    return AsteroidUiModel(
-      id = AsteroidId(id.value),
-      name = name,
-      absoluteMagnitudeH = absoluteMagnitudeH,
-      missDistance = dist,
-      isPotentiallyHazardous = isPotentiallyHazardousAsteroid,
-      velocity =
-        missDistance?.relativeVelocityKmPerSecond?.value?.let(::Velocity) ?: Velocity.UNKNOWN,
-      estimatedDiameterMaxKm = estimatedDiameter.maxKm.value,
-      closeApproachDate =
-        missDistance?.closeApproachDate?.let { dateFormatter.format(it) }.orEmpty(),
-      threatLevel = ThreatLevel.from(dist),
     )
   }
 }

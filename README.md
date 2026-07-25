@@ -87,8 +87,9 @@ NeoExplorer/
     │   ├── home/                # Root navigation host
     │   └── settings/            # App settings screen
     └── shared/
-        ├── compose/             # Reusable Compose components
-        ├── navigation/          # Navigation definitions
+        ├── asteroid/            # Asteroid UI models, components & feed→UI mapper
+        ├── compose/             # Generic reusable Compose utilities & components
+        ├── errormessage/        # Throwable → user-facing message mapping
         └── styles/              # Themes & design tokens
 ```
 

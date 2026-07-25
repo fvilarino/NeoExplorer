@@ -8,14 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.francesc.neoexplorer.ui.feature.dashboard.R
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeed as SharedAsteroidFeed
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidUiModel
+import com.francesc.neoexplorer.ui.shared.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.asteroid.ThreatLevel
+import com.francesc.neoexplorer.ui.shared.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeed as SharedAsteroidFeed
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month

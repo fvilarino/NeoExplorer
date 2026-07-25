@@ -28,14 +28,14 @@ import com.francesc.neoexplorer.ui.feature.details.components.DetailsLoadingCont
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsUiModel
 import com.francesc.neoexplorer.ui.feature.details.components.SizeReferenceObject
+import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.compose.ContentContainer
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.MarginQuad
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
-import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.francesc.neoexplorer.ui.shared.compose.rememberWindowWidthClass
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
