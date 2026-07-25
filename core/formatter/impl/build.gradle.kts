@@ -5,4 +5,6 @@ plugins {
 
 dependencies {
   implementation(projects.core.formatter)
+
+  testImplementation(libs.junit.junit)
 }
