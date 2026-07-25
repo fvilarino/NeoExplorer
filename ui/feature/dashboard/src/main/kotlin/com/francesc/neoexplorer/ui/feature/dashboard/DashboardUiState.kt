@@ -1,8 +1,8 @@
 package com.francesc.neoexplorer.ui.feature.dashboard
 
 import androidx.compose.runtime.Stable
-import com.francesc.neoexplorer.ui.feature.dashboard.components.AsteroidUiModel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
 import com.slack.circuit.runtime.CircuitUiState
 import kotlinx.datetime.LocalDate
 

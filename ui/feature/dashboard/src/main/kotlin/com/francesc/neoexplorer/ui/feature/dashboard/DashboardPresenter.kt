@@ -13,12 +13,12 @@ import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
 import com.francesc.neoexplorer.data.neo.model.NeoFeed
-import com.francesc.neoexplorer.ui.feature.dashboard.components.AsteroidUiModel
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
-import com.francesc.neoexplorer.ui.feature.dashboard.components.ThreatLevel
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
 import com.slack.circuit.codegen.annotations.CircuitInject

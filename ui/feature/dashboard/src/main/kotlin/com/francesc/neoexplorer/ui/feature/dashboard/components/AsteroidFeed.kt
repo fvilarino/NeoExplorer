@@ -12,13 +12,13 @@ import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
 import com.francesc.neoexplorer.ui.shared.compose.TabletPreviews
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidFeed as SharedAsteroidFeed
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
+import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
-
-internal val MinCardSize = com.francesc.neoexplorer.ui.shared.compose.asteroid.MinCardSize
 
 @Composable
 fun AsteroidFeed(
