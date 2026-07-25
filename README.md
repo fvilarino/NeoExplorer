@@ -6,9 +6,9 @@ NeoExplorer is an Android app for exploring **Near-Earth Objects (NEOs)** — as
 
 ## Screenshots
 
-| Dashboard | Asteroid Details |
-|-----------|-----------------|
-| ![Dashboard](docs/Dashboard.png) | ![Asteroid Details](docs/Asteroid_Details.png) |
+| Dashboard                                     | Asteroid Details                                     |
+|-----------------------------------------------|------------------------------------------------------|
+| <img src="docs/Dashboard.png" height="640" /> | <img src="docs/Asteroid_Details.png" height="640" /> |
 
 ---
 
