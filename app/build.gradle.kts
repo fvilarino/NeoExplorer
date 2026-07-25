@@ -43,6 +43,5 @@ dependencies {
   implementation(projects.ui.feature.settings)
   implementation(projects.ui.feature.temporalexplorer)
   implementation(projects.ui.shared.errormessage)
-  implementation(projects.ui.shared.navigation)
   implementation(projects.ui.shared.styles)
 }

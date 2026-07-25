@@ -16,7 +16,6 @@ import com.francesc.neoexplorer.data.preferences.AppPreferences
 import com.francesc.neoexplorer.data.preferences.AppPreferencesRepository
 import com.francesc.neoexplorer.data.preferences.AppTheme
 import com.francesc.neoexplorer.ui.feature.home.di.ActivityKey
-import com.francesc.neoexplorer.ui.shared.navigation.NavigationRouter
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 import com.slack.circuit.foundation.Circuit
 import dev.zacsweers.metro.AppScope
@@ -29,7 +28,6 @@ import dev.zacsweers.metro.binding
 @Inject
 class MainActivity(
   private val circuit: Circuit,
-  private val navigationRouter: NavigationRouter,
   private val appPreferencesRepository: AppPreferencesRepository,
 ) : ComponentActivity() {
 
@@ -66,7 +64,6 @@ class MainActivity(
       ) {
         HomeScreen(
           circuit = circuit,
-          navigationRouter = navigationRouter,
           modifier = Modifier.fillMaxSize(),
         )
       }

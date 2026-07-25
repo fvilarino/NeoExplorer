@@ -21,24 +21,31 @@ import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
-import com.francesc.neoexplorer.ui.shared.navigation.NavigationBroadcaster
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.rememberRetained
+import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import dev.zacsweers.metro.AppScope
-import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.plus
 
-@CircuitInject(DashboardScreen::class, AppScope::class)
-@Inject
+@AssistedInject
 class DashboardPresenter(
+  @Assisted private val navigator: Navigator,
   private val neoRepository: NeoRepository,
   private val dateProvider: DateProvider,
   private val dateFormatter: DateFormatter,
-  private val navigationBroadcaster: NavigationBroadcaster,
 ) : Presenter<DashboardUiState> {
+
+  @CircuitInject(DashboardScreen::class, AppScope::class)
+  @AssistedFactory
+  fun interface Factory {
+    fun create(@Assisted navigator: Navigator): DashboardPresenter
+  }
 
   @Composable
   override fun present(): DashboardUiState {
@@ -100,7 +107,7 @@ class DashboardPresenter(
           DashboardEvent.Retry -> ++retrySignal
           is DashboardEvent.SetSortOrder -> sortOrder = event.sortOrder
           is DashboardEvent.AsteroidClicked ->
-            navigationBroadcaster.broadcast(DetailsScreen(asteroidId = event.asteroidId))
+            navigator.goTo(DetailsScreen(asteroidId = event.asteroidId))
         }
       },
     )

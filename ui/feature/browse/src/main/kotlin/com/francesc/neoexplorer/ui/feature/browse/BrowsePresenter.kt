@@ -15,23 +15,30 @@ import com.francesc.neoexplorer.ui.shared.compose.asteroid.AsteroidUiModel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
-import com.francesc.neoexplorer.ui.shared.navigation.NavigationBroadcaster
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.rememberRetained
+import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import dev.zacsweers.metro.AppScope
-import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.map
 
-@CircuitInject(BrowseScreen::class, AppScope::class)
-@Inject
+@AssistedInject
 class BrowsePresenter(
+  @Assisted private val navigator: Navigator,
   private val neoRepository: NeoRepository,
   private val dateFormatter: DateFormatter,
-  private val navigationBroadcaster: NavigationBroadcaster,
   private val dispatcherProvider: DispatcherProvider,
 ) : Presenter<BrowseUiState> {
+
+  @CircuitInject(BrowseScreen::class, AppScope::class)
+  @AssistedFactory
+  fun interface Factory {
+    fun create(@Assisted navigator: Navigator): BrowsePresenter
+  }
 
   @Composable
   override fun present(): BrowseUiState {
@@ -63,7 +70,7 @@ class BrowsePresenter(
       eventSink = { event ->
         when (event) {
           is BrowseEvent.AsteroidClicked ->
-            navigationBroadcaster.broadcast(DetailsScreen(asteroidId = event.asteroidId))
+            navigator.goTo(DetailsScreen(asteroidId = event.asteroidId))
         }
       },
     )

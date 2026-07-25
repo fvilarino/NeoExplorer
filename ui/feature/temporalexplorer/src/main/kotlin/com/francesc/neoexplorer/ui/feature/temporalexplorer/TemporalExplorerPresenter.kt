@@ -21,23 +21,30 @@ import com.francesc.neoexplorer.ui.shared.compose.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.ThreatLevel
 import com.francesc.neoexplorer.ui.shared.compose.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
-import com.francesc.neoexplorer.ui.shared.navigation.NavigationBroadcaster
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.overlay.LocalOverlayHost
 import com.slack.circuit.retained.rememberRetained
+import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
 import dev.zacsweers.metro.AppScope
-import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 
-@CircuitInject(TemporalExplorerScreen::class, AppScope::class)
-@Inject
+@AssistedInject
 class TemporalExplorerPresenter(
+  @Assisted private val navigator: Navigator,
   private val neoRepository: NeoRepository,
   private val dateFormatter: DateFormatter,
-  private val navigationBroadcaster: NavigationBroadcaster,
 ) : Presenter<TemporalExplorerUiState> {
+
+  @CircuitInject(TemporalExplorerScreen::class, AppScope::class)
+  @AssistedFactory
+  fun interface Factory {
+    fun create(@Assisted navigator: Navigator): TemporalExplorerPresenter
+  }
 
   @Composable
   override fun present(): TemporalExplorerUiState {
@@ -104,7 +111,7 @@ class TemporalExplorerPresenter(
             }
 
           is TemporalExplorerEvent.AsteroidClicked ->
-            navigationBroadcaster.broadcast(DetailsScreen(asteroidId = event.asteroidId))
+            navigator.goTo(DetailsScreen(asteroidId = event.asteroidId))
         }
       },
     )

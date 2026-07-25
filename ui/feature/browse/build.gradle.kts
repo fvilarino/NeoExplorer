@@ -18,5 +18,4 @@ dependencies {
   implementation(projects.ui.feature.details)
   implementation(projects.ui.shared.compose)
   implementation(projects.ui.shared.errormessage)
-  implementation(projects.ui.shared.navigation)
 }
