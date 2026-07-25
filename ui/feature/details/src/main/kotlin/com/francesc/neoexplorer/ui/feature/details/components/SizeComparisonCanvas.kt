@@ -54,7 +54,10 @@ fun SizeComparisonCanvas(
   val asteroidInlineLabel = stringResource(R.string.size_comparison_asteroid_label)
   val sectionTitle = stringResource(R.string.size_comparison_title)
 
-  val asteroidSizeLabel = remember(key1 = asteroidDiameterKm) { formatKm(asteroidDiameterKm) }
+  val asteroidFullLabel =
+    remember(key1 = asteroidInlineLabel, key2 = asteroidDiameterKm) {
+      "$asteroidInlineLabel  (${formatKm(asteroidDiameterKm)})"
+    }
   val referenceLabel =
     remember(key1 = reference) {
       "${reference.label}  (${formatKm(reference.sizeMeters / 1_000.0)})"
@@ -96,26 +99,12 @@ fun SizeComparisonCanvas(
         cornerRadius = cornerRadius,
       )
 
-      // Size label drawn above the bar
-      val asteroidSizeMeasured = textMeasurer.measure(asteroidSizeLabel, labelStyle)
+      // Asteroid info label drawn above the bar
+      val asteroidInfoMeasured = textMeasurer.measure(asteroidFullLabel, labelStyle)
       drawText(
-        textLayoutResult = asteroidSizeMeasured,
+        textLayoutResult = asteroidInfoMeasured,
         color = onSurface,
         topLeft = Offset(0f, 0f),
-      )
-
-      // "Asteroid" label drawn inside the bar
-      val asteroidInlineMeasured = textMeasurer.measure(asteroidInlineLabel, labelStyle)
-      val asteroidValueX =
-        (asteroidBarWidth - asteroidInlineMeasured.size.width - 8f).coerceAtLeast(4f)
-      drawText(
-        textLayoutResult = asteroidInlineMeasured,
-        color = Color.White,
-        topLeft =
-          Offset(
-            asteroidValueX,
-            asteroidBarTop + (barHeightPx - asteroidInlineMeasured.size.height) / 2f,
-          ),
       )
 
       // ── Reference bar ─────────────────────────────────────────────
