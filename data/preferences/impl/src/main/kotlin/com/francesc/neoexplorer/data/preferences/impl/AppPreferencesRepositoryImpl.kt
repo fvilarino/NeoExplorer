@@ -1,5 +1,6 @@
 package com.francesc.neoexplorer.data.preferences.impl
 
+import androidx.annotation.VisibleForTesting
 import androidx.datastore.core.DataStore
 import com.francesc.neoexplorer.data.preferences.AppPreferences
 import com.francesc.neoexplorer.data.preferences.AppPreferencesRepository
@@ -36,13 +37,15 @@ class AppPreferencesRepositoryImpl(private val dataStore: DataStore<AppPreferenc
 
 // ── Mappers ──────────────────────────────────────────────────────────────────
 
-private fun AppPreferencesProto.toDomain(): AppPreferences =
+@VisibleForTesting
+internal fun AppPreferencesProto.toDomain(): AppPreferences =
   AppPreferences(
     theme = theme.toDomain(),
     useDynamicTheme = useDynamicTheme,
   )
 
-private fun AppThemeProto.toDomain(): AppTheme =
+@VisibleForTesting
+internal fun AppThemeProto.toDomain(): AppTheme =
   when (this) {
     AppThemeProto.APP_THEME_PROTO_LIGHT -> AppTheme.LIGHT
     AppThemeProto.APP_THEME_PROTO_DARK -> AppTheme.DARK
@@ -50,7 +53,8 @@ private fun AppThemeProto.toDomain(): AppTheme =
     else -> AppTheme.AUTO
   }
 
-private fun AppTheme.toProto(): AppThemeProto =
+@VisibleForTesting
+internal fun AppTheme.toProto(): AppThemeProto =
   when (this) {
     AppTheme.AUTO -> AppThemeProto.APP_THEME_PROTO_AUTO
     AppTheme.LIGHT -> AppThemeProto.APP_THEME_PROTO_LIGHT

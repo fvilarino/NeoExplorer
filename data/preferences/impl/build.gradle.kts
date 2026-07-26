@@ -1,5 +1,6 @@
 plugins {
   id("neoexplorer.android.library")
+  id("neoexplorer.android.library.test")
   id("neoexplorer.dependency.injection")
   alias(libs.plugins.com.google.protobuf)
 }
