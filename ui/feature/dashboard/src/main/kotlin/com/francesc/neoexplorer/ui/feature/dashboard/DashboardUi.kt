@@ -14,6 +14,7 @@ import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardTopBar
 import com.francesc.neoexplorer.ui.feature.dashboard.components.ErrorContent
 import com.francesc.neoexplorer.ui.feature.dashboard.components.LoadingContent
+import com.francesc.neoexplorer.ui.shared.compose.LocalHomeScaffoldPadding
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.slack.circuit.codegen.annotations.CircuitInject
@@ -23,6 +24,7 @@ import dev.zacsweers.metro.AppScope
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardUi(state: DashboardUiState, modifier: Modifier = Modifier) {
+  val homePadding = LocalHomeScaffoldPadding.current
   Scaffold(
     modifier = modifier,
     topBar = {
@@ -33,12 +35,13 @@ fun DashboardUi(state: DashboardUiState, modifier: Modifier = Modifier) {
       )
     },
   ) { innerPadding ->
+    val contentPadding = innerPadding + homePadding
     Crossfade(targetState = state.loadingState, label = "dashboardState") { loadingState ->
       when (loadingState) {
         LoadingState.LOADING ->
           LoadingContent(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding,
+            contentPadding = contentPadding,
           )
         LoadingState.LOADED ->
           AsteroidFeed(
@@ -47,14 +50,14 @@ fun DashboardUi(state: DashboardUiState, modifier: Modifier = Modifier) {
             hazardousCount = state.hazardousCount,
             onAsteroidClick = { state.eventSink(DashboardEvent.AsteroidClicked(it)) },
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding,
+            contentPadding = contentPadding,
           )
         LoadingState.ERROR ->
           ErrorContent(
             message = state.errorMessage ?: stringResource(R.string.something_went_wrong),
             onRetry = { state.eventSink(DashboardEvent.Retry) },
             modifier =
-              Modifier.padding(innerPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
+              Modifier.padding(contentPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
           )
       }
     }

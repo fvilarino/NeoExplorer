@@ -4,7 +4,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalLayoutDirection
+
+/**
+ * A [CompositionLocal] that provides additional padding values to be used by screens to account for
+ * top-level navigation components (like a bottom navigation bar) that might otherwise obscure
+ * content.
+ */
+val LocalHomeScaffoldPadding = staticCompositionLocalOf { PaddingValues() }
 
 /** Adds two [PaddingValues] together, combining each edge. */
 @Composable

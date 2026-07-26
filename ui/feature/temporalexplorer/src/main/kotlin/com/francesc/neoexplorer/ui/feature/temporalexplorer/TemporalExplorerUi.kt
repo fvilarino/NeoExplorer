@@ -17,6 +17,7 @@ import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.TemporalE
 import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeed
 import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeedErrorContent
 import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeedLoadingContent
+import com.francesc.neoexplorer.ui.shared.compose.LocalHomeScaffoldPadding
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.slack.circuit.codegen.annotations.CircuitInject
@@ -29,6 +30,7 @@ fun TemporalExplorerUi(
   state: TemporalExplorerUiState,
   modifier: Modifier = Modifier,
 ) {
+  val homePadding = LocalHomeScaffoldPadding.current
   Scaffold(
     modifier = modifier,
     topBar = {
@@ -39,6 +41,7 @@ fun TemporalExplorerUi(
       )
     },
   ) { innerPadding ->
+    val contentPadding = innerPadding + homePadding
     Crossfade(
       targetState = state.loadingState,
       label = "temporalExplorerState",
@@ -47,13 +50,13 @@ fun TemporalExplorerUi(
         TemporalExplorerLoadingState.IDLE ->
           TemporalExplorerIdleContent(
             onSelectDateClick = { state.eventSink(TemporalExplorerEvent.ShowDatePicker) },
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
+            modifier = Modifier.fillMaxSize().padding(contentPadding),
           )
 
         TemporalExplorerLoadingState.LOADING ->
           AsteroidFeedLoadingContent(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding,
+            contentPadding = contentPadding,
           )
 
         TemporalExplorerLoadingState.LOADED ->
@@ -73,7 +76,7 @@ fun TemporalExplorerUi(
               }
             },
             modifier = Modifier.fillMaxSize(),
-            contentPadding = innerPadding,
+            contentPadding = contentPadding,
           )
 
         TemporalExplorerLoadingState.ERROR ->
@@ -85,7 +88,7 @@ fun TemporalExplorerUi(
                 ),
             onRetry = { state.eventSink(TemporalExplorerEvent.Retry) },
             modifier =
-              Modifier.padding(innerPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
+              Modifier.padding(contentPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
           )
       }
     }

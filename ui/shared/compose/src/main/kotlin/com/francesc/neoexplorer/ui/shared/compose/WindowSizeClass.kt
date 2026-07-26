@@ -10,19 +10,23 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 
 /**
- * Returns the current [WindowWidthSizeClass] derived from [LocalWindowInfo], which updates
- * automatically on orientation changes without requiring an Activity reference.
+ * Returns the current [WindowSizeClass] derived from [LocalWindowInfo], which updates automatically
+ * on orientation changes without requiring an Activity reference.
  */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun rememberWindowWidthClass(): WindowWidthSizeClass {
+fun rememberWindowSizeClass(): WindowSizeClass {
   val containerSize = LocalWindowInfo.current.containerSize
   val dpSize =
     with(LocalDensity.current) {
       DpSize(containerSize.width.toDp(), containerSize.height.toDp())
     }
-  return WindowSizeClass.calculateFromSize(dpSize).widthSizeClass
+  return WindowSizeClass.calculateFromSize(dpSize)
 }
+
+/** Returns the current [WindowWidthSizeClass] derived from [LocalWindowInfo]. */
+@Composable
+fun rememberWindowWidthClass(): WindowWidthSizeClass = rememberWindowSizeClass().widthSizeClass
 
 /**
  * Returns the appropriate grid content padding for the current window width:

@@ -17,4 +17,5 @@ dependencies {
   implementation(projects.ui.feature.details)
   implementation(projects.ui.feature.settings)
   implementation(projects.ui.feature.temporalexplorer)
+  implementation(projects.ui.shared.compose)
 }

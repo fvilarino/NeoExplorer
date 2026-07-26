@@ -16,6 +16,7 @@ import com.francesc.neoexplorer.ui.feature.browse.components.BrowseGrid
 import com.francesc.neoexplorer.ui.feature.browse.components.BrowseScreen
 import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeedErrorContent
 import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidFeedLoadingContent
+import com.francesc.neoexplorer.ui.shared.compose.LocalHomeScaffoldPadding
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.plus
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
@@ -26,19 +27,21 @@ import dev.zacsweers.metro.AppScope
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BrowseUi(state: BrowseUiState, modifier: Modifier = Modifier) {
+  val homePadding = LocalHomeScaffoldPadding.current
   Scaffold(
     modifier = modifier,
     topBar = {
       TopAppBar(title = { Text(text = stringResource(R.string.browse_title)) })
     },
   ) { innerPadding ->
+    val contentPadding = innerPadding + homePadding
     val resources = LocalResources.current
     when (val refresh = state.asteroids.loadState.refresh) {
       is LoadState.Loading ->
         AsteroidFeedLoadingContent(
           modifier = Modifier.fillMaxSize(),
           displayHeader = false,
-          contentPadding = innerPadding,
+          contentPadding = contentPadding,
         )
 
       is LoadState.Error ->
@@ -46,7 +49,7 @@ fun BrowseUi(state: BrowseUiState, modifier: Modifier = Modifier) {
           message = refresh.error.toUserMessage(resources),
           onRetry = { state.asteroids.retry() },
           modifier =
-            Modifier.padding(innerPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
+            Modifier.padding(contentPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
         )
 
       is LoadState.NotLoading ->
@@ -54,7 +57,7 @@ fun BrowseUi(state: BrowseUiState, modifier: Modifier = Modifier) {
           asteroids = state.asteroids,
           onAsteroidClick = { state.eventSink(BrowseEvent.AsteroidClicked(it)) },
           modifier = Modifier.fillMaxSize(),
-          contentPadding = innerPadding,
+          contentPadding = contentPadding,
         )
     }
   }

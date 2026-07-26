@@ -32,6 +32,7 @@ import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.compose.ContentContainer
+import com.francesc.neoexplorer.ui.shared.compose.LocalHomeScaffoldPadding
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.MarginQuad
 import com.francesc.neoexplorer.ui.shared.compose.PhonePreviews
@@ -64,6 +65,7 @@ private fun DetailsUi(
   onBackClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val homePadding = LocalHomeScaffoldPadding.current
   Scaffold(
     modifier = modifier,
     topBar = {
@@ -95,16 +97,17 @@ private fun DetailsUi(
       )
     },
   ) { innerPadding ->
+    val contentPadding = innerPadding + homePadding
     when (state.loadingState) {
       DetailsLoadingState.LOADING ->
-        DetailsLoadingContent(modifier = Modifier.padding(innerPadding).fillMaxSize())
+        DetailsLoadingContent(modifier = Modifier.padding(contentPadding).fillMaxSize())
 
       DetailsLoadingState.ERROR ->
         DetailsErrorContent(
           message = state.errorMessage ?: stringResource(R.string.something_went_wrong),
           onRetry = { state.eventSink(DetailsEvent.Retry) },
           modifier =
-            Modifier.padding(innerPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
+            Modifier.padding(contentPadding + PaddingValues(all = MarginDouble)).fillMaxSize(),
         )
 
       DetailsLoadingState.LOADED -> {
@@ -114,7 +117,7 @@ private fun DetailsUi(
         if (windowWidthClass == WindowWidthSizeClass.Expanded) {
           DetailsLoadedTwoPaneContent(
             detailsUiModel = asteroid,
-            modifier = Modifier.padding(innerPadding).fillMaxSize(),
+            modifier = Modifier.padding(contentPadding).fillMaxSize(),
           )
         } else {
           // Compact / Medium – single column, capped at MaxContentWidth and centered
@@ -129,7 +132,7 @@ private fun DetailsUi(
               detailsUiModel = asteroid,
               horizontalPadding = horizontalPadding,
               modifier = Modifier.fillMaxWidth(),
-              contentPadding = innerPadding,
+              contentPadding = contentPadding,
             )
           }
         }
