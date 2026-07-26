@@ -4,9 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalResources
+import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.components.DateRangeOverlay
@@ -32,6 +34,7 @@ class TemporalExplorerPresenter(
   @Assisted private val navigator: Navigator,
   private val neoRepository: NeoRepository,
   private val mapper: NearEarthObjectMapper,
+  private val dateFormatter: DateFormatter,
 ) : Presenter<TemporalExplorerUiState> {
 
   @CircuitInject(TemporalExplorerScreen::class, AppScope::class)
@@ -51,6 +54,14 @@ class TemporalExplorerPresenter(
     var hazardousCount by rememberRetained { mutableIntStateOf(0) }
     var startDate by rememberRetained { mutableStateOf<LocalDate?>(null) }
     var endDate by rememberRetained { mutableStateOf<LocalDate?>(null) }
+    val displayStartDate =
+      remember(key1 = startDate) {
+        startDate?.let { dateFormatter.format(it) }
+      }
+    val displayEndDate =
+      remember(key1 = endDate) {
+        endDate?.let { dateFormatter.format(it) }
+      }
     var errorMessage by rememberRetained { mutableStateOf<String?>(null) }
 
     suspend fun fetchFeed(start: LocalDate, end: LocalDate) {
@@ -74,8 +85,8 @@ class TemporalExplorerPresenter(
 
     return TemporalExplorerUiState(
       loadingState = loadingState,
-      startDate = startDate,
-      endDate = endDate,
+      startDate = displayStartDate,
+      endDate = displayEndDate,
       asteroids = asteroids,
       hazardousCount = hazardousCount,
       errorMessage = errorMessage,
