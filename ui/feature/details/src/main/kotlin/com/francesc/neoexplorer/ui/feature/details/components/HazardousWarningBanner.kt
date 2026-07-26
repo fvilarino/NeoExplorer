@@ -43,7 +43,7 @@ internal fun HazardousWarningBanner(modifier: Modifier = Modifier) {
   ) {
     Icon(
       imageVector = Icons.Default.Warning,
-      contentDescription = null,
+      contentDescription = stringResource(R.string.accessibility_warning),
       tint = MaterialTheme.extendedColorScheme.onCaution,
       modifier = Modifier.size(IconSizeSmall),
     )

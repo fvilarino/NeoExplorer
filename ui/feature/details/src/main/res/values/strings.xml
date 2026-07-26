@@ -34,5 +34,6 @@
 
     <!-- Accessibility -->
     <string name="accessibility_back">Back</string>
+    <string name="accessibility_warning">Warning</string>
     <string name="accessibility_error">Error</string>
 </resources>
