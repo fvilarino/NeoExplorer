@@ -35,7 +35,7 @@ internal fun DetailsErrorContent(
     ) {
       Icon(
         imageVector = Icons.Default.Warning,
-        contentDescription = null,
+        contentDescription = stringResource(R.string.accessibility_error),
         tint = MaterialTheme.colorScheme.error,
         modifier = Modifier.size(IconSizeLarge),
       )
@@ -59,7 +59,7 @@ private fun DetailsErrorContentPreview() {
   NeoExplorerTheme {
     Surface(color = MaterialTheme.colorScheme.background) {
       DetailsErrorContent(
-        message = "Failed to load asteriod details. Please check your connection and try again.",
+        message = "Failed to load asteroid details. Please check your connection and try again.",
         onRetry = {},
         modifier = Modifier.fillMaxWidth(),
       )

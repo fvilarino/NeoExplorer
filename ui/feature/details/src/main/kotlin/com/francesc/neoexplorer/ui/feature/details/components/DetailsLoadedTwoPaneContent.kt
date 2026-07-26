@@ -23,7 +23,7 @@ import com.francesc.neoexplorer.ui.shared.compose.MarginOneAndHalf
 
 @Composable
 internal fun DetailsLoadedTwoPaneContent(
-  asteroid: DetailsUiModel,
+  detailsUiModel: DetailsUiModel,
   modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
@@ -37,7 +37,7 @@ internal fun DetailsLoadedTwoPaneContent(
       contentPadding = PaddingValues(vertical = MarginOneAndHalf),
       verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
     ) {
-      if (asteroid.isPotentiallyHazardous) {
+      if (detailsUiModel.isPotentiallyHazardous) {
         item {
           HazardousWarningBanner(modifier = Modifier.fillMaxWidth())
         }
@@ -46,7 +46,7 @@ internal fun DetailsLoadedTwoPaneContent(
         SectionTitle(text = stringResource(R.string.section_object_characteristics))
       }
       item {
-        MetricsGrid(asteroid = asteroid, columns = 3)
+        MetricsGrid(asteroid = detailsUiModel, columns = 3)
       }
     }
 
@@ -60,9 +60,9 @@ internal fun DetailsLoadedTwoPaneContent(
     ) {
       item {
         SizeComparisonCanvas(
-          asteroidName = asteroid.name,
-          asteroidDiameterKm = asteroid.diameterMaxKm,
-          reference = asteroid.sizeReference,
+          asteroidName = detailsUiModel.name,
+          asteroidDiameterKm = detailsUiModel.diameterMaxKm,
+          reference = detailsUiModel.sizeReference,
           modifier = Modifier.fillMaxWidth(),
         )
       }
@@ -73,7 +73,7 @@ internal fun DetailsLoadedTwoPaneContent(
         ) {
           JplLinkButton(
             onOpen = {
-              context.startActivity(Intent(Intent.ACTION_VIEW, asteroid.nasaJplUrl.toUri()))
+              context.startActivity(Intent(Intent.ACTION_VIEW, detailsUiModel.nasaJplUrl.toUri()))
             },
             modifier = Modifier.widthIn(max = JplButtonMaxWidth).fillMaxWidth(),
           )

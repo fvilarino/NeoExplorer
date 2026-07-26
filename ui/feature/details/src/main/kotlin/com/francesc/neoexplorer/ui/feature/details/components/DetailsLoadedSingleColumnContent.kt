@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -23,19 +24,21 @@ import com.francesc.neoexplorer.ui.shared.compose.MarginOneAndHalf
 import com.francesc.neoexplorer.ui.shared.compose.MarginSingle
 import com.francesc.neoexplorer.ui.shared.compose.plus
 
+internal const val DetailsSingleColumnContainerTestTag = "details_single_column_container"
+
 /** Max width of the size-comparison canvas on single-column layouts. */
 private val CanvasMaxWidth = 600.dp
 
 @Composable
 internal fun DetailsLoadedSingleColumnContent(
-  asteroid: DetailsUiModel,
+  detailsUiModel: DetailsUiModel,
   horizontalPadding: androidx.compose.ui.unit.Dp,
   modifier: Modifier = Modifier,
   contentPadding: PaddingValues = PaddingValues(),
 ) {
   val context = LocalContext.current
   LazyColumn(
-    modifier = modifier.fillMaxSize(),
+    modifier = modifier.fillMaxSize().testTag(DetailsSingleColumnContainerTestTag),
     contentPadding =
       PaddingValues(
         horizontal = horizontalPadding,
@@ -44,7 +47,7 @@ internal fun DetailsLoadedSingleColumnContent(
     verticalArrangement = Arrangement.spacedBy(MarginOneAndHalf),
   ) {
     // ── Hazardous badge ───────────────────────────────────────────────
-    if (asteroid.isPotentiallyHazardous) {
+    if (detailsUiModel.isPotentiallyHazardous) {
       item {
         HazardousWarningBanner(modifier = Modifier.fillMaxWidth())
       }
@@ -55,7 +58,7 @@ internal fun DetailsLoadedSingleColumnContent(
       SectionTitle(text = stringResource(R.string.section_object_characteristics))
     }
     item {
-      MetricsGrid(asteroid = asteroid)
+      MetricsGrid(asteroid = detailsUiModel)
     }
 
     // ── Size comparison ───────────────────────────────────────────────
@@ -67,9 +70,9 @@ internal fun DetailsLoadedSingleColumnContent(
     item {
       // Cap bar width so it doesn't become absurdly wide on Medium screens
       SizeComparisonCanvas(
-        asteroidName = asteroid.name,
-        asteroidDiameterKm = asteroid.diameterMaxKm,
-        reference = asteroid.sizeReference,
+        asteroidName = detailsUiModel.name,
+        asteroidDiameterKm = detailsUiModel.diameterMaxKm,
+        reference = detailsUiModel.sizeReference,
         modifier = Modifier.widthIn(max = CanvasMaxWidth).fillMaxWidth(),
       )
     }
@@ -83,7 +86,7 @@ internal fun DetailsLoadedSingleColumnContent(
       ) {
         JplLinkButton(
           onOpen = {
-            context.startActivity(Intent(Intent.ACTION_VIEW, asteroid.nasaJplUrl.toUri()))
+            context.startActivity(Intent(Intent.ACTION_VIEW, detailsUiModel.nasaJplUrl.toUri()))
           },
           modifier = Modifier.widthIn(max = JplButtonMaxWidth).fillMaxWidth(),
         )

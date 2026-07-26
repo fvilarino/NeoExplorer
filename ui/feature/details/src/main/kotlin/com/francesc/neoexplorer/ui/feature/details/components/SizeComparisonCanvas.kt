@@ -18,6 +18,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.font.FontWeight
@@ -56,7 +58,7 @@ fun SizeComparisonCanvas(
 
   val asteroidFullLabel =
     remember(key1 = asteroidInlineLabel, key2 = asteroidDiameterKm) {
-      "$asteroidInlineLabel  (${formatKm(asteroidDiameterKm)})"
+      "$asteroidInlineLabel (${formatKm(asteroidDiameterKm)})"
     }
   val referenceLabel =
     remember(key1 = reference) {
@@ -74,7 +76,11 @@ fun SizeComparisonCanvas(
     Spacer(modifier = Modifier.height(MarginSingle))
     Canvas(
       modifier =
-        Modifier.fillMaxWidth().height(LabelHeight + BarHeight + BarGap + BarHeight + LabelHeight)
+        Modifier.fillMaxWidth()
+          .height(LabelHeight + BarHeight + BarGap + BarHeight + LabelHeight)
+          .semantics {
+            contentDescription = asteroidFullLabel
+          }
     ) {
       val referenceSizeKm = reference.sizeMeters / 1_000.0
       val maxKm = maxOf(asteroidDiameterKm, referenceSizeKm)

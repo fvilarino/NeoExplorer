@@ -113,7 +113,7 @@ private fun DetailsUi(
 
         if (windowWidthClass == WindowWidthSizeClass.Expanded) {
           DetailsLoadedTwoPaneContent(
-            asteroid = asteroid,
+            detailsUiModel = asteroid,
             modifier = Modifier.padding(innerPadding).fillMaxSize(),
           )
         } else {
@@ -126,7 +126,7 @@ private fun DetailsUi(
             }
           ContentContainer(modifier = Modifier.fillMaxSize()) {
             DetailsLoadedSingleColumnContent(
-              asteroid = asteroid,
+              detailsUiModel = asteroid,
               horizontalPadding = horizontalPadding,
               modifier = Modifier.fillMaxWidth(),
               contentPadding = innerPadding,
