@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.francesc.neoexplorer.data.preferences.AppTheme
@@ -70,7 +72,10 @@ private fun ThemeIcon(
   FilledIconToggleButton(
     checked = isSelected,
     onCheckedChange = { onClick() },
-    modifier = modifier,
+    modifier =
+      modifier.semantics(mergeDescendants = true) {
+        this.contentDescription = contentDescription.orEmpty()
+      },
   ) {
     Icon(
       imageVector = icon,
@@ -80,7 +85,7 @@ private fun ThemeIcon(
         } else {
           MaterialTheme.colorScheme.onBackground
         },
-      contentDescription = contentDescription,
+      contentDescription = null,
     )
   }
 }
