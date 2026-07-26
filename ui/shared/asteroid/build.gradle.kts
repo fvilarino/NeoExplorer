@@ -9,8 +9,8 @@ android {
 }
 
 dependencies {
-  implementation(projects.core.formatter)
   implementation(projects.data.neo)
   implementation(projects.ui.shared.compose)
+  implementation(projects.ui.shared.formatter)
   implementation(projects.ui.shared.styles)
 }

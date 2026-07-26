@@ -39,10 +39,6 @@ include(":core:dispatcher")
 
 include(":core:dispatcher:impl")
 
-include(":core:formatter")
-
-include(":core:formatter:impl")
-
 include(":data:neo")
 
 include(":data:neo:impl")
@@ -68,5 +64,9 @@ include(":ui:shared:asteroid")
 include(":ui:shared:compose")
 
 include(":ui:shared:errormessage")
+
+include(":ui:shared:formatter")
+
+include(":ui:shared:formatter:impl")
 
 include(":ui:shared:styles")

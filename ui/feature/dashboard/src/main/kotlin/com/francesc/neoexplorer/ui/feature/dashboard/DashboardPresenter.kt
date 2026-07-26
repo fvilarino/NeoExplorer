@@ -9,13 +9,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalResources
 import com.francesc.neoexplorer.core.clock.DateProvider
-import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
 import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidUiModel
 import com.francesc.neoexplorer.ui.shared.asteroid.NearEarthObjectMapper
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
+import com.francesc.neoexplorer.ui.shared.formatter.DateFormatter
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.retained.rememberRetained
 import com.slack.circuit.runtime.Navigator

@@ -33,7 +33,6 @@ dependencies {
   implementation(libs.com.slack.circuit.circuit.foundation)
   implementation(projects.core.clock.impl)
   implementation(projects.core.dispatcher.impl)
-  implementation(projects.core.formatter.impl)
   implementation(projects.data.neo.impl)
   implementation(projects.data.preferences.impl)
   implementation(projects.ui.feature.browse)
@@ -44,5 +43,6 @@ dependencies {
   implementation(projects.ui.feature.temporalexplorer)
   implementation(projects.ui.shared.asteroid)
   implementation(projects.ui.shared.errormessage)
+  implementation(projects.ui.shared.formatter.impl)
   implementation(projects.ui.shared.styles)
 }

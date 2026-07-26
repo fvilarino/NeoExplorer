@@ -1,9 +1,9 @@
 package com.francesc.neoexplorer.ui.shared.asteroid
 
-import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.model.CloseApproachData
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
 import com.francesc.neoexplorer.data.neo.model.NeoFeed
+import com.francesc.neoexplorer.ui.shared.formatter.DateFormatter
 import dev.zacsweers.metro.Inject
 import kotlinx.datetime.LocalDate
 

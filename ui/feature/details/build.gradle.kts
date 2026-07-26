@@ -18,11 +18,11 @@ android {
 ksp { arg("circuit.codegen.mode", "metro") }
 
 dependencies {
-  implementation(projects.core.formatter)
   implementation(projects.data.neo)
   implementation(projects.ui.shared.asteroid)
   implementation(projects.ui.shared.compose)
   implementation(projects.ui.shared.errormessage)
+  implementation(projects.ui.shared.formatter)
 
   testImplementation(libs.robolectric)
   testImplementation(libs.androidx.compose.ui.ui.test.junit4)

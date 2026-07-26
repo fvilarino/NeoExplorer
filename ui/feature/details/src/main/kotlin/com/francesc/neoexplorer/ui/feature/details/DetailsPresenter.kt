@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalResources
-import com.francesc.neoexplorer.core.formatter.DateFormatter
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.data.neo.model.AsteroidId as DataAsteroidId
 import com.francesc.neoexplorer.data.neo.model.NearEarthObject
@@ -19,6 +18,7 @@ import com.francesc.neoexplorer.ui.shared.asteroid.AsteroidId
 import com.francesc.neoexplorer.ui.shared.asteroid.Distance
 import com.francesc.neoexplorer.ui.shared.asteroid.Velocity
 import com.francesc.neoexplorer.ui.shared.errormessage.toUserMessage
+import com.francesc.neoexplorer.ui.shared.formatter.DateFormatter
 import com.slack.circuit.codegen.annotations.CircuitInject
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter
