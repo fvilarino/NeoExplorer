@@ -26,7 +26,7 @@ dependencies {
   implementation(projects.ui.shared.compose)
   implementation(projects.ui.shared.errormessage)
 
-  testImplementation(libs.robolectric)
   testImplementation(libs.androidx.compose.ui.ui.test.junit4)
   testImplementation(libs.androidx.paging.testing)
+  testImplementation(libs.org.robolectric.robolectric)
 }

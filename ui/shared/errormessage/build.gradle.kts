@@ -13,6 +13,6 @@ android {
 }
 
 dependencies {
-  testImplementation(libs.robolectric)
   testImplementation(libs.androidx.test.core)
+  testImplementation(libs.org.robolectric.robolectric)
 }

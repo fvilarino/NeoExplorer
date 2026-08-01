@@ -24,6 +24,6 @@ dependencies {
   implementation(projects.ui.shared.errormessage)
   implementation(projects.ui.shared.formatter)
 
-  testImplementation(libs.robolectric)
   testImplementation(libs.androidx.compose.ui.ui.test.junit4)
+  testImplementation(libs.org.robolectric.robolectric)
 }

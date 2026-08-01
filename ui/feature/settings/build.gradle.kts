@@ -20,6 +20,6 @@ dependencies {
   implementation(projects.data.preferences)
   implementation(projects.ui.shared.compose)
 
-  testImplementation(libs.robolectric)
   testImplementation(libs.androidx.compose.ui.ui.test.junit4)
+  testImplementation(libs.org.robolectric.robolectric)
 }
