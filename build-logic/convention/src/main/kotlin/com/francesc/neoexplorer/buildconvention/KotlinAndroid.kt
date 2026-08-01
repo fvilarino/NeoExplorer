@@ -23,7 +23,6 @@ internal fun Project.configureKotlinAndroid(commonExtension: CommonExtension) {
     }
   }
   jvmCompilerOptions {
-    freeCompilerArgs.addAll(Config.CompilerArgs.KotlinFreeCompilerArgs)
     jvmTarget.set(jvmTargetVersion)
   }
 }

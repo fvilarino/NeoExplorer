@@ -7,8 +7,4 @@ object Config {
     const val CompileSdk = 37
     const val TargetSdk = 37
   }
-
-  object CompilerArgs {
-    val KotlinFreeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
-  }
 }
