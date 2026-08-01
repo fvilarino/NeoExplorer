@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.francesc.neoexplorer.data.neo.NeoConstants
 import com.francesc.neoexplorer.ui.feature.temporalexplorer.R
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.MarginSingle
@@ -28,7 +29,6 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.toLocalDateTime
 
-private const val MAX_RANGE_DAYS = 7L
 private const val MS_PER_DAY = 24L * 60 * 60 * 1_000
 
 private fun LocalDate.toUtcMillis(): Long = atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
@@ -56,7 +56,7 @@ fun DateRangePickerContent(
       val start = pickerState.selectedStartDateMillis
       val end = pickerState.selectedEndDateMillis
       if (start != null && end != null) {
-        end - start > (MAX_RANGE_DAYS - 1) * MS_PER_DAY
+        end - start > (NeoConstants.MAX_FEED_RANGE_DAYS - 1) * MS_PER_DAY
       } else {
         false
       }

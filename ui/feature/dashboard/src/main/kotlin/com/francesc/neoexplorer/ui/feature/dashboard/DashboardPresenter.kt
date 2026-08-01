@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalResources
 import com.francesc.neoexplorer.core.clock.DateProvider
+import com.francesc.neoexplorer.data.neo.NeoConstants
 import com.francesc.neoexplorer.data.neo.NeoRepository
 import com.francesc.neoexplorer.ui.feature.dashboard.components.DashboardScreen
 import com.francesc.neoexplorer.ui.feature.details.components.DetailsScreen
@@ -65,7 +66,10 @@ class DashboardPresenter(
       loadingState = LoadingState.LOADING
       errorMessage = null
       neoRepository
-        .getFeed(startDate = today, endDate = today.plus(6, DateTimeUnit.DAY))
+        .getFeed(
+          startDate = today,
+          endDate = today.plus(NeoConstants.MAX_FEED_RANGE_DAYS - 1, DateTimeUnit.DAY),
+        )
         .fold(
           onSuccess = { feed ->
             val parsed = mapper.parseFeed(feed)
