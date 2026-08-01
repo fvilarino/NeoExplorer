@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import com.francesc.neoexplorer.ui.shared.compose.MarginDouble
 import com.francesc.neoexplorer.ui.shared.compose.MarginSingle
 import com.francesc.neoexplorer.ui.shared.compose.ShimmerLine
@@ -17,10 +18,12 @@ import com.francesc.neoexplorer.ui.shared.compose.WidgetPreviews
 import com.francesc.neoexplorer.ui.shared.compose.rememberShimmerBrush
 import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
+internal const val ShimmerFeedHeaderTag = "ShimmerFeedHeader"
+
 @Composable
 fun ShimmerFeedHeader(modifier: Modifier = Modifier) {
   val brush = rememberShimmerBrush()
-  Column(modifier = modifier) {
+  Column(modifier = modifier.testTag(ShimmerFeedHeaderTag)) {
     ShimmerLine(widthFraction = 0.45f, style = ShimmerTextStyle.Title, brush = brush)
     Spacer(modifier = Modifier.height(MarginSingle))
     ShimmerLine(widthFraction = 0.65f, style = ShimmerTextStyle.Body, brush = brush)

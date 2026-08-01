@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.francesc.neoexplorer.ui.shared.compose.CardCornerSizeLarge
 import com.francesc.neoexplorer.ui.shared.compose.CardElevation
@@ -32,11 +33,13 @@ import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
 
 private val ShimmerBarWidth = 4.dp
 
+internal const val ShimmerAsteroidCardTag = "ShimmerAsteroidCard"
+
 @Composable
 fun ShimmerAsteroidCard(modifier: Modifier = Modifier) {
   val brush = rememberShimmerBrush()
   Card(
-    modifier = modifier,
+    modifier = modifier.testTag(ShimmerAsteroidCardTag),
     shape = RoundedCornerShape(CardCornerSizeLarge),
     elevation = CardDefaults.cardElevation(defaultElevation = CardElevation),
   ) {

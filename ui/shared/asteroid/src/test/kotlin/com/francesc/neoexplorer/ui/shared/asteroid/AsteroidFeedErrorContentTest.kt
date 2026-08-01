@@ -1,0 +1,65 @@
+package com.francesc.neoexplorer.ui.shared.asteroid
+
+import android.content.Context
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.francesc.neoexplorer.ui.shared.compose.R
+import com.francesc.neoexplorer.ui.shared.styles.NeoExplorerTheme
+import org.junit.Assert.assertTrue
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.annotation.Config
+
+@RunWith(AndroidJUnit4::class)
+@Config(sdk = [35])
+class AsteroidFeedErrorContentTest {
+
+  @get:Rule val composeTestRule = createComposeRule()
+
+  private val context = ApplicationProvider.getApplicationContext<Context>()
+
+  @Test
+  fun asteroidFeedErrorContent_displaysMessage() {
+    val message = "Something went wrong"
+    composeTestRule.render(message = message)
+
+    composeTestRule.onNodeWithText(message).assertIsDisplayed()
+  }
+
+  @Test
+  fun asteroidFeedErrorContent_displaysRetryButton() {
+    composeTestRule.render()
+
+    composeTestRule.onNodeWithText(context.getString(R.string.retry)).assertIsDisplayed()
+  }
+
+  @Test
+  fun asteroidFeedErrorContent_onRetryClick_triggersLambda() {
+    var retryClicked = false
+    composeTestRule.render(onRetry = { retryClicked = true })
+
+    composeTestRule.onNodeWithText(context.getString(R.string.retry)).performClick()
+
+    assertTrue(retryClicked)
+  }
+
+  private fun ComposeContentTestRule.render(
+    message: String = "Test message",
+    onRetry: () -> Unit = {},
+  ) {
+    setContent {
+      NeoExplorerTheme {
+        AsteroidFeedErrorContent(
+          message = message,
+          onRetry = onRetry,
+        )
+      }
+    }
+  }
+}
