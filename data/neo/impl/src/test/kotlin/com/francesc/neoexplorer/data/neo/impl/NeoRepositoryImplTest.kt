@@ -5,6 +5,10 @@ import com.francesc.neoexplorer.data.neo.model.AsteroidId
 import com.francesc.neoexplorer.data.neo.model.Kilometers
 import com.francesc.neoexplorer.data.neo.model.KilometersPerSecond
 import com.francesc.neoexplorer.data.neo.model.NasaJplUrl
+import kotlin.time.Clock
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Instant
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDate
@@ -16,7 +20,14 @@ import org.junit.Test
 class NeoRepositoryImplTest {
 
   private val dataSource = FakeNeoDataSource()
-  private val repository = NeoRepositoryImpl(dataSource)
+  private val testClock = TestClock()
+  private val cache = NeoCache(testClock)
+  private val repository =
+    NeoRepositoryImpl(
+      dataSource = dataSource,
+      asteroidLocalDataSource = cache,
+      feedLocalDataSource = cache,
+    )
 
   // region getFeed
   @Test
@@ -234,7 +245,7 @@ class NeoRepositoryImplTest {
             else -> neoBrowseResponse(neos = page1Neos, page = 1, totalPages = 2)
           }.also { pageRequested = page }
       }
-    val multiPageRepository = NeoRepositoryImpl(multiPageDataSource)
+    val multiPageRepository = NeoRepositoryImpl(multiPageDataSource, cache, cache)
     val result =
       multiPageRepository.browse().asSnapshot {
         scrollTo(index = 4)
@@ -257,7 +268,7 @@ class NeoRepositoryImplTest {
             dataSource.browse(page, pageSize)
           } // record the requested pageSize
       }
-    val multiPageRepository = NeoRepositoryImpl(multiPageDataSource)
+    val multiPageRepository = NeoRepositoryImpl(multiPageDataSource, cache, cache)
 
     multiPageRepository.browse().asSnapshot { scrollTo(index = 25) }
 
@@ -268,5 +279,90 @@ class NeoRepositoryImplTest {
       requestedSizes.all { it == requestedSizes.first() },
     )
   }
+
   // endregion
+
+  @Test
+  fun `getFeed uses cache on subsequent calls`() = runTest {
+    dataSource.feedResponse = neoFeedResponse(elementCount = 5)
+    val start = LocalDate(2025, 1, 15)
+
+    // First call - hits data source
+    val firstResult = repository.getFeed(start).getOrThrow()
+    assertEquals(5, firstResult.elementCount)
+    assertEquals("2025-01-15", dataSource.lastFeedStartDate)
+
+    // Clear data source recording
+    dataSource.lastFeedStartDate = null
+    dataSource.feedResponse = neoFeedResponse(elementCount = 10)
+
+    // Second call - should hit cache
+    val secondResult = repository.getFeed(start).getOrThrow()
+    assertEquals(5, secondResult.elementCount) // Still 5, from cache
+    assertNull(dataSource.lastFeedStartDate) // Data source not called
+  }
+
+  @Test
+  fun `getFeed hits network after cache expires`() = runTest {
+    dataSource.feedResponse = neoFeedResponse(elementCount = 5)
+    val start = LocalDate(2025, 1, 15)
+
+    repository.getFeed(start)
+    assertEquals("2025-01-15", dataSource.lastFeedStartDate)
+
+    dataSource.lastFeedStartDate = null
+    dataSource.feedResponse = neoFeedResponse(elementCount = 10)
+
+    testClock.advance(11.minutes)
+
+    val result = repository.getFeed(start).getOrThrow()
+    assertEquals(10, result.elementCount) // 10, from network
+    assertEquals("2025-01-15", dataSource.lastFeedStartDate)
+  }
+
+  @Test
+  fun `lookupAsteroid uses cache on subsequent calls`() = runTest {
+    val id = AsteroidId("12345")
+    dataSource.lookupResponse = nearEarthObjectDto(id = "12345", name = "Original")
+
+    // First call
+    val firstResult = repository.lookupAsteroid(id).getOrThrow()
+    assertEquals("Original", firstResult.name)
+    assertEquals("12345", dataSource.lastLookupAsteroidId)
+
+    dataSource.lastLookupAsteroidId = null
+    dataSource.lookupResponse = nearEarthObjectDto(id = "12345", name = "New")
+
+    // Second call
+    val secondResult = repository.lookupAsteroid(id).getOrThrow()
+    assertEquals("Original", secondResult.name)
+    assertNull(dataSource.lastLookupAsteroidId)
+  }
+
+  @Test
+  fun `lookupAsteroid hits network after cache expires`() = runTest {
+    val id = AsteroidId("12345")
+    dataSource.lookupResponse = nearEarthObjectDto(id = "12345", name = "Original")
+
+    repository.lookupAsteroid(id)
+
+    dataSource.lastLookupAsteroidId = null
+    dataSource.lookupResponse = nearEarthObjectDto(id = "12345", name = "New")
+
+    testClock.advance(11.minutes)
+
+    val result = repository.lookupAsteroid(id).getOrThrow()
+    assertEquals("New", result.name)
+    assertEquals("12345", dataSource.lastLookupAsteroidId)
+  }
+
+  private class TestClock : Clock {
+    private var currentInstant = Instant.fromEpochMilliseconds(0)
+
+    override fun now(): Instant = currentInstant
+
+    fun advance(duration: Duration) {
+      currentInstant += duration
+    }
+  }
 }

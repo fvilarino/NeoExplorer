@@ -13,19 +13,10 @@ internal class FakeNeoDataSource : NeoDataSource {
   var error: Throwable? = null
   // --- Recorded call arguments ---
   var lastFeedStartDate: String? = null
-    private set
-
   var lastFeedEndDate: String? = null
-    private set
-
   var lastLookupAsteroidId: String? = null
-    private set
-
   var lastBrowsePage: Int? = null
-    private set
-
   var lastBrowsePageSize: Int? = null
-    private set
 
   /** Every `pageSize` requested via [browse], in call order. */
   val browsePageSizes: MutableList<Int> = mutableListOf()

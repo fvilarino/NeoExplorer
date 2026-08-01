@@ -26,9 +26,16 @@ private inline fun <T> runCatchingNotCancelled(block: () -> T): Result<T> =
 
 @Inject
 @ContributesBinding(AppScope::class)
-class NeoRepositoryImpl(private val dataSource: NeoDataSource) : NeoRepository {
-  override suspend fun getFeed(startDate: LocalDate, endDate: LocalDate?): Result<NeoFeed> =
-    runCatchingNotCancelled {
+class NeoRepositoryImpl(
+  private val dataSource: NeoDataSource,
+  private val asteroidLocalDataSource: AsteroidLocalDataSource,
+  private val feedLocalDataSource: FeedLocalDataSource,
+) : NeoRepository {
+  override suspend fun getFeed(startDate: LocalDate, endDate: LocalDate?): Result<NeoFeed> {
+    feedLocalDataSource.getFeed(startDate, endDate)?.let {
+      return Result.success(it)
+    }
+    return runCatchingNotCancelled {
       dataSource
         .getFeed(
           startDate = startDate.toString(),
@@ -36,11 +43,18 @@ class NeoRepositoryImpl(private val dataSource: NeoDataSource) : NeoRepository {
         )
         .toDomain()
     }
+      .onSuccess { feedLocalDataSource.putFeed(startDate, endDate, it) }
+  }
 
-  override suspend fun lookupAsteroid(asteroidId: AsteroidId): Result<NearEarthObject> =
-    runCatchingNotCancelled {
+  override suspend fun lookupAsteroid(asteroidId: AsteroidId): Result<NearEarthObject> {
+    asteroidLocalDataSource.getAsteroid(asteroidId)?.let {
+      return Result.success(it)
+    }
+    return runCatchingNotCancelled {
       dataSource.lookupAsteroid(asteroidId.value).toDomain()
     }
+      .onSuccess { asteroidLocalDataSource.putAsteroid(it) }
+  }
 
   override fun browse(): Flow<PagingData<NearEarthObject>> =
     Pager(
