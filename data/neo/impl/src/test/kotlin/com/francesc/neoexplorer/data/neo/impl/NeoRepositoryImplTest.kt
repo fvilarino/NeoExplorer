@@ -40,9 +40,9 @@ class NeoRepositoryImplTest {
   fun `getFeed passes formatted end date to data source`() = runTest {
     repository.getFeed(
       startDate = LocalDate(2025, 1, 15),
-      endDate = LocalDate(2025, 1, 22),
+      endDate = LocalDate(2025, 1, 21),
     )
-    assertEquals("2025-01-22", dataSource.lastFeedEndDate)
+    assertEquals("2025-01-21", dataSource.lastFeedEndDate)
   }
 
   @Test
