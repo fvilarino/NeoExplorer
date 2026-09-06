@@ -33,7 +33,6 @@ private fun escapeKey(key: String): String =
   key.replace("\\", "\\\\").replace("\"", "\\\"").replace("$", "\\$")
 
 dependencies {
-  implementation(libs.androidx.collection)
   implementation(libs.androidx.paging.common)
   implementation(libs.com.squareup.okhttp3.okhttp)
   implementation(libs.com.squareup.okhttp3.logging.interceptor)
